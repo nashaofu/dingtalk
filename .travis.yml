@@ -1,0 +1,29 @@
+language: node_js
+node_js:
+  - "node"
+
+sudo: required
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - npm install
+
+script:
+  - npm run build
+
+deploy:
+  provider: releases
+  api_key:
+    secure: "${token}"
+  file:
+    - "dist/dingtalk-0.1.0-x86_64.AppImage"
+  skip_cleanup: true
+  on:
+    branches: master
+
+branches:
+  only:
+    - master
