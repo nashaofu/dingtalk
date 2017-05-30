@@ -19,7 +19,7 @@ deploy:
   api_key:
     secure: "${token}"
   file:
-    - "dist/dingtalk-0.1.0-x86_64.AppImage"
+    - "dist/dingtalk-0.0.1-x86_64.AppImage"
   skip_cleanup: true
   on:
     branches: master
