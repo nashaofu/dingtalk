@@ -2,6 +2,7 @@ language: node_js
 node_js:
   - "node"
 
+dist: trusty
 sudo: required
 
 cache:
@@ -14,12 +15,15 @@ install:
 script:
   - npm run build
 
+before_deploy:
+  - zip -o -r ./dingtalk-x86_64.zip ./dist/*
+
 deploy:
   provider: releases
   api_key:
     secure: "${token}"
   file:
-    - "dist/dingtalk-0.0.1-x86_64.AppImage"
+    - "dingtalk-x86_64.zip"
   skip_cleanup: true
   on:
     branches: master

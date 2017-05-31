@@ -20,6 +20,18 @@ class App {
   initialize() {
     // 应用准备完毕
     this.app.on('ready', () => {
+      // 同时只能运行一个人实例
+      const shouldQuit = this.app.makeSingleInstance(() => {
+        if (this.$window) {
+          this.$window.show()
+          this.$window.focus()
+        }
+        return true
+      })
+      if (shouldQuit) {
+        this.app.quit()
+        return
+      }
       this.createWindow()
       this.createTray()
     })
