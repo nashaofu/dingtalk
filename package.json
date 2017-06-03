@@ -1,6 +1,6 @@
 {
   "name": "dingtalk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "index.js",
   "description": "钉钉llinux版",
   "author": {
@@ -16,6 +16,7 @@
     "build": "node scripts/build.js"
   },
   "devDependencies": {
+    "axios": "^0.16.1",
     "chalk": "^1.1.3",
     "electron": "^1.6.10",
     "electron-builder": "^17.8.0"

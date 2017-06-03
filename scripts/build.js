@@ -10,7 +10,11 @@ build({
     copyright: `Copyright © ${new Date().getFullYear} ${author.name}`,
     productName: '钉钉',
     asar: true,
-    // icon: path.join(__dirname, '../dingtalk.png')
+    linux: {
+      description: '钉钉linux版本',
+      icon: path.join(__dirname, '../icon'),
+      target: 'deb'
+    }
   }
 })
   .then(() => {

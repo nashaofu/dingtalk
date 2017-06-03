@@ -113,7 +113,7 @@ class App {
       return
     }
     // 托盘图标及其菜单项
-    this.$tray = new Tray(path.join(__dirname, 'dingtalk.png'))
+    this.$tray = new Tray(path.join(__dirname, './icon/230x230.png'))
     const menu = Menu.buildFromTemplate([{
       label: '显示窗口',
       click: e => {
