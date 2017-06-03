@@ -15,15 +15,9 @@ install:
 script:
   - npm run build
 
-before_deploy:
-  - zip -o -r ./dingtalk-x86_64.zip ./dist/*
-
 deploy:
-  provider: releases
-  api_key:
-    secure: "${token}"
-  file:
-    - "dingtalk-x86_64.zip"
+  script:
+    - scripts/release.js
   skip_cleanup: true
   on:
     branches: master
