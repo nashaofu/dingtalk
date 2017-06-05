@@ -5,6 +5,8 @@ const chalk = require('chalk')
 const { version } = require('../package')
 
 const token = process.env.token
+// dist文件夹
+const dir = path.join(__dirname, '../dist')
 
 axiso.defaults.headers.common['Authorization'] = `token ${token}`
 
@@ -29,10 +31,9 @@ axiso({
   // 发布release的ID
   const id = res.data.id
   // 读取文件夹下的文件
-  const dirname = path.join(__dirname, '../dist')
-  const files = fs.readdirSync(dirname)
+  const files = fs.readdirSync(dir)
     .filter(file => {
-      return fs.statSync(path.join(dirname, file)).isFile()
+      return fs.statSync(path.join(dir, file)).isFile()
     })
 
   // 上传文件到发布的版本中去
@@ -47,7 +48,7 @@ function uploadAssets(id, files) {
   // 循环上传文件上传文件
   const stack = files.map(file => {
     console.log(chalk.cyan(`正在上传文件${file}...\n`))
-    const raw = fs.readFileSync(path.join(__dirname, file))
+    const raw = fs.readFileSync(path.join(dir, file))
     return axiso({
       baseURL: 'https://uploads.github.com/',
       url: `/repos/diaocheng/dingtalk/releases/${id}/assets`,
