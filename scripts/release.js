@@ -47,7 +47,7 @@ function uploadAssets(id, files) {
   // 循环上传文件上传文件
   const stack = files.map(file => {
     console.log(chalk.cyan(`正在上传文件${file}...\n`))
-    const raw = fs.readFileSync(path.join(__dirname, './build.js'))
+    const raw = fs.readFileSync(path.join(__dirname, file))
     return axiso({
       baseURL: 'https://uploads.github.com/',
       url: `/repos/diaocheng/dingtalk/releases/${id}/assets`,
