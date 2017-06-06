@@ -1,6 +1,6 @@
 {
   "name": "dingtalk",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "index.js",
   "description": "钉钉llinux版",
   "author": {
