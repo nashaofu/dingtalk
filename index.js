@@ -12,6 +12,11 @@ class App {
     this.$tray = null
 
     this.url = null
+
+    // 判断是否通过任务栏图标点击关闭命令来关闭的程序
+    // 禁止通过除了关闭命令之外的方式(键盘按钮)来关闭应用
+    // 当通过其他方式来关闭应用时只会隐藏应用窗口
+    this.isClose = false
     // 窗口是否最大化了
     this.maximize = false
 
@@ -92,6 +97,13 @@ class App {
       resizable: true
     })
 
+    this.$window.on('close', e => {
+      if (!this.isClose) {
+        e.preventDefault()
+        this.$window.hide()
+      }
+    })
+
     // 窗口关闭后
     this.$window.on('closed', () => {
       this.$window = null
@@ -122,6 +134,7 @@ class App {
     }, {
       label: '退出',
       click: e => {
+        this.isClose = true
         this.$tray.destroy()
         this.$window.close()
       }
