@@ -16,10 +16,9 @@ build({
       target: 'deb'
     }
   }
+}).then(() => {
+  console.log(chalk.cyan('Build complete.\n'))
 })
-  .then(() => {
-    console.log(chalk.cyan('Build complete.\n'))
-  })
   .catch(error => {
     throw error
   })
