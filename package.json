@@ -2,7 +2,7 @@
   "name": "dingtalk",
   "version": "0.0.6",
   "description": "钉钉llinux版",
-  "main": "./index.js",
+  "main": "./app/index.js",
   "dependencies": {},
   "devDependencies": {
     "axios": "^0.16.2",

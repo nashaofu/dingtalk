@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain, Menu, Tray } = require('electron')
 const path = require('path')
 const url = require('url')
 
-class DingTalk {
+exports = class DingTalk {
   // 构造函数
   constructor() {
     this.app = app
@@ -217,6 +217,3 @@ class DingTalk {
     }])
   }
 }
-
-// tslint:disable-next-line:no-unused-expression
-new DingTalk()
