@@ -1,10 +1,12 @@
 (() => {
   window.addEventListener('load', () => {
+    require('./move')
     const fs = require('fs')
     const { ipcRenderer } = require('electron')
+
     const $toolbar = document.createElement('div')
     $toolbar.setAttribute('class', 'toolbar')
-    fs.readFile('./window/toolbar.html', (err, html) => {
+    fs.readFile('./app/window/toolbar.html', (err, html) => {
       if (!err) {
         $toolbar.innerHTML = html
         // 插入到body下的第一个元素

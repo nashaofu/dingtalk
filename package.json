@@ -1,9 +1,11 @@
 {
   "name": "dingtalk",
   "version": "0.0.6",
-  "description": "钉钉llinux版",
+  "description": "钉钉linux版",
   "main": "./app/index.js",
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^4.17.4"
+  },
   "devDependencies": {
     "axios": "^0.16.2",
     "chalk": "^1.1.3",

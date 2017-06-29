@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain, Menu, Tray } = require('electron')
 const path = require('path')
 const url = require('url')
 
-exports = class DingTalk {
+exports = module.exports = class DingTalk {
   // 构造函数
   constructor() {
     this.app = app
@@ -23,6 +23,13 @@ exports = class DingTalk {
 
     // 窗口是否最大化了
     this.maximize = false
+
+    // 窗口原来的位置
+    this.winoX = null
+    this.winoY = null
+    // 窗口是否可移动位置
+    this.winMoveabled = false
+
     // 初始化应用
     this.initialize()
   }
@@ -32,10 +39,17 @@ exports = class DingTalk {
     this.onActivate()
     this.onQuit()
 
+    // ===============================
     // 渲染进程事件
+    // ===============================
+    // 工具栏按钮事件
     this.onMinimize()
     this.onMaximization()
     this.onClose()
+    // 拖拽窗口
+    this.onMovestart()
+    this.onMoveing()
+    this.onMoveend()
   }
 
   // 应用准备完毕时执行
@@ -124,6 +138,44 @@ exports = class DingTalk {
     })
   }
 
+  // 移动开始
+  onMovestart() {
+    this.ipcMain.on('movestart', e => {
+      const [x, y] = this.$window.getPosition()
+      this.winoX = x
+      this.winoY = y
+      this.winMoveabled = true
+    })
+  }
+
+  // 移动过程中
+  onMoveing() {
+    this.ipcMain.on('moveing', (e, m) => {
+      if (this.winMoveabled) {
+        const nx = this.winoX + m.mx
+        const ny = this.winoY + m.my
+        console.log(this.$window.getPosition(), this.winoX, this.winoY)
+        this.$window.setPosition(nx, ny)
+        console.log(m, this.$window.getPosition())
+      }
+    })
+  }
+
+  // 移动结束
+  onMoveend() {
+    this.ipcMain.on('moveend', (e, m) => {
+      if (this.winMoveabled) {
+        const nx = this.winoX + m.mx
+        const ny = this.winoY + m.my
+        this.$window.setPosition(nx, ny)
+      }
+      const [x, y] = this.$window.getPosition()
+      this.winoX = x
+      this.winoX = y
+      this.winMoveabled = false
+    })
+  }
+
   // 穿件窗体
   createWindow() {
     if (this.$window) {
@@ -140,6 +192,10 @@ exports = class DingTalk {
       backgroundColor: '#5a83b7',
       resizable: true
     })
+    // 记录窗体位置
+    const [x, y] = this.$window.getPosition()
+    this.winoX = x
+    this.winoX = y
 
     // 窗体关闭事件处理
     // 如果不是通过任务栏关闭
@@ -178,7 +234,7 @@ exports = class DingTalk {
       return
     }
     // 生成托盘图标及其菜单项实例
-    this.$tray = new Tray(path.join(__dirname, './icon/48x48.png'))
+    this.$tray = new Tray(path.join(__dirname, '../icon/48x48.png'))
     this.createMenu()
     // 设置鼠标悬浮时的标题
     this.$tray.setToolTip('钉钉')

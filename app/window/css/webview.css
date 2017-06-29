@@ -12,3 +12,7 @@
   height: 100% !important;
   flex: 0 1 100% !important;
 }
+
+.dingtalk-moveing, .dingtalk-moveing *, .dingtalk-moveing>* {
+  cursor: move !important;
+}

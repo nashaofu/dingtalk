@@ -25,7 +25,3 @@ $webview.addEventListener('dom-ready', () => {
 $webview.addEventListener('new-window', e => {
   shell.openExternal(e.url)
 })
-$webview.addEventListener('click', e => {
-  console.log(e)
-})
-
