@@ -1,6 +1,6 @@
 {
   "name": "dingtalk",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "description": "钉钉linux版",
   "main": "./app/index.js",
   "dependencies": {
