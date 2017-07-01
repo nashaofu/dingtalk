@@ -1,6 +1,6 @@
-const { app, BrowserWindow, ipcMain, Menu, Tray } = require('electron')
+const { app, BrowserWindow, ipcMain, Menu, Tray, shell } = require('electron')
 const path = require('path')
-const url = require('url')
+const fs = require('fs')
 
 exports = module.exports = class DingTalk {
   // 构造函数
@@ -24,12 +24,6 @@ exports = module.exports = class DingTalk {
     // 窗口是否最大化了
     this.maximize = false
 
-    // 窗口原来的位置
-    this.winoX = null
-    this.winoY = null
-    // 窗口是否可移动位置
-    this.winMoveabled = false
-
     // 初始化应用
     this.initialize()
   }
@@ -46,10 +40,6 @@ exports = module.exports = class DingTalk {
     this.onMinimize()
     this.onMaximization()
     this.onClose()
-    // 拖拽窗口
-    this.onMovestart()
-    this.onMoveing()
-    this.onMoveend()
   }
 
   // 应用准备完毕时执行
@@ -138,44 +128,6 @@ exports = module.exports = class DingTalk {
     })
   }
 
-  // 移动开始
-  onMovestart() {
-    this.ipcMain.on('movestart', e => {
-      const [x, y] = this.$window.getPosition()
-      this.winoX = x
-      this.winoY = y
-      this.winMoveabled = true
-    })
-  }
-
-  // 移动过程中
-  onMoveing() {
-    this.ipcMain.on('moveing', (e, m) => {
-      if (this.winMoveabled) {
-        const nx = this.winoX + m.mx
-        const ny = this.winoY + m.my
-        console.log(this.$window.getPosition(), this.winoX, this.winoY)
-        this.$window.setPosition(nx, ny)
-        console.log(m, this.$window.getPosition())
-      }
-    })
-  }
-
-  // 移动结束
-  onMoveend() {
-    this.ipcMain.on('moveend', (e, m) => {
-      if (this.winMoveabled) {
-        const nx = this.winoX + m.mx
-        const ny = this.winoY + m.my
-        this.$window.setPosition(nx, ny)
-      }
-      const [x, y] = this.$window.getPosition()
-      this.winoX = x
-      this.winoX = y
-      this.winMoveabled = false
-    })
-  }
-
   // 穿件窗体
   createWindow() {
     if (this.$window) {
@@ -185,17 +137,18 @@ exports = module.exports = class DingTalk {
     this.$window = new BrowserWindow({
       width: 960,
       height: 600,
-      minWidth: 640,
-      minHeight: 400,
+      minWidth: 720,
+      minHeight: 450,
       center: true,
       frame: false,
+      show: false,
       backgroundColor: '#5a83b7',
       resizable: true
     })
-    // 记录窗体位置
-    const [x, y] = this.$window.getPosition()
-    this.winoX = x
-    this.winoX = y
+
+    this.$window.once('ready-to-show', () => {
+      this.$window.show()
+    })
 
     // 窗体关闭事件处理
     // 如果不是通过任务栏关闭
@@ -214,18 +167,10 @@ exports = module.exports = class DingTalk {
       this.$window = null
     })
 
-    this.$window.webContents.openDevTools()
-
-    // 得到初始化显示URL
-    if (!this.url) {
-      this.url = url.format({
-        pathname: path.join(__dirname, './window/index.html'),
-        protocol: 'file:',
-        slashes: true
-      })
-    }
+    // 桥接页面内容
+    this.bridging()
     // 加载URL地址
-    this.$window.loadURL(this.url)
+    this.$window.loadURL('https://im.dingtalk.com/')
   }
 
   // 创建任务栏图标
@@ -247,6 +192,8 @@ exports = module.exports = class DingTalk {
       }
     })
   }
+
+  // 创建任务栏图标菜单列表
   createMenu() {
     if (this.$menu) {
       return
@@ -271,5 +218,45 @@ exports = module.exports = class DingTalk {
         }
       }
     }])
+  }
+
+  // 桥接webContents
+  bridging() {
+    if (!this.$window || !this.$window.webContents) {
+      return
+    }
+    this.$window.webContents.on('dom-ready', () => {
+      this.injectCss()
+      this.injectJs()
+    }).on('new-window', (e, url) => {
+      e.preventDefault()
+      if (url !== 'about:blank') {
+        shell.openExternal(url)
+      }
+    })
+  }
+
+  // 注入CSS
+  injectCss() {
+    if (!this.$window || !this.$window.webContents) {
+      return
+    }
+
+    let filename = path.join(__dirname, './window/css/css.css')
+    fs.readFile(filename, (err, css) => {
+      if (!err) {
+        return this.$window.webContents.insertCSS(css.toString())
+      }
+    })
+  }
+
+  // 注入JS
+  injectJs() {
+    const filename = path.join(__dirname, './window/js/js.js')
+    fs.readFile(filename, (err, js) => {
+      if (!err) {
+        return this.$window.webContents.executeJavaScript(js.toString())
+      }
+    })
   }
 }
