@@ -4,7 +4,7 @@ const axiso = require('axios')
 const chalk = require('chalk')
 const { version } = require('../package')
 
-const token = 'fd8ad078b390943179b439234e4428c88618965a' // process.env.token
+const token = process.env.token
 // dist文件夹
 const dir = path.join(__dirname, '../dist')
 
