@@ -2,7 +2,7 @@
 基于网页版钉钉的linux版封装，解决linux上打开网页被关闭后要重新登陆的问题!
 
 ## 安装步骤
-> 直接从[GitHub relase](https://github.com/nashaofu/dingtalk/releases)页面下载最新版安装包即可
+> 直接从[GitHub relase](https://github.com/nashaofu/dingtalk/releases/latest)页面下载最新版安装包即可
 
 ## 手动构建步骤
 1. 安装node与npm，版本必须大于4.0.0,npm版本必须高于3.0.0

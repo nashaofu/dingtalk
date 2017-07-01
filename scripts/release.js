@@ -4,7 +4,7 @@ const axiso = require('axios')
 const chalk = require('chalk')
 const { version } = require('../package')
 
-const token = process.env.token
+const token = 'fd8ad078b390943179b439234e4428c88618965a' // process.env.token
 // dist文件夹
 const dir = path.join(__dirname, '../dist')
 
@@ -13,7 +13,7 @@ axiso.defaults.headers.common['Authorization'] = `token ${token}`
 axiso({
   baseURL: 'https://api.github.com/',
   method: 'post',
-  url: '/repos/diaocheng/dingtalk/releases',
+  url: '/repos/nashaofu/dingtalk/releases',
   data: {
     tag_name: `v${version}`,
     target_commitish: 'master',
@@ -51,7 +51,7 @@ function uploadAssets(id, files) {
     const raw = fs.readFileSync(path.join(dir, file))
     return axiso({
       baseURL: 'https://uploads.github.com/',
-      url: `/repos/diaocheng/dingtalk/releases/${id}/assets`,
+      url: `/repos/nashaofu/dingtalk/releases/${id}/assets`,
       method: 'post',
       params: {
         name: file,
