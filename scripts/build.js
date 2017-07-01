@@ -18,7 +18,6 @@ build({
   }
 }).then(() => {
   console.log(chalk.cyan('Build complete.\n'))
+}).catch(error => {
+  throw error
 })
-  .catch(error => {
-    throw error
-  })
