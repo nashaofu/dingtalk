@@ -175,7 +175,7 @@ exports = module.exports = class DingTalk {
     }
     // 生成托盘图标及其菜单项实例
     this.$tray = new Tray(path.join(__dirname, '../icon/48x48.png'))
-    this.createMenu()
+    this.createTrayMenu()
     // 设置鼠标悬浮时的标题
     this.$tray.setToolTip('钉钉')
     // 绑定菜单
@@ -189,7 +189,7 @@ exports = module.exports = class DingTalk {
   }
 
   // 创建任务栏图标菜单列表
-  createMenu() {
+  createTrayMenu() {
     if (this.$menu) {
       return
     }
