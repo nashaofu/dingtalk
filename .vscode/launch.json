@@ -9,8 +9,8 @@
             "type": "node",
             "request": "launch",
             "cwd": "${workspaceRoot}",
-            "runtimeExecutable": "${workspaceRoot}\\node_modules\\.bin\\electron.cmd",
-            "program": "${workspaceRoot}\\app\\index.js"
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+            "program": "${workspaceRoot}/app/index.js"
         }
     ]
 }

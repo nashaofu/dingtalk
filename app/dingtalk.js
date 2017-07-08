@@ -21,9 +21,6 @@ exports = module.exports = class DingTalk {
     // 当通过其他方式来关闭应用时只会隐藏应用窗口
     this.isClose = false
 
-    // 窗口是否最大化了
-    this.maximize = false
-
     // 初始化应用
     this.initialize()
   }
@@ -104,16 +101,14 @@ exports = module.exports = class DingTalk {
   // 最大化(页面点击)
   onMaximization() {
     this.ipcMain.on('maximization', () => {
-      if (this.maximize) {
+      if (this.$window.isMaximized()) {
         if (this.$window) {
           this.$window.unmaximize()
         }
-        this.maximize = false
       } else {
         if (this.$window) {
           this.$window.maximize()
         }
-        this.maximize = true
       }
     })
   }
