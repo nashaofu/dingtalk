@@ -10,10 +10,6 @@ exports = module.exports = class DingTalk {
     this.$window = null
     // 任务栏图标
     this.$tray = null
-    // 任务栏菜单
-    this.$menu = null
-    // 页面url
-    this.url = null
 
     // 判断是否通过任务栏图标点击关闭命令来关闭的程序
     // 禁止通过除了关闭命令之外的方式(键盘按钮)来关闭应用
@@ -174,7 +170,7 @@ exports = module.exports = class DingTalk {
     this.createContextMenu()
     // 浏览器中打开链接
     this.openURLEvent()
-
+    this.$window.webContents.openDevTools()
     // 加载URL地址
     this.$window.loadURL('https://im.dingtalk.com/')
   }
@@ -186,11 +182,11 @@ exports = module.exports = class DingTalk {
     }
     // 生成托盘图标及其菜单项实例
     this.$tray = new Tray(path.join(__dirname, '../icon/48x48.png'))
-    this.createTrayMenu()
+    const trayMenu = this.createTrayMenu()
     // 设置鼠标悬浮时的标题
     this.$tray.setToolTip('钉钉')
     // 绑定菜单
-    this.$tray.setContextMenu(this.$menu)
+    this.$tray.setContextMenu(trayMenu)
     // 双击时显示窗体(linux上无效)
     this.$tray.on('double-click', () => {
       if (this.$window) {
@@ -201,10 +197,7 @@ exports = module.exports = class DingTalk {
 
   // 创建任务栏图标菜单列表
   createTrayMenu () {
-    if (this.$menu) {
-      return
-    }
-    this.$menu = Menu.buildFromTemplate([{
+    return Menu.buildFromTemplate([{
       label: '显示窗口',
       click: () => {
         if (this.$window) {
