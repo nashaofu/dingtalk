@@ -1,5 +1,5 @@
 const path = require('path')
-const { build, Platform } = require("electron-builder")
+const { build, Platform } = require('electron-builder')
 const chalk = require('chalk')
 const { author } = require('../package.json')
 

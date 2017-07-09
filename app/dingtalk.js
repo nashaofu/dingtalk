@@ -1,10 +1,9 @@
 const { app, BrowserWindow, ipcMain, Menu, Tray, shell } = require('electron')
 const path = require('path')
-const fs = require('fs')
 
 exports = module.exports = class DingTalk {
   // 构造函数
-  constructor() {
+  constructor () {
     this.app = app
     this.ipcMain = ipcMain
     // 应用窗体
@@ -24,7 +23,9 @@ exports = module.exports = class DingTalk {
     // 初始化应用
     this.initialize()
   }
-  initialize() {
+
+  // 初始化
+  initialize () {
     // 主进程事件
     this.onReady()
     this.onActivate()
@@ -40,7 +41,7 @@ exports = module.exports = class DingTalk {
   }
 
   // 应用准备完毕时执行
-  onReady() {
+  onReady () {
     this.app.on('ready', () => {
       // 同时只能运行一个人实例
       const shouldQuit = this.app.makeSingleInstance(() => {
@@ -62,7 +63,7 @@ exports = module.exports = class DingTalk {
   }
 
   // 应用被重新启动时时间处理
-  onActivate() {
+  onActivate () {
     this.app.on('activate', () => {
       this.createWindow()
       this.createTray()
@@ -70,7 +71,7 @@ exports = module.exports = class DingTalk {
   }
 
   // 当应用的所有窗口关闭时
-  onQuit() {
+  onQuit () {
     this.app.on('window-all-closed', () => {
       // 销毁任务栏图标
       if (this.$tray) {
@@ -91,16 +92,17 @@ exports = module.exports = class DingTalk {
   }
 
   // 最小化(页面点击)
-  onMinimize() {
-    this.ipcMain.on('minimize', () => {
+  onMinimize () {
+    this.ipcMain.on('window-minimize', () => {
       if (this.$window) {
         this.$window.minimize()
       }
     })
   }
+
   // 最大化(页面点击)
-  onMaximization() {
-    this.ipcMain.on('maximization', () => {
+  onMaximization () {
+    this.ipcMain.on('window-maximization', () => {
       if (this.$window.isMaximized()) {
         if (this.$window) {
           this.$window.unmaximize()
@@ -114,22 +116,23 @@ exports = module.exports = class DingTalk {
   }
 
   // 关闭(页面点击)
-  onClose() {
+  onClose () {
     // 渲染进程通信监听
-    this.ipcMain.on('close', () => {
+    this.ipcMain.on('window-close', () => {
       if (this.$window) {
         this.$window.hide()
       }
     })
   }
 
-  // 穿件窗体
-  createWindow() {
+  // 创建窗体
+  createWindow () {
     if (this.$window) {
       return
     }
     // 创建浏览器窗口
     this.$window = new BrowserWindow({
+      title: '钉钉',
       width: 960,
       height: 600,
       minWidth: 720,
@@ -138,9 +141,14 @@ exports = module.exports = class DingTalk {
       frame: false,
       show: false,
       backgroundColor: '#5a83b7',
-      resizable: true
+      icon: path.join(__dirname, '../icon/48x48.png'),
+      resizable: true,
+      webPreferences: {
+        preload: path.join(__dirname, './window/js/js.js')
+      }
     })
 
+    // 页面初始化完成之后再显示窗口
     this.$window.once('ready-to-show', () => {
       this.$window.show()
     })
@@ -148,7 +156,7 @@ exports = module.exports = class DingTalk {
     // 窗体关闭事件处理
     // 如果不是通过任务栏关闭
     // 则只会隐藏窗口
-    this.$window.on('close', e => {
+    this.$window.on('close', (e) => {
       if (!this.isClose) {
         e.preventDefault()
         if (this.$window) {
@@ -162,14 +170,17 @@ exports = module.exports = class DingTalk {
       this.$window = null
     })
 
-    // 桥接页面内容
-    this.bridging()
+    // 创建上下文菜单
+    this.createContextMenu()
+    // 浏览器中打开链接
+    this.openURLEvent()
+
     // 加载URL地址
     this.$window.loadURL('https://im.dingtalk.com/')
   }
 
   // 创建任务栏图标
-  createTray() {
+  createTray () {
     if (this.$tray) {
       return
     }
@@ -189,7 +200,7 @@ exports = module.exports = class DingTalk {
   }
 
   // 创建任务栏图标菜单列表
-  createTrayMenu() {
+  createTrayMenu () {
     if (this.$menu) {
       return
     }
@@ -215,15 +226,12 @@ exports = module.exports = class DingTalk {
     }])
   }
 
-  // 桥接webContents
-  bridging() {
+  // 打开新链接窗口
+  openURLEvent () {
     if (!this.$window || !this.$window.webContents) {
       return
     }
-    this.$window.webContents.on('dom-ready', () => {
-      this.injectCss()
-      this.injectJs()
-    }).on('new-window', (e, url) => {
+    this.$window.webContents.on('new-window', (e, url) => {
       e.preventDefault()
       if (url !== 'about:blank') {
         shell.openExternal(url)
@@ -231,26 +239,82 @@ exports = module.exports = class DingTalk {
     })
   }
 
-  // 注入CSS
-  injectCss() {
+  // 创建上下文菜单
+  createContextMenu () {
     if (!this.$window || !this.$window.webContents) {
       return
     }
-
-    let filename = path.join(__dirname, './window/css/css.css')
-    fs.readFile(filename, (err, css) => {
-      if (!err) {
-        return this.$window.webContents.insertCSS(css.toString())
+    // 菜单执行命令
+    const menuCmd = {
+      copy: {
+        id: 1,
+        label: '复制'
+      },
+      cut: {
+        id: 2,
+        label: '剪切'
+      },
+      paste: {
+        id: 3,
+        label: '粘贴'
+      },
+      selectall: {
+        id: 4,
+        label: '全选'
       }
-    })
-  }
+    }
 
-  // 注入JS
-  injectJs() {
-    const filename = path.join(__dirname, './window/js/js.js')
-    fs.readFile(filename, (err, js) => {
-      if (!err) {
-        return this.$window.webContents.executeJavaScript(js.toString())
+    this.$window.webContents.on('context-menu', (e, params) => {
+      e.preventDefault()
+      const { selectionText, isEditable, editFlags } = params
+
+      // 生成菜单模板
+      const template = Object.keys(menuCmd)
+        .map(cmd => {
+          const { id, label } = menuCmd[cmd]
+          let enabled = false
+          let visible = false
+          const { canCopy, canCut, canPaste, canSelectAll } = editFlags
+          switch (cmd) {
+            case 'copy':
+              // 有文字选中就显示
+              visible = !!selectionText
+              enabled = canCopy
+              break
+            case 'cut':
+              // 可以编辑就显示项目
+              visible = !!isEditable
+              // 有文字选中才可用
+              enabled = visible && !!selectionText && canCut
+              break
+            case 'paste':
+              // 可以编辑就显示项目
+              visible = !!isEditable
+              enabled = visible && canPaste
+              break
+            case 'selectall':
+              // 可以编辑就显示项目
+              visible = !!isEditable
+              enabled = visible && canSelectAll
+              break
+            default:
+              break
+          }
+          return {
+            id,
+            label,
+            role: cmd,
+            enabled,
+            visible
+          }
+        })
+        .filter(item => item.visible)
+        .sort((a, b) => a.id > b.id)
+
+      // 用模板生成菜单
+      if (template.length) {
+        const menu = Menu.buildFromTemplate(template)
+        menu.popup(this.$window)
       }
     })
   }
