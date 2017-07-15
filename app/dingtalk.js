@@ -170,7 +170,6 @@ exports = module.exports = class DingTalk {
     this.createContextMenu()
     // 浏览器中打开链接
     this.openURLEvent()
-    this.$window.webContents.openDevTools()
     // 加载URL地址
     this.$window.loadURL('https://im.dingtalk.com/')
   }

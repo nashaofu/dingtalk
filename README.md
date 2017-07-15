@@ -1,4 +1,4 @@
-# dingtalk[![Build Status](https://travis-ci.org/diaocheng/dingtalk.svg?branch=master)](https://travis-ci.org/diaocheng/dingtalk)
+# dingtalk[![Build Status](https://travis-ci.org/nashaofu/dingtalk.svg?branch=master)](https://travis-ci.org/nashaofu/dingtalk)
 基于网页版钉钉的linux版封装，解决linux上打开网页被关闭后要重新登陆的问题!
 
 ## 安装步骤

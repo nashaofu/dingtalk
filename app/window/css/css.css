@@ -15,7 +15,7 @@
   background: none;
 }
 
-#header>div.upload-container-wrap.ng-scope.ng-isolate-scope {
+#header>upload-list > .upload-container-wrap.ng-isolate-scope {
   margin-right: 96px !important;
 }
 
