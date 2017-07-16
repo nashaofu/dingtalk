@@ -37,6 +37,8 @@ exports = module.exports = class DingTalk {
 
     // 消息通知
     this.onSetBadgeCount()
+    // 点击消息通知后打开窗口
+    this.onShow()
   }
 
   // 应用准备完毕时执行
@@ -130,6 +132,18 @@ exports = module.exports = class DingTalk {
     this.ipcMain.on('set-badge', (e, count) => {
       if (this.app) {
         this.app.setBadgeCount(count)
+      }
+    })
+  }
+
+  // 显示窗体
+  onShow () {
+    // 渲染进程消息通知点击后打开窗体
+    this.ipcMain.on('window-show', () => {
+      if (this.$window) {
+        // 显示窗口并激活
+        this.$window.show()
+        this.$window.focus()
       }
     })
   }

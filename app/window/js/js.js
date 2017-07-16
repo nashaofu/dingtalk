@@ -68,6 +68,7 @@ class Injector {
 
   // 消息通知发送到主进程
   setBadgeCount () {
+    let oldCount = 0
     setInterval(() => {
       let count = 0
       const $mainMenus = document.querySelector('#menu-pannel>.main-menus')
@@ -81,7 +82,19 @@ class Injector {
           }
         })
       }
-      ipcRenderer.send('set-badge', count)
+      if (oldCount !== count) {
+        // 当有新消息来时才发送提示信息
+        if (count !== 0 && oldCount < count) {
+          const notify = new Notification('钉钉', {
+            body: `您有${count}条消息未查收`
+          })
+          notify.addEventListener('click', () => {
+            ipcRenderer.send('window-show')
+          })
+        }
+        oldCount = count
+        ipcRenderer.send('set-badge', count)
+      }
     }, 2000)
   }
 }
