@@ -11,6 +11,7 @@ cache:
 
 before_install:
   - git checkout release
+  - git status
 
 install:
   - npm install
