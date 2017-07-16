@@ -11,7 +11,6 @@ cache:
 
 before_install:
   - git checkout release
-  - git status
 
 install:
   - npm install
@@ -23,8 +22,6 @@ deploy:
   provider: script
   script: npm run deploy
   skip_cleanup: true
-  on:
-    branches: release
 
 branches:
   only:
