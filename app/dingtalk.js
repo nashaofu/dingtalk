@@ -34,6 +34,9 @@ exports = module.exports = class DingTalk {
     this.onMinimize()
     this.onMaximization()
     this.onClose()
+
+    // 消息通知
+    this.onSetBadgeCount()
   }
 
   // 应用准备完毕时执行
@@ -121,6 +124,16 @@ exports = module.exports = class DingTalk {
     })
   }
 
+  // 设置应用在badge上的值(linux、macos)
+  onSetBadgeCount () {
+    // 渲染进程通信监听
+    this.ipcMain.on('set-badge', (e, count) => {
+      if (this.app) {
+        this.app.setBadgeCount(count)
+      }
+    })
+  }
+
   // 创建窗体
   createWindow () {
     if (this.$window) {
@@ -170,6 +183,7 @@ exports = module.exports = class DingTalk {
     this.createContextMenu()
     // 浏览器中打开链接
     this.openURLEvent()
+    this.$window.webContents.openDevTools()
     // 加载URL地址
     this.$window.loadURL('https://im.dingtalk.com/')
   }
@@ -308,6 +322,15 @@ exports = module.exports = class DingTalk {
         const menu = Menu.buildFromTemplate(template)
         menu.popup(this.$window)
       }
+    })
+  }
+
+  // 更新
+  uploader () {
+    let child = new BrowserWindow({parent: this.$window, modal: true, show: false})
+    child.loadURL('https://github.com')
+    child.once('ready-to-show', () => {
+      child.show()
     })
   }
 }

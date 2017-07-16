@@ -34,6 +34,17 @@ class Injector {
      * 插入窗口操作按钮
      * 关闭/最大化/最小化
      */
+    this.createWindowOperation()
+
+    /**
+     * 检测是否有未读消息
+     * 发送未读消息条数到主进程
+     */
+    this.setBadgeCount()
+  }
+
+  // 插入窗口操作按钮
+  createWindowOperation () {
     const $ul = document.createElement('ul')
     $ul.setAttribute('class', 'dingtalk-window-operations')
 
@@ -53,6 +64,25 @@ class Injector {
     // 把生成的按钮添加到DOM
     const $layoutContainer = document.querySelector('#layout-container')
     document.body.insertBefore($ul, $layoutContainer.nextSibling)
+  }
+
+  // 消息通知发送到主进程
+  setBadgeCount () {
+    setInterval(() => {
+      let count = 0
+      const $mainMenus = document.querySelector('#menu-pannel>.main-menus')
+      if ($mainMenus) {
+        const $menuItems = $mainMenus.querySelectorAll('li.menu-item')
+        $menuItems.forEach($item => {
+          const $unread = $item.querySelector('all-conv-unread-count em.ng-binding')
+          if ($unread) {
+            const badge = parseInt($unread.innerText)
+            count += isNaN(badge) ? 0 : badge
+          }
+        })
+      }
+      ipcRenderer.send('set-badge', count)
+    }, 2000)
   }
 }
 
