@@ -16,7 +16,7 @@ axiso({
   url: '/repos/nashaofu/dingtalk/releases',
   data: {
     tag_name: `v${version}`,
-    target_commitish: 'release',
+    target_commitish: 'master',
     name: `v${version}`,
     body: `发布${version}版本`,
     draft: false,

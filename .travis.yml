@@ -20,7 +20,7 @@ deploy:
   script: npm run deploy
   skip_cleanup: true
   on:
-    branches: release
+    branches: master
 
 branches:
   only:
