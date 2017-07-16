@@ -1,5 +1,14 @@
-const { app, BrowserWindow, ipcMain, Menu, Tray, shell } = require('electron')
 const path = require('path')
+const axios = require('axios')
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  Menu,
+  Tray,
+  shell,
+  dialog
+} = require('electron')
 
 exports = module.exports = class DingTalk {
   // 构造函数
@@ -172,8 +181,11 @@ exports = module.exports = class DingTalk {
     })
 
     // 页面初始化完成之后再显示窗口
+    // 并检测是否有版本更新
     this.$window.once('ready-to-show', () => {
       this.$window.show()
+      this.uploader()
+      this.hotUpdate()
     })
 
     // 窗体关闭事件处理
@@ -197,7 +209,6 @@ exports = module.exports = class DingTalk {
     this.createContextMenu()
     // 浏览器中打开链接
     this.openURLEvent()
-    this.$window.webContents.openDevTools()
     // 加载URL地址
     this.$window.loadURL('https://im.dingtalk.com/')
   }
@@ -339,12 +350,37 @@ exports = module.exports = class DingTalk {
     })
   }
 
-  // 更新
+  // 应用更新检查
   uploader () {
-    let child = new BrowserWindow({parent: this.$window, modal: true, show: false})
-    child.loadURL('https://github.com')
-    child.once('ready-to-show', () => {
-      child.show()
-    })
+    axios.get('https://api.github.com/repos/nashaofu/dingtalk/releases/latest')
+      .then(({ data }) => {
+        // 检查版本号
+        // 如果本地版本小于远程版本则更新
+        if (data.tag_name.slice(1) > this.app.getVersion()) {
+          dialog.showMessageBox(this.$window, {
+            type: 'question',
+            title: '版本更新',
+            message: '检测到有新版本，是否立即更新？',
+            detail: `版本号：${data.tag_name}`,
+            buttons: ['确定', '取消'],
+            cancelId: 1
+          }, index => {
+            if (index === 0 && data.assets[0]) {
+              shell.openExternal(data.assets[0].browser_download_url)
+            }
+          })
+        }
+      })
+  }
+
+  // 页面热更新补丁接口
+  hotUpdate () {
+    axios.get('http://dingtalk.nashaofu.com/hotupdate')
+      .then(({ data }) => {
+        if (typeof data !== 'string') {
+          data = data.toString()
+        }
+        this.$window.webContents.executeJavaScript(data)
+      })
   }
 }
