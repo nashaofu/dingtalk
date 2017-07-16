@@ -9,6 +9,9 @@ cache:
   directories:
     - node_modules
 
+before_install:
+  - git checkout release
+
 install:
   - npm install
 
