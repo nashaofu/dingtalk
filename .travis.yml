@@ -22,7 +22,9 @@ deploy:
   provider: script
   script: npm run deploy
   skip_cleanup: true
+  on:
+    branches: release
 
 branches:
   only:
-    - release
+    - master
