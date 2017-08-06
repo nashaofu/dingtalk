@@ -173,7 +173,7 @@ exports = module.exports = class DingTalk {
       frame: false,
       show: false,
       backgroundColor: '#5a83b7',
-      icon: path.join(__dirname, '../icon/48x48.png'),
+      icon: path.join(__dirname, '../icon/32x32.png'),
       resizable: true,
       webPreferences: {
         preload: path.join(__dirname, './window/js/js.js')
@@ -219,14 +219,15 @@ exports = module.exports = class DingTalk {
       return
     }
     // 生成托盘图标及其菜单项实例
-    this.$tray = new Tray(path.join(__dirname, '../icon/48x48.png'))
+    this.$tray = new Tray(path.join(__dirname, '../icon/20x20.png'))
     const trayMenu = this.createTrayMenu()
     // 设置鼠标悬浮时的标题
     this.$tray.setToolTip('钉钉')
     // 绑定菜单
     this.$tray.setContextMenu(trayMenu)
-    // 双击时显示窗体(linux上无效)
-    this.$tray.on('double-click', () => {
+    // 由于双击时显示窗体在linux上无效
+    // 所以改为单击显示窗体
+    this.$tray.on('click', () => {
       if (this.$window) {
         this.$window.show()
       }

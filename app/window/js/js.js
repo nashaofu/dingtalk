@@ -9,6 +9,8 @@ class Injector {
 
   // 初始化
   initialize () {
+    // 只要loading结束
+    // 不论页面加载是否成功都会执行
     window.addEventListener('load', () => {
       this.injectCss()
       this.injectJs()
@@ -18,9 +20,9 @@ class Injector {
   // 注入CSS
   injectCss () {
     let filename = path.join(__dirname, '../css/css.css')
-    const style = document.createElement('style')
     fs.readFile(filename, (err, css) => {
       if (!err) {
+        const style = document.createElement('style')
         const styleContent = document.createTextNode(css.toString())
         style.appendChild(styleContent)
         document.head.appendChild(style)
@@ -63,12 +65,17 @@ class Injector {
     })
     // 把生成的按钮添加到DOM
     const $layoutContainer = document.querySelector('#layout-container')
-    document.body.insertBefore($ul, $layoutContainer.nextSibling)
+    if ($layoutContainer) {
+      document.body.insertBefore($ul, $layoutContainer.nextSibling)
+    } else {
+      document.body.appendChild($ul)
+    }
   }
 
   // 消息通知发送到主进程
   setBadgeCount () {
     let oldCount = 0
+    let notify = null
     setInterval(() => {
       let count = 0
       const $mainMenus = document.querySelector('#menu-pannel>.main-menus')
@@ -85,9 +92,16 @@ class Injector {
       if (oldCount !== count) {
         // 当有新消息来时才发送提示信息
         if (count !== 0 && oldCount < count) {
-          const notify = new Notification('钉钉', {
-            body: `您有${count}条消息未查收`
+          // 关闭上一条消息提示
+          if (notify && typeof notify.close === 'function') {
+            notify.close()
+          }
+          notify = new Notification('钉钉', {
+            body: `您有${count}条消息未查收`,
+            tag: 'notify'
           })
+
+          // linux上不支持点击事件
           notify.addEventListener('click', () => {
             ipcRenderer.send('window-show')
           })
