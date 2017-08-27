@@ -48,11 +48,15 @@ exports = module.exports = class DingTalk {
     this.onSetBadgeCount()
     // 点击消息通知后打开窗口
     this.onShow()
+    // 点击邮箱之后打开新窗口
+    this.onOpneEmail()
   }
 
   // 应用准备完毕时执行
   onReady () {
     this.app.on('ready', () => {
+      // 移除菜单项
+      Menu.setApplicationMenu(null)
       // 同时只能运行一个人实例
       const shouldQuit = this.app.makeSingleInstance(() => {
         if (this.$window) {
@@ -154,6 +158,40 @@ exports = module.exports = class DingTalk {
         this.$window.show()
         this.$window.focus()
       }
+    })
+  }
+
+  // 渲染进程通知打开邮件新窗体
+  onOpneEmail () {
+    let $emailWindow = null
+    // 渲染进程消息通知点击后打开窗体
+    this.ipcMain.on('open-email', (e, url) => {
+      if ($emailWindow) {
+        $emailWindow.show()
+        $emailWindow.focus()
+        return
+      }
+      $emailWindow = new BrowserWindow({
+        title: '钉邮',
+        width: 980,
+        height: 640,
+        minWidth: 720,
+        minHeight: 450,
+        resizable: true,
+        menu: false,
+        icon: path.join(__dirname, '../icon/32x32.png')
+      })
+      // 加载URL地址
+      $emailWindow.loadURL(url)
+      // 右键上下文菜单
+      $emailWindow.webContents.on('context-menu', (e, params) => {
+        e.preventDefault()
+        this.buildContextMenu(params, $emailWindow)
+      })
+      // 窗口关闭后手动让$window为null
+      $emailWindow.on('closed', () => {
+        $emailWindow = null
+      })
     })
   }
 
@@ -276,6 +314,13 @@ exports = module.exports = class DingTalk {
     if (!this.$window || !this.$window.webContents) {
       return
     }
+    this.$window.webContents.on('context-menu', (e, params) => {
+      e.preventDefault()
+      this.buildContextMenu(params, this.$window)
+    })
+  }
+
+  buildContextMenu (params, $win) {
     // 菜单执行命令
     const menuCmd = {
       copy: {
@@ -296,59 +341,56 @@ exports = module.exports = class DingTalk {
       }
     }
 
-    this.$window.webContents.on('context-menu', (e, params) => {
-      e.preventDefault()
-      const { selectionText, isEditable, editFlags } = params
+    const { selectionText, isEditable, editFlags } = params
 
-      // 生成菜单模板
-      const template = Object.keys(menuCmd)
-        .map(cmd => {
-          const { id, label } = menuCmd[cmd]
-          let enabled = false
-          let visible = false
-          const { canCopy, canCut, canPaste, canSelectAll } = editFlags
-          switch (cmd) {
-            case 'copy':
-              // 有文字选中就显示
-              visible = !!selectionText
-              enabled = canCopy
-              break
-            case 'cut':
-              // 可以编辑就显示项目
-              visible = !!isEditable
-              // 有文字选中才可用
-              enabled = visible && !!selectionText && canCut
-              break
-            case 'paste':
-              // 可以编辑就显示项目
-              visible = !!isEditable
-              enabled = visible && canPaste
-              break
-            case 'selectall':
-              // 可以编辑就显示项目
-              visible = !!isEditable
-              enabled = visible && canSelectAll
-              break
-            default:
-              break
-          }
-          return {
-            id,
-            label,
-            role: cmd,
-            enabled,
-            visible
-          }
-        })
-        .filter(item => item.visible)
-        .sort((a, b) => a.id > b.id)
+    // 生成菜单模板
+    const template = Object.keys(menuCmd)
+      .map(cmd => {
+        const { id, label } = menuCmd[cmd]
+        let enabled = false
+        let visible = false
+        const { canCopy, canCut, canPaste, canSelectAll } = editFlags
+        switch (cmd) {
+          case 'copy':
+            // 有文字选中就显示
+            visible = !!selectionText
+            enabled = canCopy
+            break
+          case 'cut':
+            // 可以编辑就显示项目
+            visible = !!isEditable
+            // 有文字选中才可用
+            enabled = visible && !!selectionText && canCut
+            break
+          case 'paste':
+            // 可以编辑就显示项目
+            visible = !!isEditable
+            enabled = visible && canPaste
+            break
+          case 'selectall':
+            // 可以编辑就显示项目
+            visible = !!isEditable
+            enabled = visible && canSelectAll
+            break
+          default:
+            break
+        }
+        return {
+          id,
+          label,
+          role: cmd,
+          enabled,
+          visible
+        }
+      })
+      .filter(item => item.visible)
+      .sort((a, b) => a.id > b.id)
 
-      // 用模板生成菜单
-      if (template.length) {
-        const menu = Menu.buildFromTemplate(template)
-        menu.popup(this.$window)
-      }
-    })
+    // 用模板生成菜单
+    if (template.length) {
+      const menu = Menu.buildFromTemplate(template)
+      menu.popup($win)
+    }
   }
 
   // 应用更新检查
