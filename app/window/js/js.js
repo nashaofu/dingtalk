@@ -43,6 +43,11 @@ class Injector {
      * 发送未读消息条数到主进程
      */
     this.setBadgeCount()
+
+    /**
+     * 打开邮箱界面
+     */
+    this.openEmail()
   }
 
   // 插入窗口操作按钮
@@ -110,6 +115,28 @@ class Injector {
         ipcRenderer.send('set-badge', count)
       }
     }, 2000)
+  }
+
+  openEmail () {
+    document.addEventListener('click', e => {
+      const $email = document.querySelector('#menu-pannel > ul.extra-options.ng-scope > div > org-email > li')
+      if (!$email) {
+        return
+      }
+      if ($email.contains(e.target)) {
+        // 停止事件冒泡和默认事件
+        e.stopPropagation()
+        e.preventDefault()
+        const reg = /^\d+_mailUrl/
+        const storage = localStorage
+        for (let key in storage) {
+          if (reg.test(key)) {
+            ipcRenderer.send('open-email', storage[key])
+            break
+          }
+        }
+      }
+    })
   }
 }
 
