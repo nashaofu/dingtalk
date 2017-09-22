@@ -50,6 +50,7 @@ exports = module.exports = class DingTalk {
     this.onShow()
     // 点击邮箱之后打开新窗口
     this.onOpneEmail()
+
   }
 
   // 应用准备完毕时执行
@@ -249,6 +250,10 @@ exports = module.exports = class DingTalk {
     this.openURLEvent()
     // 加载URL地址
     this.$window.loadURL('https://im.dingtalk.com/')
+
+    this.$window.webContents.on('did-finish-load', () => {
+      this.$window.webContents.send('load-finished')
+    })
   }
 
   // 创建任务栏图标

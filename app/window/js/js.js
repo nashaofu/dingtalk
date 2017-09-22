@@ -1,6 +1,8 @@
 const fs = require('fs')
 const path = require('path')
 const { ipcRenderer } = require('electron')
+const Store = require('electron-store')
+const store = new Store()
 
 class Injector {
   constructor () {
@@ -39,6 +41,12 @@ class Injector {
     this.createWindowOperation()
 
     /**
+     * 检测是否需要插入记住我选项
+     */
+    this.onLoadFinished()
+    this.onLoginTabChange()
+
+    /**
      * 检测是否有未读消息
      * 发送未读消息条数到主进程
      */
@@ -75,6 +83,63 @@ class Injector {
     } else {
       document.body.appendChild($ul)
     }
+  }
+
+  onLoadFinished () {
+    ipcRenderer.on('load-finished', (event, msg) => {
+      this.createRememberMe()
+    })
+  }
+
+  onLoginTabChange () {
+    const $tabItems = document.querySelectorAll('.login-tab .tab-item')
+    $tabItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        if (item.getAttribute('ui-sref') === '.passwordLogin') {
+          setTimeout((cb) => {
+            cb()
+          }, 100, this.createRememberMe);
+        }
+      })
+    })
+  }
+
+  // 插入记住我选项
+  createRememberMe () {
+    const $checkboxContainer = document.createElement('div')
+    $checkboxContainer.innerHTML = '<input name="rememberMe" type="checkbox">记住我'
+    const $submitBtn = document.querySelector('button[type="submit"]')
+    const $checkbox = $checkboxContainer.querySelector('input[name="rememberMe"]')
+    if ($submitBtn) {
+      $submitBtn.style.marginTop = 0
+      if (!document.querySelector('input[name="rememberMe"]')) {
+        $submitBtn.before($checkboxContainer)
+      }
+    }
+    const $pwdInput = document.querySelector("input.password")
+    const pwdOnInput = function(){
+      $pwdInput.oninput = function(){
+        store.set('pwd', $pwdInput.value)
+      }
+    }
+    let pwd = store.get('pwd')
+    if (pwd) {
+      $checkbox.checked = true
+      let $scope = angular.element($pwdInput).scope()
+      $scope.$apply(() => {
+        $scope.passwordLogin.password = $pwdInput.value = pwd
+        $scope.passwordLogin.submitable = true
+        $submitBtn.disabled=false
+      })
+      pwdOnInput()
+    }
+    $checkbox.addEventListener('click', () => {
+      if ($checkbox.checked) {
+        pwdOnInput()
+      }else {
+        store.delete('pwd')
+      }
+    })
   }
 
   // 消息通知发送到主进程
