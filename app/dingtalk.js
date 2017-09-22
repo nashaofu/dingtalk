@@ -50,7 +50,6 @@ exports = module.exports = class DingTalk {
     this.onShow()
     // 点击邮箱之后打开新窗口
     this.onOpneEmail()
-
   }
 
   // 应用准备完毕时执行

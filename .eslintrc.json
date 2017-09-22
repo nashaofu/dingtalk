@@ -10,6 +10,9 @@
   "parserOptions": {
     "sourceType": "module"
   },
+  "globals": {
+    "angular": true
+  },
   "rules": {
     "generator-star-spacing": "error",
     "no-debugger": "error",

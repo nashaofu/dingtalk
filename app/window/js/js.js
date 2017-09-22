@@ -98,7 +98,7 @@ class Injector {
         if (item.getAttribute('ui-sref') === '.passwordLogin') {
           setTimeout((cb) => {
             cb()
-          }, 100, this.createRememberMe);
+          }, 100, this.createRememberMe)
         }
       })
     })
@@ -116,9 +116,9 @@ class Injector {
         $submitBtn.before($checkboxContainer)
       }
     }
-    const $pwdInput = document.querySelector("input.password")
-    const pwdOnInput = function(){
-      $pwdInput.oninput = function(){
+    const $pwdInput = document.querySelector('input.password')
+    const pwdOnInput = function () {
+      $pwdInput.oninput = function () {
         store.set('pwd', $pwdInput.value)
       }
     }
@@ -129,14 +129,14 @@ class Injector {
       $scope.$apply(() => {
         $scope.passwordLogin.password = $pwdInput.value = pwd
         $scope.passwordLogin.submitable = true
-        $submitBtn.disabled=false
+        $submitBtn.disabled = false
       })
       pwdOnInput()
     }
     $checkbox.addEventListener('click', () => {
       if ($checkbox.checked) {
         pwdOnInput()
-      }else {
+      } else {
         store.delete('pwd')
       }
     })
