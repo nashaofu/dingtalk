@@ -179,7 +179,10 @@ exports = module.exports = class DingTalk {
         minHeight: 450,
         resizable: true,
         menu: false,
-        icon: path.join(__dirname, '../icon/32x32.png')
+        icon: path.join(__dirname, '../icon/32x32.png'),
+        webPreferences: {
+          preload: path.join(__dirname, './window/js/email.js')
+        }
       })
       // 加载URL地址
       $emailWindow.loadURL(url)
@@ -214,7 +217,7 @@ exports = module.exports = class DingTalk {
       icon: path.join(__dirname, '../icon/32x32.png'),
       resizable: true,
       webPreferences: {
-        preload: path.join(__dirname, './window/js/js.js')
+        preload: path.join(__dirname, './window/js/main.js')
       }
     })
 
@@ -249,7 +252,6 @@ exports = module.exports = class DingTalk {
     this.openURLEvent()
     // 加载URL地址
     this.$window.loadURL('https://im.dingtalk.com/')
-
     this.$window.webContents.on('did-finish-load', () => {
       this.$window.webContents.send('load-finished')
     })

@@ -1,3 +1,7 @@
+body {
+  border: 1px solid rgba(90, 131, 183, 0.3);
+}
+
 #layout-main {
   width: 100% !important;
   height: 100% !important;

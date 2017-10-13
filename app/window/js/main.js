@@ -85,12 +85,14 @@ class Injector {
     }
   }
 
+  // 页面渲染完成事件
   onLoadFinished () {
     ipcRenderer.on('load-finished', (event, msg) => {
       this.createRememberMe()
     })
   }
 
+  // 登录页面面板切换
   onLoginTabChange () {
     const $tabItems = document.querySelectorAll('.login-tab .tab-item')
     $tabItems.forEach((item) => {
@@ -182,6 +184,7 @@ class Injector {
     }, 2000)
   }
 
+  // 打开邮箱
   openEmail () {
     document.addEventListener('click', e => {
       const $email = document.querySelector('#menu-pannel > ul.extra-options.ng-scope > div > org-email > li')
