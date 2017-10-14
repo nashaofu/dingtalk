@@ -266,7 +266,6 @@ class Injector {
       if (index !== -1) {
         files[index] = file
       }
-      console.log(file)
       new Notification('钉钉', {
         body: `${file.name}${status[file.state]}`,
         tag: 'download-notify'

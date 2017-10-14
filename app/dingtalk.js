@@ -188,7 +188,6 @@ exports = module.exports = class DingTalk {
       })
       // 加载URL地址
       $emailWindow.loadURL(url)
-      $emailWindow.webContents.openDevTools()
       // 右键上下文菜单
       $emailWindow.webContents.on('context-menu', (e, params) => {
         e.preventDefault()
@@ -258,7 +257,6 @@ exports = module.exports = class DingTalk {
     this.openURLEvent()
     // 加载URL地址
     this.$window.loadURL('https://im.dingtalk.com/')
-    this.$window.webContents.openDevTools()
     this.$window.webContents.on('did-finish-load', () => {
       this.$window.webContents.send('load-finished')
     })

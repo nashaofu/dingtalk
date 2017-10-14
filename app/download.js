@@ -32,18 +32,6 @@ module.exports = mainWindow => {
       if (!mainWindow.isDestroyed()) {
         mainWindow.setProgressBar(-1)
       }
-      // switch (state) {
-      //   case 'completed':
-      //     console.log('文件下载完成')
-      //     break
-      //   case 'cancelled':
-      //     console.log('文件下载被取消')
-      //     break
-      //   case 'interrupted':
-      //   default:
-      //     dialog.showErrorBox('下载失败', `${item.getFilename() } 下载失败`)
-      //     break
-      // }
     })
   })
 }
