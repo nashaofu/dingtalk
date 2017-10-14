@@ -10,6 +10,8 @@ const {
   dialog
 } = require('electron')
 
+const download = require('./download')
+
 exports = module.exports = class DingTalk {
   // 构造函数
   constructor () {
@@ -186,6 +188,7 @@ exports = module.exports = class DingTalk {
       })
       // 加载URL地址
       $emailWindow.loadURL(url)
+      $emailWindow.webContents.openDevTools()
       // 右键上下文菜单
       $emailWindow.webContents.on('context-menu', (e, params) => {
         e.preventDefault()
@@ -227,6 +230,9 @@ exports = module.exports = class DingTalk {
       this.$window.show()
       this.uploader()
       this.hotUpdate()
+
+      // 文件下载监听
+      download(this.$window)
     })
 
     // 窗体关闭事件处理
@@ -252,6 +258,7 @@ exports = module.exports = class DingTalk {
     this.openURLEvent()
     // 加载URL地址
     this.$window.loadURL('https://im.dingtalk.com/')
+    this.$window.webContents.openDevTools()
     this.$window.webContents.on('did-finish-load', () => {
       this.$window.webContents.send('load-finished')
     })

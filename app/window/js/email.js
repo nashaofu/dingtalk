@@ -1,3 +1,4 @@
+const { webFrame } = require('electron')
 class Injector {
   constructor () {
     this.initialize()
@@ -20,8 +21,16 @@ class Injector {
 
   // 注入JS
   injectJs () {
+    this.setZoomLevel()
     // 代理重写console.error
     this.proxyConsoleError()
+  }
+
+  setZoomLevel () {
+    // 设置缩放限制
+    webFrame.setZoomFactor(100)
+    webFrame.setZoomLevel(0)
+    webFrame.setVisualZoomLevelLimits(1, 1)
   }
 
   proxyConsoleError () {
