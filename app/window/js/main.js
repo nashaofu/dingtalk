@@ -1,6 +1,12 @@
 const fs = require('fs')
 const path = require('path')
-const { ipcRenderer, webFrame } = require('electron')
+const {
+  ipcRenderer,
+  webFrame,
+  desktopCapturer,
+  clipboard,
+  screen
+} = require('electron')
 const Store = require('electron-store')
 const store = new Store()
 
@@ -62,6 +68,11 @@ class Injector {
      * 文件下载监听
      */
     this.onDownload()
+
+    /**
+     * 屏幕截图
+     */
+    this.onShortcutCapture()
   }
 
   // 设置缩放等级
@@ -324,6 +335,35 @@ class Injector {
         }
       }
     }, 1000)
+  }
+
+  // 屏幕截图处理
+  onShortcutCapture () {
+    ipcRenderer.on('shortcut-capture', () => {
+      const display = screen.getAllDisplays()
+      display.forEach((item, i) => {
+        desktopCapturer.getSources({
+          types: ['screen'],
+          thumbnailSize: item.size
+        }, (error, sources) => {
+          if (!error) {
+            console.log(sources)
+            // let strWindowFeatures = {
+            //   width: item.size.width,
+            //   height: item.size.height,
+            //   menubar: 'no',
+            //   location: 'no',
+            //   resizable: 'no',
+            //   scrollbars: 'no',
+            //   status: 'no'
+            // }
+            // strWindowFeatures = Object.keys(strWindowFeatures).map(key => `${key}=${strWindowFeatures[key]}`)
+            // window.open('https://www.bing.com', strWindowFeatures.join(','))
+            clipboard.writeImage(sources[i].thumbnail)
+          }
+        })
+      })
+    })
   }
 }
 
