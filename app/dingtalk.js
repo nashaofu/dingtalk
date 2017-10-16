@@ -228,7 +228,9 @@ exports = module.exports = class DingTalk {
     this.$window.once('ready-to-show', () => {
       this.$window.show()
       this.uploader()
-      this.hotUpdate()
+
+      // 服务器不可用，暂时注释掉热更新接口
+      // this.hotUpdate()
 
       // 文件下载监听
       download(this.$window)
