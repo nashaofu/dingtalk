@@ -7,7 +7,7 @@ const {
 
 // 保证函数只执行一次
 let isRuned = false
-let $windows = []
+const $windows = []
 module.exports = mainWindow => {
   if (isRuned) {
     return
@@ -17,7 +17,7 @@ module.exports = mainWindow => {
     mainWindow.webContents.send('shortcut-capture', 1)
   })
   ipcMain.on('shortcut-capture', (e, params) => {
-    const { display, source } = params
+    const { display } = params
     const $win = new BrowserWindow({
       title: '截图',
       width: display.size.width,
@@ -34,17 +34,19 @@ module.exports = mainWindow => {
     })
     $windows.push($win)
     // 有一个窗口关闭就关闭所有的窗口
-    $win.on('close', () => {
-      $windows.forEach(item => {
+    ipcMain.on('cancel-shortcut-capture', () => {
+      $windows.forEach((item, i) => {
         if (item) {
           item.close()
         }
-        item = null
+        $windows.splice(i, 1)
       })
-      $windows = []
     })
     $win.loadURL(path.resolve(__dirname, './window/shortcut-capture.html'))
     $win.webContents.openDevTools()
-    // $win.webContents.executeJavaScript(`console.log(${params})`)
+    $win.webContents.on('did-finish-load', () => {
+      $win.webContents.executeJavaScript(`window.params = ${JSON.stringify(params)}`)
+      $win.webContents.send('did-finish-load')
+    })
   })
 }

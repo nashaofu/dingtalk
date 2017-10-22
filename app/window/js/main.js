@@ -347,14 +347,13 @@ class Injector {
         thumbnailSize: displays[0].size
       }, (error, sources) => {
         if (!error) {
-          console.log(displays)
-          console.log(JSON.stringify(displays, null, 2))
-          sources.forEach((item, i) => {
-            const source = cloneDeep(item)
-            source.thumbnail = item.thumbnail.toDataURL()
-            const display = cloneDeep(displays[i])
-            ipcRenderer.send('shortcut-capture', { display, source })
-          })
+          // sources.forEach((item, i) => {
+          const item = sources[0]
+          const source = cloneDeep(item)
+          source.thumbnail = item.thumbnail.toDataURL()
+          const display = cloneDeep(displays[0])
+          ipcRenderer.send('shortcut-capture', { display, source })
+          // })
           clipboard.writeImage(sources[1].thumbnail)
         }
       })
