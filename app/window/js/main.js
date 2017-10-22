@@ -7,6 +7,7 @@ const {
   clipboard,
   screen
 } = require('electron')
+const { cloneDeep } = require('lodash')
 const Store = require('electron-store')
 const store = new Store()
 
@@ -340,28 +341,22 @@ class Injector {
   // 屏幕截图处理
   onShortcutCapture () {
     ipcRenderer.on('shortcut-capture', () => {
-      const display = screen.getAllDisplays()
-      display.forEach((item, i) => {
-        desktopCapturer.getSources({
-          types: ['screen'],
-          thumbnailSize: item.size
-        }, (error, sources) => {
-          if (!error) {
-            console.log(sources)
-            // let strWindowFeatures = {
-            //   width: item.size.width,
-            //   height: item.size.height,
-            //   menubar: 'no',
-            //   location: 'no',
-            //   resizable: 'no',
-            //   scrollbars: 'no',
-            //   status: 'no'
-            // }
-            // strWindowFeatures = Object.keys(strWindowFeatures).map(key => `${key}=${strWindowFeatures[key]}`)
-            // window.open('https://www.bing.com', strWindowFeatures.join(','))
-            clipboard.writeImage(sources[i].thumbnail)
-          }
-        })
+      const displays = screen.getAllDisplays()
+      desktopCapturer.getSources({
+        types: ['screen'],
+        thumbnailSize: displays[0].size
+      }, (error, sources) => {
+        if (!error) {
+          console.log(displays)
+          console.log(JSON.stringify(displays, null, 2))
+          sources.forEach((item, i) => {
+            const source = cloneDeep(item)
+            source.thumbnail = item.thumbnail.toDataURL()
+            const display = cloneDeep(displays[i])
+            ipcRenderer.send('shortcut-capture', { display, source })
+          })
+          clipboard.writeImage(sources[1].thumbnail)
+        }
       })
     })
   }

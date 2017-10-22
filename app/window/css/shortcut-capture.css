@@ -1,0 +1,8 @@
+body {
+  -webkit-app-region: no-drag;
+}
+
+canvas {
+  width: 100%;
+  height: 1000%;
+}
