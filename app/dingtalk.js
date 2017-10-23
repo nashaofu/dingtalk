@@ -290,26 +290,37 @@ exports = module.exports = class DingTalk {
 
   // 创建任务栏图标菜单列表
   createTrayMenu () {
-    return Menu.buildFromTemplate([{
-      label: '显示窗口',
-      click: () => {
-        if (this.$window) {
-          this.$window.show()
+    return Menu.buildFromTemplate([
+      {
+        label: '显示窗口',
+        click: () => {
+          if (this.$window) {
+            this.$window.show()
+          }
+        }
+      },
+      {
+        label: '屏幕截图',
+        click: () => {
+          if (this.$window) {
+            this.$window.webContents.send('shortcut-capture')
+          }
+        }
+      },
+      {
+        label: '退出',
+        click: () => {
+          // 关闭窗口
+          this.isClose = true
+          if (this.$tray) {
+            this.$tray.destroy()
+          }
+          if (this.$window) {
+            this.$window.close()
+          }
         }
       }
-    }, {
-      label: '退出',
-      click: () => {
-        // 关闭窗口
-        this.isClose = true
-        if (this.$tray) {
-          this.$tray.destroy()
-        }
-        if (this.$window) {
-          this.$window.close()
-        }
-      }
-    }])
+    ])
   }
 
   // 打开新链接窗口

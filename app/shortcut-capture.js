@@ -14,7 +14,7 @@ module.exports = mainWindow => {
   }
   isRuned = true
   globalShortcut.register('ctrl+alt+a', function () {
-    mainWindow.webContents.send('shortcut-capture', 1)
+    mainWindow.webContents.send('shortcut-capture')
   })
   ipcMain.on('shortcut-capture', (e, sources) => {
     while ($windows.length) {
