@@ -41,9 +41,12 @@ class Injector {
     }
     let isDraw = false
     window.addEventListener('mousedown', e => {
-      isDraw = true
-      start.x = end.x = e.clientX
-      start.y = end.y = e.clientY
+      // 鼠标左键
+      if (e.button === 0) {
+        isDraw = true
+        start.x = end.x = e.clientX
+        start.y = end.y = e.clientY
+      }
     })
     window.addEventListener('mousemove', e => {
       if (!isDraw) {

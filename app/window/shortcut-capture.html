@@ -4,7 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>截图</title>
+  <link href="./css/shortcut-capture.css" rel="stylsheet">
   <style>
+    html,
+    body {
+      background-color: transparent;
+    }
+
     body {
       -webkit-app-region: no-drag;
       margin: 0;
@@ -34,16 +40,21 @@
       padding: 0;
     }
 
+    .mask {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
     canvas {
       position: absolute;
-      border: 1px dashed #000;
+      border: 2px dashed #333;
+      cursor: move;
     }
   </style>
 </head>
 <body>
   <img id="capture" class="capture">
-  <canvas id="canvas"></canvas>
-  <div class="mask"></div>
+  <div class="mask" title="按住鼠标左键选择截图区域，鼠标右键或ESC退出截屏"></div>
+  <canvas id="canvas" width="0" height="0"></canvas>
   <script src="./js/shortcut-capture.js"></script>
 </body>
 </html>
