@@ -262,7 +262,6 @@ exports = module.exports = class DingTalk {
     this.openURLEvent()
     // 加载URL地址
     this.$window.loadURL('https://im.dingtalk.com/')
-    this.$window.webContents.openDevTools()
     this.$window.webContents.on('did-finish-load', () => {
       this.$window.webContents.send('load-finished')
     })

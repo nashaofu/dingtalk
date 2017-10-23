@@ -1,4 +1,9 @@
-const { ipcRenderer, webFrame } = require('electron')
+const {
+  ipcRenderer,
+  webFrame,
+  clipboard,
+  nativeImage
+} = require('electron')
 
 class Injector {
   constructor () {
@@ -17,6 +22,8 @@ class Injector {
     this.setZoomLevel()
     this.shortcutCapture()
     this.cancel()
+    this.cancelDraw()
+    this.checkDraw()
   }
 
   setZoomLevel () {
@@ -31,12 +38,13 @@ class Injector {
     this.ctx = this.$canvas.getContext('2d')
     this.$canvas.width = 0
     this.$canvas.height = 0
-    this.capture = document.querySelector('#capture')
-    this.capture.addEventListener('load', () => {
+    this.$capture = document.querySelector('#capture')
+    this.$capture.addEventListener('load', () => {
       this.onDrawImage()
     })
 
-    this.capture.src = window.params.source.thumbnail
+    this.$capture.src = window.source.thumbnail
+    this.$captureToolbar = document.querySelector('#capture-toolbar')
   }
 
   onDrawImage () {
@@ -92,17 +100,71 @@ class Injector {
     } else {
       style.right = window.innerWidth - start.x + 'px'
     }
-    style = Object.keys(style).map(key => `${key}:${style[key]}`).join(';')
-    this.$canvas.setAttribute('style', style)
-    this.ctx.clearRect(0, 0, width, height)
-    this.ctx.drawImage(this.capture, start.x < end.x ? start.x : end.x, start.y < end.y ? start.y : end.y, width, height, 0, 0, width, height)
+    ['left', 'right', 'top', 'bottom'].forEach(key => {
+      this.$canvas.style[key] = ''
+      this.$captureToolbar.style[key] = ''
+    })
+
+    Object.keys(style).forEach(key => {
+      this.$canvas.style[key] = style[key]
+    })
+    const toolbarWidth = this.$captureToolbar.offsetWidth
+    const toolbarHeight = this.$captureToolbar.offsetHeight
+    const windowWidth = window.innerWidth
+    const windowHeight = window.innerHeight
+    this.ctx.clearRect(0, 0, windowWidth, windowHeight)
+
+    if (width < 1 || height < 1) {
+      this.$captureToolbar.style.visibility = 'hidden'
+      return
+    }
+    this.$captureToolbar.style.visibility = 'visible'
+    const x = start.x < end.x ? start.x : end.x
+    const y = start.y < end.y ? start.y : end.y
+    let left = x + width - toolbarWidth
+    let top = y + height + 7
+    if (left < 0) {
+      left = 0
+    }
+    this.$captureToolbar.style.left = left + 'px'
+    if (top + toolbarHeight > windowHeight) {
+      top = y - toolbarHeight
+    }
+    this.$captureToolbar.style.top = top + 'px'
+    this.ctx.drawImage(this.$capture, x, y, width, height, 0, 0, width, height)
   }
 
   cancel () {
     window.addEventListener('keydown', e => {
       if (e.keyCode === 27) {
+        this.drawImage({ x: 0, y: 0 }, { x: 0, y: 0 })
         ipcRenderer.send('cancel-shortcut-capture')
       }
+    })
+  }
+
+  cancelDraw () {
+    const $cancel = document.querySelector('#cancel')
+    $cancel.addEventListener('mousedown', e => {
+      e.stopPropagation()
+    })
+    $cancel.addEventListener('click', e => {
+      e.stopPropagation()
+      this.drawImage({ x: 0, y: 0 }, { x: 0, y: 0 })
+    })
+  }
+
+  checkDraw () {
+    const $check = document.querySelector('#check')
+    $check.addEventListener('mousedown', e => {
+      e.stopPropagation()
+    })
+    $check.addEventListener('click', e => {
+      e.stopPropagation()
+      const dataURL = this.ctx.canvas.toDataURL('image/png')
+      clipboard.writeImage(nativeImage.createFromDataURL(dataURL))
+      this.drawImage({ x: 0, y: 0 }, { x: 0, y: 0 })
+      ipcRenderer.send('cancel-shortcut-capture')
     })
   }
 }

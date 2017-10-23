@@ -4,10 +4,8 @@ const {
   ipcRenderer,
   webFrame,
   desktopCapturer,
-  clipboard,
   screen
 } = require('electron')
-const { cloneDeep } = require('lodash')
 const Store = require('electron-store')
 const store = new Store()
 
@@ -342,24 +340,27 @@ class Injector {
   onShortcutCapture () {
     ipcRenderer.on('shortcut-capture', () => {
       const displays = screen.getAllDisplays()
-      desktopCapturer.getSources({
-        types: ['screen'],
-        thumbnailSize: displays[0].size
-      }, (error, sources) => {
-        if (!error) {
-          const id = parseInt(`${new Date().getTime()}${Math.random() * 10000}`)
-          sources.forEach((item, i) => {
-            const source = cloneDeep(item)
-            source.thumbnail = item.thumbnail.toDataURL()
-            const display = cloneDeep(displays[i])
-            ipcRenderer.send('shortcut-capture', {
-              id,
-              display,
-              source
-            })
+      const getDesktopCapturer = displays.map((display, i) => {
+        return new Promise((resolve, reject) => {
+          desktopCapturer.getSources({
+            types: ['screen'],
+            thumbnailSize: display.size
+          }, (error, sources) => {
+            if (!error) {
+              return resolve({
+                display,
+                thumbnail: sources[i].thumbnail.toDataURL()
+              })
+            }
+            return reject(error)
           })
-        }
+        })
       })
+      Promise.all(getDesktopCapturer)
+        .then(sources => {
+          ipcRenderer.send('shortcut-capture', sources)
+        })
+        .catch(error => console.log(error))
     })
   }
 }

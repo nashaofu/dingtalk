@@ -6,9 +6,21 @@
   <title>截图</title>
   <link href="./css/shortcut-capture.css" rel="stylsheet">
   <style>
+    @font-face {
+      font-family: "dingtalk-font";
+      src: url('./fonts/iconfont.eot');
+      /* IE9*/
+      src: url('./fonts/iconfont.eot') format('embedded-opentype'), /* IE6-IE8 */
+      url('./fonts/iconfont.woff') format('woff'), /* chrome, firefox */
+      url('./fonts/iconfont.eot.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+      url('./fonts/iconfont.eot.svg#iconfont') format('svg');
+      /* iOS 4.1- */
+    }
+
     html,
     body {
       background-color: transparent;
+      user-select: none;
     }
 
     body {
@@ -40,6 +52,10 @@
       padding: 0;
     }
 
+    img {
+      background-color: transparent;
+    }
+
     .mask {
       background-color: rgba(255, 255, 255, 0.2);
     }
@@ -47,7 +63,65 @@
     canvas {
       position: absolute;
       border: 2px dashed #333;
-      cursor: move;
+    }
+
+    .capture-toolbar {
+      position: absolute;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      visibility: hidden;
+    }
+
+    canvas,
+    .capture-toolbar {
+      transform: translateZ(0);
+    }
+
+    .capture-toolbar button {
+      background-color: #fff;
+      border: none;
+      outline: none;
+      float: left;
+      width: 20px;
+      height: 20px;
+      line-height: 22px;
+      text-align: center;
+      font-size: 14px;
+      color: #08f;
+      padding: 0;
+      margin: 0;
+      cursor: default;
+      border-right: 1px solid #ccc;
+    }
+
+    .capture-toolbar button:last-child {
+      border-right: none;
+    }
+
+    .capture-toolbar button:hover {
+      background-color: #f0f0f0;
+    }
+
+    [class^="capture-toolbar-icon-"],
+    [class*=" capture-toolbar-icon-"] {
+      font-family: "dingtalk-font" !important;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+      vertical-align: baseline;
+      display: inline-block;
+      /* Better Font Rendering =========== */
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .capture-toolbar-icon-check:before {
+      content: "\e602";
+    }
+
+    .capture-toolbar-icon-cancel:before {
+      content: "\e778";
     }
   </style>
 </head>
@@ -55,6 +129,14 @@
   <img id="capture" class="capture">
   <div class="mask" title="按住鼠标左键选择截图区域，鼠标右键或ESC退出截屏"></div>
   <canvas id="canvas" width="0" height="0"></canvas>
+  <div id="capture-toolbar" class="capture-toolbar">
+    <button id="cancel" title="取消">
+      <span class="capture-toolbar-icon-cancel"></span>
+    </button>
+    <button id="check" title="确定">
+      <span class="capture-toolbar-icon-check"></span>
+    </button>
+  </div>
   <script src="./js/shortcut-capture.js"></script>
 </body>
 </html>
