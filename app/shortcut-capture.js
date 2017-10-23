@@ -22,8 +22,9 @@ module.exports = mainWindow => {
     if (captureId && captureId !== id) {
       while ($windows.length) {
         const $winItem = $windows.pop()
-        $winItem.close()
+        $winItem.destroy()
       }
+      captureId = null
     }
     const $win = new BrowserWindow({
       title: '截图',
@@ -48,8 +49,12 @@ module.exports = mainWindow => {
     ipcMain.on('cancel-shortcut-capture', () => {
       while ($windows.length) {
         const $winItem = $windows.pop()
-        $winItem.close()
+        $winItem.destroy()
       }
+    })
+    // 只能通过cancel-shortcut-capture的方式关闭窗口
+    $win.on('close', e => {
+      e.preventDefault()
     })
     $win.loadURL(path.resolve(__dirname, './window/shortcut-capture.html'))
     $win.webContents.openDevTools()

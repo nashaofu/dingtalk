@@ -1,4 +1,5 @@
-const { ipcRenderer } = require('electron')
+const { ipcRenderer, webFrame } = require('electron')
+
 class Injector {
   constructor () {
     this.initialize()
@@ -13,8 +14,16 @@ class Injector {
   }
 
   injectJs () {
+    this.setZoomLevel()
     this.shortcutCapture()
     this.cancel()
+  }
+
+  setZoomLevel () {
+    // 设置缩放限制
+    webFrame.setZoomFactor(100)
+    webFrame.setZoomLevel(0)
+    webFrame.setVisualZoomLevelLimits(1, 1)
   }
 
   shortcutCapture () {
@@ -85,6 +94,7 @@ class Injector {
     }
     style = Object.keys(style).map(key => `${key}:${style[key]}`).join(';')
     this.$canvas.setAttribute('style', style)
+    this.ctx.clearRect(0, 0, width, height)
     this.ctx.drawImage(this.capture, start.x < end.x ? start.x : end.x, start.y < end.y ? start.y : end.y, width, height, 0, 0, width, height)
   }
 
