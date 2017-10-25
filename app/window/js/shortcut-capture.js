@@ -1,8 +1,6 @@
 const {
   ipcRenderer,
-  webFrame,
-  clipboard,
-  nativeImage
+  webFrame
 } = require('electron')
 
 class Injector {
@@ -118,16 +116,17 @@ class Injector {
       this.$canvas.width = 0
       this.$canvas.height = 0
       this.$canvas.style.visibility = 'hidden'
-      if (!isShowToobar) {
-        this.$captureToolbar.style.visibility = 'hidden'
-      } else {
-        this.$captureToolbar.style.visibility = 'visible'
-      }
+      this.$captureToolbar.style.visibility = 'hidden'
       return
     } else {
       this.$canvas.width = width
       this.$canvas.height = height
       this.$canvas.style.visibility = 'visible'
+      if (!isShowToobar) {
+        this.$captureToolbar.style.visibility = 'hidden'
+      } else {
+        this.$captureToolbar.style.visibility = 'visible'
+      }
     }
     const x = start.x < end.x ? start.x : end.x
     const y = start.y < end.y ? start.y : end.y
@@ -172,9 +171,8 @@ class Injector {
     $check.addEventListener('click', e => {
       e.stopPropagation()
       const dataURL = this.ctx.canvas.toDataURL('image/png')
-      clipboard.writeImage(nativeImage.createFromDataURL(dataURL))
+      ipcRenderer.send('set-shortcut-capture', dataURL)
       this.drawImage({ x: 0, y: 0 }, { x: 0, y: 0 })
-      ipcRenderer.send('cancel-shortcut-capture')
     })
   }
 }

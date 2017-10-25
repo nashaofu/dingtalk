@@ -1,7 +1,9 @@
 const {
   globalShortcut,
   ipcMain,
-  BrowserWindow
+  BrowserWindow,
+  clipboard,
+  nativeImage
 } = require('electron')
 
 // 保证函数只执行一次
@@ -25,10 +27,13 @@ module.exports = mainWindow => {
     sources.forEach(source => {
       createWindow(source)
     })
-    isClose = false
   })
   // 有一个窗口关闭就关闭所有的窗口
   ipcMain.on('cancel-shortcut-capture', closeWindow)
+  ipcMain.on('set-shortcut-capture', (e, dataURL) => {
+    clipboard.writeImage(nativeImage.createFromDataURL(dataURL))
+    closeWindow()
+  })
 }
 
 function createWindow (source) {
@@ -46,18 +51,11 @@ function createWindow (source) {
     alwaysOnTop: true,
     fullscreen: true,
     skipTaskbar: true,
-    closable: false,
+    closable: true,
     minimizable: false,
     maximizable: false
   })
-
-  $win.setBounds({
-    width: display.size.width,
-    height: display.size.height,
-    x: display.bounds.x,
-    y: display.bounds.y
-  })
-
+  setFullScreen($win, display)
   // 只能通过cancel-shortcut-capture的方式关闭窗口
   $win.on('close', e => {
     if (!isClose) {
@@ -68,12 +66,7 @@ function createWindow (source) {
   // 并检测是否有版本更新
   $win.once('ready-to-show', () => {
     // 重新调整窗口位置和大小
-    $win.setBounds({
-      width: display.size.width,
-      height: display.size.height,
-      x: display.bounds.x,
-      y: display.bounds.y
-    })
+    setFullScreen($win, display)
     $win.show()
     $win.focus()
   })
@@ -83,9 +76,18 @@ function createWindow (source) {
     $win.webContents.send('dom-ready')
     $win.focus()
   })
-  $win.webContents.openDevTools()
   $win.loadURL(`file://${__dirname}/window/shortcut-capture.html`)
   $windows.push($win)
+}
+
+function setFullScreen ($win, display) {
+  $win.setBounds({
+    width: display.size.width,
+    height: display.size.height,
+    x: display.bounds.x,
+    y: display.bounds.y
+  })
+  $win.setFullScreen(true)
 }
 
 function closeWindow () {
@@ -94,4 +96,5 @@ function closeWindow () {
     const $winItem = $windows.pop()
     $winItem.close()
   }
+  isClose = false
 }

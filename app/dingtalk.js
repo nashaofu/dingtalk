@@ -16,8 +16,6 @@ const shortcutCapture = require('./shortcut-capture')
 exports = module.exports = class DingTalk {
   // 构造函数
   constructor () {
-    this.app = app
-    this.ipcMain = ipcMain
     // 应用窗体
     this.$window = null
     // 任务栏图标
@@ -37,7 +35,6 @@ exports = module.exports = class DingTalk {
     // 主进程事件
     this.onReady()
     this.onActivate()
-    this.onQuit()
 
     // ===============================
     // 渲染进程事件
@@ -57,11 +54,11 @@ exports = module.exports = class DingTalk {
 
   // 应用准备完毕时执行
   onReady () {
-    this.app.on('ready', () => {
+    app.on('ready', () => {
       // 移除菜单项
       Menu.setApplicationMenu(null)
       // 同时只能运行一个人实例
-      const shouldQuit = this.app.makeSingleInstance(() => {
+      const shouldQuit = app.makeSingleInstance(() => {
         if (this.$window) {
           this.$window.show()
           this.$window.focus()
@@ -69,7 +66,7 @@ exports = module.exports = class DingTalk {
         return true
       })
       if (shouldQuit) {
-        this.app.quit()
+        app.quit()
         return
       }
       // 创建窗体
@@ -81,36 +78,15 @@ exports = module.exports = class DingTalk {
 
   // 应用被重新启动时时间处理
   onActivate () {
-    this.app.on('activate', () => {
+    app.on('activate', () => {
       this.createWindow()
       this.createTray()
     })
   }
 
-  // 当应用的所有窗口关闭时
-  onQuit () {
-    this.app.on('window-all-closed', () => {
-      // 销毁任务栏图标
-      if (this.$tray) {
-        this.$tray.destroy()
-        this.$tray = null
-      }
-      // 销毁窗体
-      if (this.$window) {
-        this.$window.destroy()
-        this.$window = null
-      }
-      // Mac应用特殊处理
-      // 保证一定清理掉程序
-      if (process.platform !== 'darwin') {
-        this.app.quit()
-      }
-    })
-  }
-
   // 最小化(页面点击)
   onMinimize () {
-    this.ipcMain.on('window-minimize', () => {
+    ipcMain.on('window-minimize', () => {
       if (this.$window) {
         this.$window.minimize()
       }
@@ -119,7 +95,7 @@ exports = module.exports = class DingTalk {
 
   // 最大化(页面点击)
   onMaximization () {
-    this.ipcMain.on('window-maximization', () => {
+    ipcMain.on('window-maximization', () => {
       if (this.$window.isMaximized()) {
         if (this.$window) {
           this.$window.unmaximize()
@@ -135,7 +111,7 @@ exports = module.exports = class DingTalk {
   // 关闭(页面点击)
   onClose () {
     // 渲染进程通信监听
-    this.ipcMain.on('window-close', () => {
+    ipcMain.on('window-close', () => {
       if (this.$window) {
         this.$window.hide()
       }
@@ -145,9 +121,9 @@ exports = module.exports = class DingTalk {
   // 设置应用在badge上的值(linux、macos)
   onSetBadgeCount () {
     // 渲染进程通信监听
-    this.ipcMain.on('set-badge', (e, count) => {
-      if (this.app) {
-        this.app.setBadgeCount(count)
+    ipcMain.on('set-badge', (e, count) => {
+      if (app) {
+        app.setBadgeCount(count)
       }
     })
   }
@@ -155,7 +131,7 @@ exports = module.exports = class DingTalk {
   // 显示窗体
   onShow () {
     // 渲染进程消息通知点击后打开窗体
-    this.ipcMain.on('window-show', () => {
+    ipcMain.on('window-show', () => {
       if (this.$window) {
         // 显示窗口并激活
         this.$window.show()
@@ -168,7 +144,7 @@ exports = module.exports = class DingTalk {
   onOpneEmail () {
     let $emailWindow = null
     // 渲染进程消息通知点击后打开窗体
-    this.ipcMain.on('open-email', (e, url) => {
+    ipcMain.on('open-email', (e, url) => {
       if ($emailWindow) {
         $emailWindow.show()
         $emailWindow.focus()
@@ -286,6 +262,11 @@ exports = module.exports = class DingTalk {
         this.$window.show()
       }
     })
+    this.$tray.on('double-click', () => {
+      if (this.$window) {
+        this.$window.show()
+      }
+    })
   }
 
   // 创建任务栏图标菜单列表
@@ -312,17 +293,17 @@ exports = module.exports = class DingTalk {
         click: () => {
           // 关闭窗口
           this.isClose = true
-          if (this.$tray) {
-            this.$tray.destroy()
-          }
+          this.$tray.destroy()
+          this.$tray = null
           if (this.$window) {
             this.$window.close()
+            this.$window = null
           }
           BrowserWindow.getAllWindows()
             .forEach(item => {
-              item.close()
+              item.destroy()
             })
-          this.app.quit()
+          app.quit()
         }
       }
     ])
@@ -431,7 +412,7 @@ exports = module.exports = class DingTalk {
       .then(({ data }) => {
         // 检查版本号
         // 如果本地版本小于远程版本则更新
-        if (data.tag_name.slice(1) > this.app.getVersion()) {
+        if (data.tag_name.slice(1) > app.getVersion()) {
           dialog.showMessageBox(this.$window, {
             type: 'question',
             title: '版本更新',
