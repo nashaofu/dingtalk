@@ -87,8 +87,6 @@ class Injector {
   drawImage (start, end, isShowToobar) {
     const width = Math.abs(end.x - start.x)
     const height = Math.abs(end.y - start.y)
-    this.$canvas.width = width
-    this.$canvas.height = height
     let style = {}
     if (end.y > start.y) {
       style.top = start.y + 'px'
@@ -112,13 +110,24 @@ class Injector {
     const toolbarHeight = this.$captureToolbar.offsetHeight
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
+
+    // 清空绘图区域
     this.ctx.clearRect(0, 0, windowWidth, windowHeight)
 
-    if (!isShowToobar) {
-      this.$captureToolbar.style.visibility = 'hidden'
+    if (width <= 2 || height <= 2) {
+      this.$canvas.width = 0
+      this.$canvas.height = 0
+      this.$canvas.style.visibility = 'hidden'
+      if (!isShowToobar) {
+        this.$captureToolbar.style.visibility = 'hidden'
+      } else {
+        this.$captureToolbar.style.visibility = 'visible'
+      }
       return
     } else {
-      this.$captureToolbar.style.visibility = 'visible'
+      this.$canvas.width = width
+      this.$canvas.height = height
+      this.$canvas.style.visibility = 'visible'
     }
     const x = start.x < end.x ? start.x : end.x
     const y = start.y < end.y ? start.y : end.y
