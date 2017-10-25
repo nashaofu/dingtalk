@@ -318,6 +318,11 @@ exports = module.exports = class DingTalk {
           if (this.$window) {
             this.$window.close()
           }
+          BrowserWindow.getAllWindows()
+            .forEach(item => {
+              item.close()
+            })
+          this.app.quit()
         }
       }
     ])

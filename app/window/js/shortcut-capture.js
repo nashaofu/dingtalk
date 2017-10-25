@@ -13,7 +13,7 @@ class Injector {
   initialize () {
     // 只要loading结束
     // 不论页面加载是否成功都会执行
-    ipcRenderer.on('did-finish-load', () => {
+    ipcRenderer.on('dom-ready', () => {
       this.injectJs()
     })
   }
@@ -80,11 +80,11 @@ class Injector {
       end.x = e.clientX
       end.y = e.clientY
       isDraw = false
-      this.drawImage(start, end)
+      this.drawImage(start, end, true)
     })
   }
 
-  drawImage (start, end) {
+  drawImage (start, end, isShowToobar) {
     const width = Math.abs(end.x - start.x)
     const height = Math.abs(end.y - start.y)
     this.$canvas.width = width
@@ -114,11 +114,12 @@ class Injector {
     const windowHeight = window.innerHeight
     this.ctx.clearRect(0, 0, windowWidth, windowHeight)
 
-    if (width < 1 || height < 1) {
+    if (!isShowToobar) {
       this.$captureToolbar.style.visibility = 'hidden'
       return
+    } else {
+      this.$captureToolbar.style.visibility = 'visible'
     }
-    this.$captureToolbar.style.visibility = 'visible'
     const x = start.x < end.x ? start.x : end.x
     const y = start.y < end.y ? start.y : end.y
     let left = x + width - toolbarWidth
