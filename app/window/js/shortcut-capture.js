@@ -135,9 +135,15 @@ class Injector {
     if (left < 0) {
       left = 0
     }
+    if (left + toolbarWidth > windowWidth) {
+      left = windowWidth - toolbarWidth
+    }
     this.$captureToolbar.style.left = left + 'px'
     if (top + toolbarHeight > windowHeight) {
       top = y - toolbarHeight
+    }
+    if (top < 0) {
+      top = 0
     }
     this.$captureToolbar.style.top = top + 'px'
     this.ctx.drawImage(this.$capture, x, y, width, height, 0, 0, width, height)
