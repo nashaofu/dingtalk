@@ -23,6 +23,7 @@
     * 解决了网页版钉钉内容区域无法最大化的问题
     * 除了少数的功能未能够完全实现，其余的使用体验和PC版钉钉基本一致
 3. 支持屏幕截图，并且支持多显示器截图。截图快捷键为`ctrl+alt+a`
+4. 添加应用分类，[Linux系统分类](https://specifications.freedesktop.org/menu-spec/latest/apa.html#main-category-registry)
 
 ## 更新说明
 1. 支持屏幕截图，并且支持多显示器截图。截图快捷键为`ctrl+alt+a`，2017-10-23
