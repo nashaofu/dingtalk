@@ -55,7 +55,6 @@ function createWindow (source) {
     minimizable: false,
     maximizable: false
   })
-  setFullScreen($win, display)
   // 只能通过cancel-shortcut-capture的方式关闭窗口
   $win.on('close', e => {
     if (!isClose) {
@@ -65,8 +64,6 @@ function createWindow (source) {
   // 页面初始化完成之后再显示窗口
   // 并检测是否有版本更新
   $win.once('ready-to-show', () => {
-    // 重新调整窗口位置和大小
-    setFullScreen($win, display)
     $win.show()
     $win.focus()
   })
@@ -78,16 +75,6 @@ function createWindow (source) {
   })
   $win.loadURL(`file://${__dirname}/window/shortcut-capture.html`)
   $windows.push($win)
-}
-
-function setFullScreen ($win, display) {
-  $win.setBounds({
-    width: display.size.width,
-    height: display.size.height,
-    x: display.bounds.x,
-    y: display.bounds.y
-  })
-  $win.setFullScreen(true)
 }
 
 function closeWindow () {

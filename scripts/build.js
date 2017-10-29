@@ -13,7 +13,8 @@ build({
     linux: {
       description: '钉钉linux版本',
       icon: path.join(__dirname, '../icon'),
-      target: 'deb'
+      target: 'deb',
+      category: 'InstantMessaging'
     }
   }
 }).then(() => {
