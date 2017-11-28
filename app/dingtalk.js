@@ -241,6 +241,9 @@ exports = module.exports = class DingTalk {
     this.$window.webContents.on('did-finish-load', () => {
       this.$window.webContents.send('load-finished')
     })
+    this.$window.webContents.on('did-fail-load', () => {
+      $win.loadURL(`file://${__dirname}/window/error.html`)
+    })
   }
 
   // 创建任务栏图标

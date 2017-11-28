@@ -1,0 +1,107 @@
+@font-face {
+    font-family: "dingtalk-font";
+    src: url('../fonts/iconfont.eot');
+    /* IE9*/
+    src: url('../fonts/iconfont.eot') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/iconfont.woff') format('woff'), /* chrome, firefox */
+    url('../fonts/iconfont.eot.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+    url('../fonts/iconfont.eot.svg#iconfont') format('svg');
+    /* iOS 4.1- */
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #5a83b7;
+    font-family: PingFangSC, 'Microsoft Yahei', STHeitiSC, sans-serif;  
+  }
+  
+  .error {
+    height: 100%;
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  
+  .error-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    user-select: none;
+  }
+  
+  .error-container-lamp {
+    margin: 40px auto;
+    padding: 0;
+    text-align: center;
+    font-family: cursive, Arial, Helvetica, sans-serif;
+    font-size: 180px;
+    font-weight: bold;
+    line-height: 100px;
+    letter-spacing: 5px;
+    color: #fff;
+    cursor: default;
+    white-space: nowrap;
+    padding: 0 80px;
+  }
+  
+  .error-container-lamp-1, .error-container-lamp-2, .error-container-lamp-3, .error-container-lamp-4, .error-container-lamp-5 {
+    margin: 0 -50px;
+    text-shadow: 0 0 2px #686868, 0px 1px 1px #ddd, 0px 2px 1px #d6d6d6, 0px 3px 1px #ccc, 0px 4px 1px #c5c5c5, 0px 5px 1px #c1c1c1, 0px 6px 1px #bbb, 0px 7px 1px #777, 0px 8px 3px rgba(100, 100, 100, 0.4), 0px 9px 5px rgba(100, 100, 100, 0.1), 0px 10px 7px rgba(100, 100, 100, 0.15), 0px 11px 9px rgba(100, 100, 100, 0.2), 0px 12px 11px rgba(100, 100, 100, 0.25), 0px 13px 15px rgba(100, 100, 100, 0.3);
+    transition: all .1s linear;
+  }
+  
+  .error-container-lamp-1 {
+    animation: lamp 3s linear infinite;
+  }
+  
+  .error-container-lamp-2 {
+    animation: lamp 3s linear 0.6s infinite;
+  }
+  
+  .error-container-lamp-3 {
+    animation: lamp 3s linear 1.2s infinite;
+  }
+  
+  .error-container-lamp-4 {
+    animation: lamp 3s linear 1.8s infinite;
+  }
+  
+  .error-container-lamp-5 {
+    animation: lamp 3s linear 2.4s infinite;
+  }
+  
+  .error-container-desc {
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 2px 2px #777;
+    letter-spacing: 1px;
+  }
+  
+  .error-container-desc span {
+    font-size: 24px;
+    padding-left: 7px;
+  }
+  
+  @keyframes lamp {
+    0% {
+      text-shadow: 0 0 2px #686868, 0px 1px 1px #ddd, 0px 2px 1px #d6d6d6, 0px 3px 1px #ccc, 0px 4px 1px #c5c5c5, 0px 5px 1px #c1c1c1, 0px 6px 1px #bbb, 0px 7px 1px #777, 0px 8px 3px rgba(100, 100, 100, 0.4), 0px 9px 5px rgba(100, 100, 100, 0.1), 0px 10px 7px rgba(100, 100, 100, 0.15), 0px 11px 9px rgba(100, 100, 100, 0.2), 0px 12px 11px rgba(100, 100, 100, 0.25), 0px 13px 15px rgba(100, 100, 100, 0.3);
+    }
+    16% {
+      text-shadow: 0 0 2px #686868, 0px 1px 1px #fff, 0px 2px 1px #fff, 0px 3px 1px #fff, 0px 4px 1px #fff, 0px 5px 1px #fff, 0px 6px 1px #fff, 0px 7px 1px #777, 0px 8px 3px #fff, 0px 9px 5px #fff, 0px 10px 7px #fff, 0px 11px 9px #fff, 0px 12px 11px #fff, 0px 13px 15px #fff;
+    }
+    32% {
+      text-shadow: 0 0 2px #686868, 0px 1px 1px #ddd, 0px 2px 1px #d6d6d6, 0px 3px 1px #ccc, 0px 4px 1px #c5c5c5, 0px 5px 1px #c1c1c1, 0px 6px 1px #bbb, 0px 7px 1px #777, 0px 8px 3px rgba(100, 100, 100, 0.4), 0px 9px 5px rgba(100, 100, 100, 0.1), 0px 10px 7px rgba(100, 100, 100, 0.15), 0px 11px 9px rgba(100, 100, 100, 0.2), 0px 12px 11px rgba(100, 100, 100, 0.25), 0px 13px 15px rgba(100, 100, 100, 0.3);
+    }
+    100% {
+      text-shadow: 0 0 2px #686868, 0px 1px 1px #ddd, 0px 2px 1px #d6d6d6, 0px 3px 1px #ccc, 0px 4px 1px #c5c5c5, 0px 5px 1px #c1c1c1, 0px 6px 1px #bbb, 0px 7px 1px #777, 0px 8px 3px rgba(100, 100, 100, 0.4), 0px 9px 5px rgba(100, 100, 100, 0.1), 0px 10px 7px rgba(100, 100, 100, 0.15), 0px 11px 9px rgba(100, 100, 100, 0.2), 0px 12px 11px rgba(100, 100, 100, 0.25), 0px 13px 15px rgba(100, 100, 100, 0.3);
+    }
+  }
