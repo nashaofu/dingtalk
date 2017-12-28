@@ -111,9 +111,7 @@ class Injector {
 
   // 页面渲染完成事件
   onLoadFinished () {
-    ipcRenderer.on('load-finished', (event, msg) => {
-      this.createRememberMe()
-    })
+    this.createRememberMe()
   }
 
   // 登录页面面板切换
