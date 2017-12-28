@@ -40,10 +40,10 @@ function createWindow (source) {
   const { display } = source
   const $win = new BrowserWindow({
     title: '截图',
-    width: display.size.width,
-    height: display.size.height,
-    x: display.bounds.x,
-    y: display.bounds.y,
+    width: display.width,
+    height: display.height,
+    x: display.x,
+    y: display.y,
     frame: false,
     show: false,
     transparent: true,
@@ -82,10 +82,10 @@ function createWindow (source) {
 
 function setFullScreen ($win, display) {
   $win.setBounds({
-    width: display.size.width,
-    height: display.size.height,
-    x: display.bounds.x,
-    y: display.bounds.y
+    width: display.width,
+    height: display.height,
+    x: display.x,
+    y: display.y
   })
   $win.setAlwaysOnTop(true)
   $win.setFullScreen(true)
