@@ -236,11 +236,11 @@ exports = module.exports = class DingTalk {
     this.createContextMenu()
     // 浏览器中打开链接
     this.openURLEvent()
+    this.$window.webContents.on('did-fail-load', () => {
+      this.$window.loadURL(`file://${__dirname}/window/error.html`)
+    })
     // 加载URL地址
     this.$window.loadURL('https://im.dingtalk.com/')
-    this.$window.webContents.on('did-finish-load', () => {
-      this.$window.webContents.send('load-finished')
-    })
   }
 
   // 创建任务栏图标

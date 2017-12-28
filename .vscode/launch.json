@@ -5,12 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-          "type": "node",
-          "request": "launch",
-          "name": "Electron Main",
-          "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd",
-          "program": "${workspaceRoot}/app/index.js",
-          "protocol": "legacy"
-        }
+            "name": "Debug Main Process",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+            "windows": {
+              "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
+            },
+            "args" : ["."]
+          }
     ]
 }
