@@ -1,5 +1,7 @@
 const fs = require('fs')
 const path = require('path')
+const _ = require('lodash')
+
 const {
   ipcRenderer,
   webFrame,
@@ -338,27 +340,38 @@ class Injector {
   onShortcutCapture () {
     ipcRenderer.on('shortcut-capture', () => {
       const displays = screen.getAllDisplays()
-      const getDesktopCapturer = displays.map((display, i) => {
-        return new Promise((resolve, reject) => {
-          desktopCapturer.getSources({
-            types: ['screen'],
-            thumbnailSize: display.size
-          }, (error, sources) => {
-            if (!error) {
-              return resolve({
-                display,
-                thumbnail: sources[i].thumbnail.toDataURL()
-              })
+        .map(item => ({
+          width: item.size.width,
+          height: item.size.height,
+          x: item.bounds.x,
+          y: item.bounds.y,
+          scaleFactor: item.scaleFactor
+        }))
+
+      // 用最大的屏幕去截屏，保证图片高清
+      const max = _.maxBy(displays, item => item.width * item.height)
+      desktopCapturer.getSources({
+        types: ['screen'],
+        thumbnailSize: {
+          width: max.width,
+          height: max.height
+        }
+      }, (error, sources) => {
+        if (!error) {
+          sources = sources.map((item, i) => {
+            const display = displays[i]
+            return {
+              display,
+              thumbnail: item.thumbnail.resize({
+                width: display.width,
+                height: display.height,
+                quality: 'best'
+              }).toDataURL()
             }
-            return reject(error)
           })
-        })
+        }
+        ipcRenderer.send('shortcut-capture', sources)
       })
-      Promise.all(getDesktopCapturer)
-        .then(sources => {
-          ipcRenderer.send('shortcut-capture', sources)
-        })
-        .catch(error => console.log(error))
     })
   }
 }
