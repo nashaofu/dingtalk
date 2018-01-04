@@ -23,20 +23,25 @@ class Injector {
     window.addEventListener('load', () => {
       this.injectCss()
       this.injectJs()
+      if (!navigator.onLine && window.location.href === 'data:text/html,chromewebdata') {
+        ipcRenderer.send('offline')
+      }
     })
   }
 
   // 注入CSS
   injectCss () {
-    let filename = path.join(__dirname, '../css/css.css')
-    fs.readFile(filename, (err, css) => {
-      if (!err) {
-        const style = document.createElement('style')
-        const styleContent = document.createTextNode(css.toString())
-        style.appendChild(styleContent)
-        document.head.appendChild(style)
-      }
-    })
+    if (navigator.onLine) {
+      const filename = path.join(__dirname, '../css/css.css')
+      fs.readFile(filename, (err, css) => {
+        if (!err) {
+          const style = document.createElement('style')
+          const styleContent = document.createTextNode(css.toString())
+          style.appendChild(styleContent)
+          document.head.appendChild(style)
+        }
+      })
+    }
   }
 
   // 注入JS

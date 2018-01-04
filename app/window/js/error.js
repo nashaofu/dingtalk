@@ -1,8 +1,16 @@
+const { ipcRenderer } = require('electron')
 window.addEventListener('load', () => {
   window.addEventListener('online', () => {
-    window.location.href = 'https://im.dingtalk.com/'
+    ipcRenderer.send('online')
   })
-  document.querySelector('.error-container-retry').addEventListener('click', () => {
-    window.location.href = 'https://im.dingtalk.com/'
+  const $button = document.querySelector('.error-container-retry')
+  $button.addEventListener('click', () => {
+    if (!$button.disabled) {
+      $button.disabled = true
+      ipcRenderer.send('online')
+    }
   })
+  if (navigator.onLine) {
+    ipcRenderer.send('online')
+  }
 })
