@@ -236,8 +236,11 @@ exports = module.exports = class DingTalk {
     this.createContextMenu()
     // 浏览器中打开链接
     this.openURLEvent()
-    this.$window.webContents.on('did-fail-load', () => {
+    ipcMain.on('offline', () => {
       this.$window.loadURL(`file://${__dirname}/window/error.html`)
+    })
+    ipcMain.on('online', () => {
+      this.$window.loadURL('https://im.dingtalk.com/')
     })
     // 加载URL地址
     this.$window.loadURL('https://im.dingtalk.com/')
