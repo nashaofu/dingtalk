@@ -1,19 +1,8 @@
-@font-face {
-  font-family: "dingtalk-font";
-  src: url('../fonts/iconfont.eot');
-  /* IE9*/
-  src: url('../fonts/iconfont.eot') format('embedded-opentype'), /* IE6-IE8 */
-  url('../fonts/iconfont.woff') format('woff'), /* chrome, firefox */
-  url('../fonts/iconfont.eot.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('../fonts/iconfont.eot.svg#iconfont') format('svg');
-  /* iOS 4.1- */
-}
-
 body {
   margin: 0;
   padding: 0;
   background-color: #5a83b7;
-  font-family: PingFangSC, 'Microsoft Yahei', STHeitiSC, sans-serif;
+  font-family: "PingFang SC", 微软雅黑, "Microsoft YaHei", Helvetica, "Helvetica Neue", Tahoma, Arial, sans-serif;
   overflow: hidden;
 }
 
@@ -122,71 +111,76 @@ body {
   border: none;
   color: #fff;
   font-size: 16px;
-  text-decoration: underline;
-  font-family: PingFangSC, 'Microsoft Yahei', STHeitiSC, sans-serif;
+  text-decoration: none;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Open Sans", sans-serif;
   outline: none;
   display: block;
-  margin: 10px auto;
-  padding: 6px 15px;
+  margin: 20px auto;
+  padding: 10px 30px;
+  font-weight: 600;
   cursor: pointer;
   position: relative;
-  transition: all 0.3s ease-in-out;
   z-index: 1;
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px transparent;
+  transition-duration: 0.3s;
+  transition-property: all;
+  box-shadow: 0 0 1px transparent;
 }
 
 .error-container-retry:before {
-  content: "";
-  display: block;
-  width: 10px;
-  height: 10px;
+  pointer-events: none;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  border-radius: 50%;
-  transform: translate3d(-50%, -50%, 0) scale3d(0, 0, 1);
-  background-color: rgba(0, 0, 0, 0.5);
-  transition: transform 0.3s ease-in-out;
+  z-index: -1;
+  content: "";
+  top: 100%;
+  left: 5%;
+  height: 10px;
+  width: 90%;
   opacity: 0;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, transparent 80%);
+  transition-duration: 0.3s;
+  transition-property: transform, opacity;
 }
 
-.error-container-retry:active {
-  text-shadow: 0 30px 0px #fff;
-  border: 1px solid #fff;
-  padding: 6px 40px;
+.error-container-retry:after {
+  content: "";
+  position: absolute;
+  border: 0 solid #eee;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 0;
+  animation-duration: 1s;
 }
 
-.error-container-retry:active:before {
-  transform: translate3d(-50%, -50%, 0) scale3d(150, 150, 1);
-  animation: fade 0.3s;
+.error-container-retry:hover, .error-container-retry:focus, .error-container-retry:active {
+  transform: translateY(-5px);
 }
 
-@keyframes fade {
-  0% {
-    opacity: 0;
-    border-radius: 50%;
-  }
-  10% {
-    border-radius: 0;
-  }
-  20% {
-    border-radius: 50%;
-  }
-  30% {
-    border-radius: 0;
-  }
-  50% {
-    opacity: 1;
-    border-radius: 50%;
-  }
-  70% {
-    border-radius: 0;
-  }
-  80% {
-    border-radius: 50%;
-  }
+.error-container-retry:hover, .error-container-retry:focus, .error-container-retry:active {
+  color: #fff;
+}
+
+.error-container-retry:hover:before, .error-container-retry:focus:before, .error-container-retry:active:before {
+  opacity: 1;
+  transform: translateY(5px);
+}
+
+.error-container-retry:hover:after, .error-container-retry:focus:after, .error-container-retry:active:after {
+  animation-name: hvr-ripple-out;
+  border: 6px solid #eee;
+}
+
+@keyframes hvr-ripple-out {
   100% {
+    top: -12px;
+    right: -12px;
+    bottom: -12px;
+    left: -12px;
     opacity: 0;
-    border-radius: 50%;
+    border-radius: 40%
   }
 }
 

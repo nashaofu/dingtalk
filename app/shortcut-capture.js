@@ -6,18 +6,17 @@ const {
   nativeImage
 } = require('electron')
 
-// 保证函数只执行一次
-let isRuned = false
 const $windows = []
 let isClose = false
-module.exports = mainWindow => {
-  if (isRuned) {
-    return
-  }
-  isRuned = true
+module.exports = dingtalk => {
+  const mainWindow = dingtalk.$window
+  const setting = dingtalk.setting || {}
+  const key = setting.keymap['shortcut-capture']
 
+  // 清空所有快捷键
+  globalShortcut.unregisterAll()
   // 注册全局快捷键
-  globalShortcut.register('ctrl+alt+a', function () {
+  globalShortcut.register(key, function () {
     mainWindow.webContents.send('shortcut-capture')
   })
 
@@ -44,6 +43,7 @@ function createWindow (source) {
     height: display.height,
     x: display.x,
     y: display.y,
+    useContentSize: true,
     frame: false,
     show: false,
     transparent: true,

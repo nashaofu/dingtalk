@@ -1,3 +1,5 @@
+const fs = require('fs')
+const _ = require('lodash')
 const path = require('path')
 const axios = require('axios')
 const {
@@ -20,7 +22,11 @@ exports = module.exports = class DingTalk {
     this.$window = null
     // 任务栏图标
     this.$tray = null
-
+    this.setting = {
+      keymap: {
+        'shortcut-capture': 'Control+Alt+a'
+      }
+    }
     // 判断是否通过任务栏图标点击关闭命令来关闭的程序
     // 禁止通过除了关闭命令之外的方式(键盘按钮)来关闭应用
     // 当通过其他方式来关闭应用时只会隐藏应用窗口
@@ -32,6 +38,7 @@ exports = module.exports = class DingTalk {
 
   // 初始化
   initialize () {
+    this.getSetting()
     // 主进程事件
     this.onReady()
     this.onActivate()
@@ -50,6 +57,20 @@ exports = module.exports = class DingTalk {
     this.onShow()
     // 点击邮箱之后打开新窗口
     this.onOpneEmail()
+    // 设置保存事件
+    this.onSetting()
+  }
+
+  getSetting () {
+    const settingPath = path.join(app.getPath('userData'), 'setting.json')
+    if (!fs.existsSync(settingPath)) {
+      fs.writeFileSync(settingPath, JSON.stringify(this.setting, null, 2))
+    }
+    try {
+      this.setting = _.merge(this.setting, JSON.parse(fs.readFileSync(settingPath)))
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   // 应用准备完毕时执行
@@ -156,6 +177,7 @@ exports = module.exports = class DingTalk {
         height: 640,
         minWidth: 720,
         minHeight: 450,
+        useContentSize: true,
         resizable: true,
         menu: false,
         icon: path.join(__dirname, '../icon/32x32.png'),
@@ -177,6 +199,20 @@ exports = module.exports = class DingTalk {
     })
   }
 
+  onSetting () {
+    ipcMain.on('setting', (e, setting) => {
+      this.setting = _.merge(this.setting, setting)
+      const settingPath = path.join(app.getPath('userData'), 'setting.json')
+      fs.writeFileSync(settingPath, JSON.stringify(this.setting, null, 2))
+      shortcutCapture(this)
+    })
+    ipcMain.on('setting-ready', () => {
+      if (this.$settingWindow) {
+        this.$settingWindow.webContents.send('send-setting', this.setting)
+      }
+    })
+  }
+
   // 创建窗体
   createWindow () {
     if (this.$window) {
@@ -189,6 +225,7 @@ exports = module.exports = class DingTalk {
       height: 600,
       minWidth: 720,
       minHeight: 450,
+      useContentSize: true,
       center: true,
       frame: false,
       show: false,
@@ -196,6 +233,7 @@ exports = module.exports = class DingTalk {
       icon: path.join(__dirname, '../icon/32x32.png'),
       resizable: true,
       webPreferences: {
+        webSecurity: true,
         preload: path.join(__dirname, './window/js/main.js')
       }
     })
@@ -210,9 +248,9 @@ exports = module.exports = class DingTalk {
       // this.hotUpdate()
 
       // 文件下载监听
-      download(this.$window)
+      download(this)
       // 屏幕截图支持
-      shortcutCapture(this.$window)
+      shortcutCapture(this)
     })
 
     // 窗体关闭事件处理
@@ -252,7 +290,7 @@ exports = module.exports = class DingTalk {
       return
     }
     // 生成托盘图标及其菜单项实例
-    this.$tray = new Tray(path.join(__dirname, '../icon/20x20.png'))
+    this.$tray = new Tray(path.join(__dirname, '../icon/24x24.png'))
     const trayMenu = this.createTrayMenu()
     // 设置鼠标悬浮时的标题
     this.$tray.setToolTip('钉钉')
@@ -292,6 +330,12 @@ exports = module.exports = class DingTalk {
         }
       },
       {
+        label: '设置',
+        click: () => {
+          this.showSetting()
+        }
+      },
+      {
         label: '退出',
         click: () => {
           // 关闭窗口
@@ -310,6 +354,39 @@ exports = module.exports = class DingTalk {
         }
       }
     ])
+  }
+
+  showSetting () {
+    if (this.$settingWindow) {
+      this.$settingWindow.show()
+      this.$settingWindow.focus()
+      return
+    }
+    this.$settingWindow = new BrowserWindow({
+      title: '设置',
+      width: 320,
+      height: 180,
+      minWidth: 320,
+      minHeight: 180,
+      useContentSize: true,
+      resizable: false,
+      menu: false,
+      parent: this.$window,
+      modal: true,
+      icon: path.join(__dirname, '../icon/32x32.png')
+    })
+    // 右键上下文菜单
+    this.$settingWindow.webContents.on('context-menu', (e, params) => {
+      e.preventDefault()
+      this.buildContextMenu(params, this.$settingWindow)
+    })
+
+    // 窗口关闭后手动让$window为null
+    this.$settingWindow.on('closed', () => {
+      this.$settingWindow = null
+    })
+    // 加载URL地址
+    this.$settingWindow.loadURL(`file://${__dirname}/window/setting.html`)
   }
 
   // 打开新链接窗口
@@ -429,17 +506,6 @@ exports = module.exports = class DingTalk {
             }
           })
         }
-      })
-  }
-
-  // 页面热更新补丁接口
-  hotUpdate () {
-    axios.get('http://dingtalk.nashaofu.com/hotupdate')
-      .then(({ data }) => {
-        if (typeof data !== 'string') {
-          data = data.toString()
-        }
-        this.$window.webContents.executeJavaScript(data)
       })
   }
 }

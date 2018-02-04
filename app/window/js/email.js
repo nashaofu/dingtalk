@@ -10,13 +10,8 @@ class Injector {
     // 只要loading结束
     // 不论页面加载是否成功都会执行
     window.addEventListener('load', () => {
-      this.injectCss()
       this.injectJs()
     })
-  }
-
-  // 注入CSS
-  injectCss () {
   }
 
   // 注入JS
