@@ -1,12 +1,10 @@
 const fs = require('fs')
-const path = require('path')
 const _ = require('lodash')
+const path = require('path')
 
 const {
   ipcRenderer,
-  webFrame,
-  desktopCapturer,
-  screen
+  webFrame
 } = require('electron')
 const Store = require('electron-store')
 const store = new Store()
@@ -21,27 +19,25 @@ class Injector {
     // 只要loading结束
     // 不论页面加载是否成功都会执行
     window.addEventListener('load', () => {
+      if (!navigator.onLine) {
+        return ipcRenderer.send('offline')
+      }
       this.injectCss()
       this.injectJs()
-      if (!navigator.onLine && window.location.href === 'data:text/html,chromewebdata') {
-        ipcRenderer.send('offline')
-      }
     })
   }
 
   // 注入CSS
   injectCss () {
-    if (navigator.onLine) {
-      const filename = path.join(__dirname, '../css/css.css')
-      fs.readFile(filename, (err, css) => {
-        if (!err) {
-          const style = document.createElement('style')
-          const styleContent = document.createTextNode(css.toString())
-          style.appendChild(styleContent)
-          document.head.appendChild(style)
-        }
-      })
-    }
+    const filename = path.join(__dirname, '../css/css.css')
+    fs.readFile(filename, (err, css) => {
+      if (!err) {
+        const style = document.createElement('style')
+        const styleContent = document.createTextNode(css.toString())
+        style.appendChild(styleContent)
+        document.head.appendChild(style)
+      }
+    })
   }
 
   // 注入JS
@@ -52,7 +48,6 @@ class Injector {
      * 关闭/最大化/最小化
      */
     this.createWindowOperation()
-
     /**
      * 检测是否需要插入记住我选项
      */
@@ -69,16 +64,10 @@ class Injector {
      * 打开邮箱界面
      */
     this.openEmail()
-
     /**
      * 文件下载监听
      */
     this.onDownload()
-
-    /**
-     * 屏幕截图
-     */
-    this.onShortcutCapture()
   }
 
   // 设置缩放等级
@@ -339,45 +328,6 @@ class Injector {
         }
       }
     }, 1000)
-  }
-
-  // 屏幕截图处理
-  onShortcutCapture () {
-    ipcRenderer.on('shortcut-capture', () => {
-      const displays = screen.getAllDisplays()
-        .map(item => ({
-          width: item.size.width,
-          height: item.size.height,
-          x: item.bounds.x,
-          y: item.bounds.y,
-          scaleFactor: item.scaleFactor
-        }))
-
-      // 用最大的屏幕去截屏，保证图片高清
-      const max = _.maxBy(displays, item => item.width * item.height)
-      desktopCapturer.getSources({
-        types: ['screen'],
-        thumbnailSize: {
-          width: max.width,
-          height: max.height
-        }
-      }, (error, sources) => {
-        if (!error) {
-          sources = sources.map((item, i) => {
-            const display = displays[i]
-            return {
-              display,
-              thumbnail: item.thumbnail.resize({
-                width: display.width,
-                height: display.height,
-                quality: 'best'
-              }).toDataURL()
-            }
-          })
-        }
-        ipcRenderer.send('shortcut-capture', sources)
-      })
-    })
   }
 }
 

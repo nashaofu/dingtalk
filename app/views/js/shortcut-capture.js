@@ -11,7 +11,9 @@ class Injector {
   initialize () {
     // 只要loading结束
     // 不论页面加载是否成功都会执行
-    ipcRenderer.on('dom-ready', () => {
+    ipcRenderer.on('dom-ready', (e, data) => {
+      this.source = data.source
+      this.setting = data.setting
       this.injectJs()
     })
   }
@@ -31,6 +33,13 @@ class Injector {
     webFrame.setVisualZoomLevelLimits(1, 1)
   }
 
+  setMask () {
+    const key = this.setting.keymap['shortcut-capture']
+    const title = `${key}快速截图，按住鼠标左键选择截图区域，鼠标右键或ESC退出截屏`
+    const $mask = document.querySelector('#mask')
+    $mask.setAttribute('title', title)
+  }
+
   shortcutCapture () {
     this.$canvas = document.querySelector('#canvas')
     this.ctx = this.$canvas.getContext('2d')
@@ -41,7 +50,7 @@ class Injector {
       this.onDrawImage()
     })
 
-    this.$capture.src = window.source.thumbnail
+    this.$capture.src = this.source.thumbnail
     this.$captureToolbar = document.querySelector('#capture-toolbar')
   }
 

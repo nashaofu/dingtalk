@@ -5,19 +5,43 @@ const {
   clipboard,
   nativeImage
 } = require('electron')
+const path = require('path')
 
-// 保证函数只执行一次
-let isRuned = false
+let mainWindow = null
 const $windows = []
 let isClose = false
-module.exports = mainWindow => {
-  if (isRuned) {
-    return
-  }
-  isRuned = true
+module.exports = dingtalk => {
+  const setting = dingtalk.setting || {}
+  const key = setting.keymap['shortcut-capture']
 
+  if (mainWindow) {
+    mainWindow.close()
+    mainWindow.destroy()
+    mainWindow = null
+  }
+
+  mainWindow = new BrowserWindow({
+    title: '后台进程',
+    width: 0,
+    height: 0,
+    useContentSize: true,
+    frame: false,
+    show: false,
+    menu: false,
+    transparent: false,
+    closable: false,
+    resizable: false,
+    skipTaskbar: true,
+    webPreferences: {
+      preload: path.join(__dirname, './shortcut-capture-renderer.js')
+    }
+  })
+  mainWindow.loadURL('about:blank')
+
+  // 清空所有快捷键
+  globalShortcut.unregisterAll()
   // 注册全局快捷键
-  globalShortcut.register('ctrl+alt+a', function () {
+  globalShortcut.register(key, () => {
     mainWindow.webContents.send('shortcut-capture')
   })
 
@@ -25,7 +49,7 @@ module.exports = mainWindow => {
   ipcMain.on('shortcut-capture', (e, sources) => {
     closeWindow()
     sources.forEach(source => {
-      createWindow(source)
+      createWindow(source, dingtalk.setting)
     })
   })
   // 有一个窗口关闭就关闭所有的窗口
@@ -34,9 +58,10 @@ module.exports = mainWindow => {
     clipboard.writeImage(nativeImage.createFromDataURL(dataURL))
     closeWindow()
   })
+  return mainWindow
 }
 
-function createWindow (source) {
+function createWindow (source, setting) {
   const { display } = source
   const $win = new BrowserWindow({
     title: '截图',
@@ -44,8 +69,10 @@ function createWindow (source) {
     height: display.height,
     x: display.x,
     y: display.y,
+    useContentSize: true,
     frame: false,
     show: false,
+    menu: false,
     transparent: true,
     resizable: false,
     alwaysOnTop: true,
@@ -72,11 +99,11 @@ function createWindow (source) {
   })
 
   $win.webContents.on('dom-ready', () => {
-    $win.webContents.executeJavaScript(`window.source = ${JSON.stringify(source)}`)
-    $win.webContents.send('dom-ready')
+    $win.webContents.send('dom-ready', { source, setting })
     $win.focus()
   })
-  $win.loadURL(`file://${__dirname}/window/shortcut-capture.html`)
+  const filename = path.join(__dirname, '../views/shortcut-capture.html')
+  $win.loadURL(filename)
   $windows.push($win)
 }
 

@@ -4,11 +4,12 @@
   <meta charset=utf-8>
   <meta name=viewport content="width=device-width,initial-scale=1">
   <title>截图</title>
+  <link href="css/font.css" rel="stylesheet">
   <link href="css/shortcut-capture.css" rel="stylesheet">
 </head>
 <body>
   <img id="capture" class="capture">
-  <div class="mask" title="ctrl+alt+a快速截图，按住鼠标左键选择截图区域，鼠标右键或ESC退出截屏"></div>
+  <div id="mask" class="mask"></div>
   <canvas id="canvas" width="0" height="0"></canvas>
   <div id="capture-toolbar" class="capture-toolbar">
     <button id="cancel" title="取消">

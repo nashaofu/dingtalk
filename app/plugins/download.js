@@ -1,12 +1,7 @@
 const { session } = require('electron')
 
-// 保证函数只执行一次
-let isRuned = false
-module.exports = mainWindow => {
-  if (isRuned) {
-    return
-  }
-  isRuned = true
+module.exports = dingtalk => {
+  const mainWindow = dingtalk.$window
   session.defaultSession.on('will-download', (event, item, webContents) => {
     const file = {
       id: `${new Date().getTime()}${Math.round(Math.random() * 10000)}`,
