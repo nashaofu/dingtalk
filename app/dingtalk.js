@@ -209,6 +209,9 @@ exports = module.exports = class DingTalk {
     })
   }
 
+  /**
+   * 保存设置
+   */
   onSetting () {
     ipcMain.on('setting', (e, setting) => {
       this.setting = _.merge(this.setting, setting)
@@ -218,8 +221,14 @@ exports = module.exports = class DingTalk {
     })
   }
 
+  /**
+   * 上报在线
+   */
   onOnline () {
     ipcMain.on('online', () => {
+      if (this.online === true) {
+        return
+      }
       this.online = true
       if (!this.$window) {
         return
@@ -234,6 +243,9 @@ exports = module.exports = class DingTalk {
     })
   }
 
+  /**
+   * 错误页重试按钮点击
+   */
   onRetry () {
     ipcMain.on('retry', () => {
       if (!this.$errorWindow) {
@@ -245,6 +257,9 @@ exports = module.exports = class DingTalk {
     })
   }
 
+  /**
+   * 离线提示
+   */
   onOffline () {
     ipcMain.on('offline', () => {
       this.online = false
@@ -252,6 +267,9 @@ exports = module.exports = class DingTalk {
     })
   }
 
+  /**
+   * 退出应用
+   */
   quit () {
     this.isClose = true
     this.$tray.destroy()
@@ -397,6 +415,9 @@ exports = module.exports = class DingTalk {
     ])
   }
 
+  /**
+   * 显示错页
+   */
   showErrorWindow () {
     if (this.$errorWindow) {
       this.$errorWindow.show()
@@ -431,6 +452,9 @@ exports = module.exports = class DingTalk {
     this.$errorWindow.loadURL(`file://${__dirname}/views/error.html`)
   }
 
+  /**
+   * 显示设置页面
+   */
   showSetting () {
     if (this.$settingWindow) {
       this.$settingWindow.show()
