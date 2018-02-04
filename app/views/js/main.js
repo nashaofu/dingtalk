@@ -1,5 +1,4 @@
 const fs = require('fs')
-const _ = require('lodash')
 const path = require('path')
 
 const {
@@ -19,7 +18,9 @@ class Injector {
     // 只要loading结束
     // 不论页面加载是否成功都会执行
     window.addEventListener('load', () => {
-      if (!navigator.onLine) {
+      if (navigator.onLine) {
+        ipcRenderer.send('online')
+      } else {
         return ipcRenderer.send('offline')
       }
       this.injectCss()
