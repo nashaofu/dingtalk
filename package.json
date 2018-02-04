@@ -1,6 +1,6 @@
 {
   "name": "dingtalk",
-  "version": "1.4.5",
+  "version": "1.5.0",
   "description": "钉钉linux桌面版",
   "main": "./app/index.js",
   "scripts": {
