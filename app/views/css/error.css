@@ -1,9 +1,10 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #5a83b7;
   font-family: "PingFang SC", 微软雅黑, "Microsoft YaHei", Helvetica, "Helvetica Neue", Tahoma, Arial, sans-serif;
   overflow: hidden;
+  background-color: transparent;
+  -webkit-app-region: no-drag;
 }
 
 .error {
@@ -15,16 +16,6 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
-}
-
-.error-header {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  -webkit-app-region: drag;
 }
 
 .error-container {
@@ -40,7 +31,7 @@ body {
   padding: 0;
   text-align: center;
   font-family: cursive, Arial, Helvetica, sans-serif;
-  font-size: 180px;
+  font-size: 120px;
   font-weight: bold;
   line-height: 100px;
   letter-spacing: 5px;
@@ -48,27 +39,32 @@ body {
   cursor: default;
   white-space: nowrap;
   padding: 0 80px;
+  transform: translate3d(0, 0, 0);
 }
 
 .error-container-lamp-1, .error-container-lamp-2, .error-container-lamp-3, .error-container-lamp-4, .error-container-lamp-5 {
-  margin: 0 -30px;
+  margin: 0 -10px;
   text-shadow: 0 0 2px #686868, 0px 1px 1px #ddd, 0px 2px 1px #d6d6d6, 0px 3px 1px #ccc, 0px 4px 1px #c5c5c5, 0px 5px 1px #c1c1c1, 0px 6px 1px #bbb, 0px 7px 1px #777, 0px 8px 3px rgba(100, 100, 100, 0.4), 0px 9px 5px rgba(100, 100, 100, 0.1), 0px 10px 7px rgba(100, 100, 100, 0.15), 0px 11px 9px rgba(100, 100, 100, 0.2), 0px 12px 11px rgba(100, 100, 100, 0.25), 0px 13px 15px rgba(100, 100, 100, 0.3);
   transition: all .1s linear;
 }
 
 .error-container-lamp-1 {
+  transform: translate3d(0, 0, 0);
   animation: lamp 3s linear infinite;
 }
 
 .error-container-lamp-2 {
+  transform: translate3d(0, 0, 0);
   animation: lamp 3s linear 0.6s infinite;
 }
 
 .error-container-lamp-3 {
+  transform: translate3d(0, 0, 0);
   animation: lamp 3s linear 1.2s infinite;
 }
 
 .error-container-lamp-4 {
+  transform: translate3d(0, 0, 0);
   animation: lamp 3s linear 1.8s infinite;
 }
 
@@ -106,16 +102,16 @@ body {
   }
 }
 
-.error-container-retry {
+.error-container-retry, .error-container-close {
   background-color: transparent;
   border: none;
   color: #fff;
   font-size: 16px;
   text-decoration: none;
-  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Open Sans", sans-serif;
+  font-family: "PingFang SC", 微软雅黑, "Microsoft YaHei", Helvetica, "Helvetica Neue", Tahoma, Arial, sans-serif;
   outline: none;
-  display: block;
-  margin: 20px auto;
+  display: inline-block;
+  margin: 20px 30px;
   padding: 10px 30px;
   font-weight: 600;
   cursor: pointer;
@@ -128,7 +124,7 @@ body {
   box-shadow: 0 0 1px transparent;
 }
 
-.error-container-retry:before {
+.error-container-retry:before, .error-container-close:before {
   pointer-events: none;
   position: absolute;
   z-index: -1;
@@ -138,12 +134,12 @@ body {
   height: 10px;
   width: 90%;
   opacity: 0;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, transparent 80%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6) 0%, transparent 80%);
   transition-duration: 0.3s;
   transition-property: transform, opacity;
 }
 
-.error-container-retry:after {
+.error-container-retry:after, .error-container-close:after {
   content: "";
   position: absolute;
   border: 0 solid #eee;
@@ -155,25 +151,26 @@ body {
   animation-duration: 1s;
 }
 
-.error-container-retry:hover, .error-container-retry:focus, .error-container-retry:active {
+.error-container-retry:hover, .error-container-retry:focus, .error-container-retry:active, .error-container-close:hover, .error-container-close:focus, .error-container-close:active {
   transform: translateY(-5px);
 }
 
-.error-container-retry:hover, .error-container-retry:focus, .error-container-retry:active {
+.error-container-retry:hover, .error-container-retry:focus, .error-container-retry:active, .error-container-close:hover, .error-container-close:focus, .error-container-close:active {
   color: #fff;
 }
 
-.error-container-retry:hover:before, .error-container-retry:focus:before, .error-container-retry:active:before {
+.error-container-retry:hover:before, .error-container-retry:focus:before, .error-container-retry:active:before, .error-container-close:hover:before, .error-container-close:focus:before, .error-container-close:active:before {
   opacity: 1;
   transform: translateY(5px);
 }
 
-.error-container-retry:hover:after, .error-container-retry:focus:after, .error-container-retry:active:after {
-  animation-name: hvr-ripple-out;
-  border: 6px solid #eee;
+.error-container-retry:hover:after, .error-container-retry:focus:after, .error-container-retry:active:after, .error-container-close:hover:after, .error-container-close:focus:after, .error-container-close:active:after {
+  animation-name: ripple-out;
+  border: 4px solid #eee;
+  border-radius: 3px;
 }
 
-@keyframes hvr-ripple-out {
+@keyframes ripple-out {
   100% {
     top: -12px;
     right: -12px;
@@ -182,9 +179,4 @@ body {
     opacity: 0;
     border-radius: 40%
   }
-}
-
-ul.dingtalk-window-operations {
-  margin: 0;
-  list-style: none;
 }

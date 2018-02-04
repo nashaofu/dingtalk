@@ -12,14 +12,19 @@ const {
   dialog
 } = require('electron')
 
-const download = require('./download')
-const shortcutCapture = require('./shortcut-capture')
+const download = require('./plugins/download')
+const shortcutCapture = require('./plugins/shortcut-capture')
 
 exports = module.exports = class DingTalk {
   // 构造函数
   constructor () {
     // 应用窗体
+    this.$mainWindow = null
     this.$window = null
+    this.online = true
+    this.$errorWindow = null
+    this.$settingWindow = null
+
     // 任务栏图标
     this.$tray = null
     this.setting = {
@@ -59,6 +64,9 @@ exports = module.exports = class DingTalk {
     this.onOpneEmail()
     // 设置保存事件
     this.onSetting()
+    this.onOnline()
+    this.onRetry()
+    this.onOffline()
   }
 
   getSetting () {
@@ -90,6 +98,8 @@ exports = module.exports = class DingTalk {
         app.quit()
         return
       }
+      // 屏幕截图支持
+      this.$mainWindow = shortcutCapture(this)
       // 创建窗体
       this.createWindow()
       // 创建任务栏图标
@@ -182,7 +192,7 @@ exports = module.exports = class DingTalk {
         menu: false,
         icon: path.join(__dirname, '../icon/32x32.png'),
         webPreferences: {
-          preload: path.join(__dirname, './window/js/email.js')
+          preload: path.join(__dirname, './views/js/email.js')
         }
       })
       // 加载URL地址
@@ -204,13 +214,57 @@ exports = module.exports = class DingTalk {
       this.setting = _.merge(this.setting, setting)
       const settingPath = path.join(app.getPath('userData'), 'setting.json')
       fs.writeFileSync(settingPath, JSON.stringify(this.setting, null, 2))
-      shortcutCapture(this)
+      this.$mainWindow = shortcutCapture(this)
     })
-    ipcMain.on('setting-ready', () => {
-      if (this.$settingWindow) {
-        this.$settingWindow.webContents.send('send-setting', this.setting)
+  }
+
+  onOnline () {
+    ipcMain.on('online', () => {
+      this.online = true
+      if (!this.$window) {
+        return
       }
+      this.$window.reload()
+      this.$window.show()
+      this.$window.focus()
+      if (!this.$errorWindow) {
+        return
+      }
+      this.$errorWindow.destroy()
     })
+  }
+
+  onRetry () {
+    ipcMain.on('retry', () => {
+      if (!this.$errorWindow) {
+        return
+      }
+      this.$errorWindow.show()
+      this.$errorWindow.focus()
+      this.$errorWindow.reload()
+    })
+  }
+
+  onOffline () {
+    ipcMain.on('offline', () => {
+      this.online = false
+      this.showErrorWindow()
+    })
+  }
+
+  quit () {
+    this.isClose = true
+    this.$tray.destroy()
+    this.$tray = null
+    if (this.$window) {
+      this.$window.close()
+      this.$window = null
+    }
+    BrowserWindow.getAllWindows()
+      .forEach(item => {
+        item.destroy()
+      })
+    app.quit()
   }
 
   // 创建窗体
@@ -233,8 +287,7 @@ exports = module.exports = class DingTalk {
       icon: path.join(__dirname, '../icon/32x32.png'),
       resizable: true,
       webPreferences: {
-        webSecurity: true,
-        preload: path.join(__dirname, './window/js/main.js')
+        preload: path.join(__dirname, './views/js/main.js')
       }
     })
 
@@ -242,15 +295,11 @@ exports = module.exports = class DingTalk {
     // 并检测是否有版本更新
     this.$window.once('ready-to-show', () => {
       this.$window.show()
+      this.$window.focus()
       this.uploader()
-
-      // 服务器不可用，暂时注释掉热更新接口
-      // this.hotUpdate()
 
       // 文件下载监听
       download(this)
-      // 屏幕截图支持
-      shortcutCapture(this)
     })
 
     // 窗体关闭事件处理
@@ -265,6 +314,13 @@ exports = module.exports = class DingTalk {
       }
     })
 
+    this.$window.on('show', () => {
+      if (!this.online) {
+        this.$window.hide()
+        this.showErrorWindow()
+      }
+    })
+
     // 窗口关闭后手动让$window为null
     this.$window.on('closed', () => {
       this.$window = null
@@ -274,12 +330,7 @@ exports = module.exports = class DingTalk {
     this.createContextMenu()
     // 浏览器中打开链接
     this.openURLEvent()
-    ipcMain.on('offline', () => {
-      this.$window.loadURL(`file://${__dirname}/window/error.html`)
-    })
-    ipcMain.on('online', () => {
-      this.$window.loadURL('https://im.dingtalk.com/')
-    })
+
     // 加载URL地址
     this.$window.loadURL('https://im.dingtalk.com/')
   }
@@ -304,6 +355,9 @@ exports = module.exports = class DingTalk {
       }
     })
     this.$tray.on('double-click', () => {
+      if (!this.online) {
+        return this.showErrorWindow()
+      }
       if (this.$window) {
         this.$window.show()
       }
@@ -316,6 +370,9 @@ exports = module.exports = class DingTalk {
       {
         label: '显示窗口',
         click: () => {
+          if (!this.online) {
+            return this.showErrorWindow()
+          }
           if (this.$window) {
             this.$window.show()
           }
@@ -325,35 +382,53 @@ exports = module.exports = class DingTalk {
         label: '屏幕截图',
         click: () => {
           if (this.$window) {
-            this.$window.webContents.send('shortcut-capture')
+            this.$mainWindow.webContents.send('shortcut-capture')
           }
         }
       },
       {
         label: '设置',
-        click: () => {
-          this.showSetting()
-        }
+        click: () => this.showSetting()
       },
       {
         label: '退出',
-        click: () => {
-          // 关闭窗口
-          this.isClose = true
-          this.$tray.destroy()
-          this.$tray = null
-          if (this.$window) {
-            this.$window.close()
-            this.$window = null
-          }
-          BrowserWindow.getAllWindows()
-            .forEach(item => {
-              item.destroy()
-            })
-          app.quit()
-        }
+        click: () => this.quit()
       }
     ])
+  }
+
+  showErrorWindow () {
+    if (this.$errorWindow) {
+      this.$errorWindow.show()
+      this.$errorWindow.focus()
+      return
+    }
+    this.$errorWindow = new BrowserWindow({
+      title: '网络错误',
+      width: 600,
+      height: 320,
+      useContentSize: true,
+      resizable: false,
+      center: true,
+      frame: false,
+      menu: false,
+      transparent: true,
+      show: false,
+      closable: false,
+      skipTaskbar: true,
+      icon: path.join(__dirname, '../icon/32x32.png')
+    })
+
+    this.$errorWindow.on('ready-to-show', () => {
+      this.$window.hide()
+      this.$errorWindow.show()
+      this.$errorWindow.focus()
+    })
+    this.$errorWindow.on('closed', () => {
+      this.$errorWindow = null
+    })
+    // 加载URL地址
+    this.$errorWindow.loadURL(`file://${__dirname}/views/error.html`)
   }
 
   showSetting () {
@@ -366,8 +441,6 @@ exports = module.exports = class DingTalk {
       title: '设置',
       width: 320,
       height: 180,
-      minWidth: 320,
-      minHeight: 180,
       useContentSize: true,
       resizable: false,
       menu: false,
@@ -385,8 +458,11 @@ exports = module.exports = class DingTalk {
     this.$settingWindow.on('closed', () => {
       this.$settingWindow = null
     })
+    this.$settingWindow.webContents.on('dom-ready', () => {
+      this.$settingWindow.webContents.send('dom-ready', this.setting)
+    })
     // 加载URL地址
-    this.$settingWindow.loadURL(`file://${__dirname}/window/setting.html`)
+    this.$settingWindow.loadURL(`file://${__dirname}/views/setting.html`)
   }
 
   // 打开新链接窗口

@@ -6,7 +6,8 @@ class Injector {
 
   // 初始化
   initialize () {
-    window.addEventListener('load', () => {
+    ipcRenderer.on('dom-ready', (e, setting) => {
+      this.setting = setting
       this.injectJs()
     })
   }
@@ -28,11 +29,8 @@ class Injector {
   }
 
   initUI () {
-    ipcRenderer.send('setting-ready')
-    ipcRenderer.on('send-setting', (e, setting) => {
-      this.setting = setting
-      this.$shortcutCapture.value = this.setting.keymap['shortcut-capture']
-    })
+    this.$shortcutCapture = document.querySelector('#shortcut-capture')
+    this.$shortcutCapture.value = this.setting.keymap['shortcut-capture']
   }
 
   shortcutCapture () {
@@ -95,7 +93,6 @@ class Injector {
       }
       ipcRenderer.send('setting', setting)
       remote.getCurrentWindow().close()
-      remote.getCurrentWindow().destroy()
     })
   }
   cancel () {
