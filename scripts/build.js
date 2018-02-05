@@ -1,7 +1,7 @@
 const path = require('path')
 const { build, Platform } = require('electron-builder')
 const chalk = require('chalk')
-const { author } = require('../package.json')
+const { author, description } = require('../package.json')
 
 build({
   targets: Platform.LINUX.createTarget(),
@@ -11,7 +11,7 @@ build({
     productName: '钉钉',
     asar: true,
     linux: {
-      description: '钉钉linux版本',
+      description,
       icon: path.join(__dirname, '../icon'),
       target: 'deb',
       category: 'InstantMessaging'
