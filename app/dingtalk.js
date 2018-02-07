@@ -15,7 +15,7 @@ const {
 const download = require('./plugins/download')
 const shortcutCapture = require('./plugins/shortcut-capture')
 
-exports = module.exports = class DingTalk {
+module.exports = class DingTalk {
   // 构造函数
   constructor () {
     // 应用窗体
