@@ -1,7 +1,7 @@
 {
   "name": "dingtalk",
   "version": "1.5.0",
-  "description": "钉钉linux桌面版",
+  "description": "钉钉linux桌面版，基于electron开发",
   "main": "./app/index.js",
   "scripts": {
     "dev": "electron .",

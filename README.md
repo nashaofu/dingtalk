@@ -11,13 +11,20 @@
 4. 打包完成之后即可拷贝出dist目录下的文件到想要的文件夹下，运行里面的dingtalk文件即可安装应用。
 
 ## 截图效果
-1. 二维码登录页面![1.png](./screenshot/1.png)
-2. 账号密码登录页面![2.png](./screenshot/2.png)
-3. 登录后页面展示![3.png](./screenshot/3.png)
-4. 邮箱打开效果![4.png](./screenshot/4.png)
-5. 截图效果预览![5.png](./screenshot/5.png)
-6. 网络错误页面![6.png](./screenshot/6.png)
-7. 网络错误页面![7.png](./screenshot/7.png)
+1. 二维码登录页面
+![1.png](./screenshot/1.png)
+2. 账号密码登录页面
+![2.png](./screenshot/2.png)
+3. 登录后页面展示
+![3.png](./screenshot/3.png)
+4. 邮箱打开效果
+![4.png](./screenshot/4.png)
+5. 截图效果预览
+![5.png](./screenshot/5.png)
+6. 网络错误页面
+![6.png](./screenshot/6.png)
+7. 网络错误页面
+![7.png](./screenshot/7.png)
 
 ## 功能说明
 1. 本版本是基于网页版钉钉和electron制作的
