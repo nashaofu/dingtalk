@@ -1,79 +1,37 @@
 const {
-  app,
   globalShortcut,
   ipcMain,
-  BrowserWindow,
   clipboard,
-  nativeImage,
-  screen
+  nativeImage
 } = require('electron')
-const path = require('path')
 
-module.exports = dingtalk => {
-  const setting = dingtalk.setting || {}
-  const key = setting.keymap['shortcut-capture']
+const initWindow = require('./initWindow')
 
-  // 清空所有快捷键
-  globalShortcut.unregisterAll()
+let $window = null
+let shortcutKey = null
+
+module.exports = ({
+  key
+}) => {
+  if (globalShortcut.isRegistered(key)) {
+
+  }
+  // 取消原有快捷键
+  if (shortcutKey) {
+    globalShortcut.unregister(shortcutKey)
+  }
+  $window = initWindow()
+
   // 注册全局快捷键
   globalShortcut.register(key, () => {
-    $windows.forEach($win => {
-      $win.show()
-      $win.focus()
-      $win.setAlwaysOnTop(true)
-      $win.setFullScreen(true)
-    })
+    // $window.setAlwaysOnTop(true)
+    $window.webContents.send('shortcut-capture')
   })
 
-  const $windows = screen.getAllDisplays()
-    .map(({ id, size, bounds, scaleFactor }) => {
-      const $win = new BrowserWindow({
-        title: '截图',
-        width: size.width,
-        height: size.height,
-        x: bounds.x,
-        y: bounds.y,
-        useContentSize: true,
-        frame: false,
-        show: false,
-        menu: false,
-        transparent: true,
-        resizable: false,
-        alwaysOnTop: true,
-        fullscreen: true,
-        skipTaskbar: true,
-        closable: true,
-        minimizable: false,
-        maximizable: false,
-        webPreferences: {
-          preload: path.join(__dirname, './renderer.js')
-        }
-      })
+  shortcutKey = key
 
-      // 显示指定的显示器的截图
-      $win.display = id
-      // 只能通过shortcut-capture-cancel的方式关闭窗口
-      $win.on('close', e => {
-        e.preventDefault()
-      })
-      $win.loadURL(`file://${__dirname}/index.html`)
-      return $win
-    })
-
-  // 有一个窗口关闭就关闭所有的窗口
-  ipcMain.on('shortcut-capture-cancel', () => {
-    $windows.forEach($win => $win.hide())
-  })
-  ipcMain.on('shortcut-capture-save', (e, dataURL) => {
-    $windows.forEach($win => $win.hide())
+  ipcMain.on('shortcut-capture', (e, dataURL) => {
     clipboard.writeImage(nativeImage.createFromDataURL(dataURL))
   })
+  return $window
 }
-
-function createWindow (source, setting) {
-  $win.webContents.on('dom-ready', () => {
-    $win.webContents.send('dom-ready', { source, setting })
-    $win.focus()
-  })
-}
-

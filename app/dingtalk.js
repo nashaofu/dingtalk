@@ -99,7 +99,7 @@ module.exports = class DingTalk {
         return
       }
       // 屏幕截图支持
-      this.$mainWindow = shortcutCapture(this)
+      this.$mainWindow = shortcutCapture({ key: this.setting.keymap['shortcut-capture'] })
       // 创建窗体
       this.createWindow()
       // 创建任务栏图标
@@ -217,7 +217,7 @@ module.exports = class DingTalk {
       this.setting = _.merge(this.setting, setting)
       const settingPath = path.join(app.getPath('userData'), 'setting.json')
       fs.writeFileSync(settingPath, JSON.stringify(this.setting, null, 2))
-      this.$mainWindow = shortcutCapture(this)
+      this.$mainWindow = shortcutCapture({ key: this.setting.keymap['shortcut-capture'] })
     })
   }
 
