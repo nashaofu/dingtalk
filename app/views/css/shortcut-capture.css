@@ -42,6 +42,9 @@ img {
 canvas {
   position: absolute;
   border: 2px dashed #333;
+  margin-top: -2px;
+  margin-left: -2px;
+  box-sizing: border-box;
 }
 
 .capture-toolbar {
@@ -52,7 +55,7 @@ canvas {
 }
 
 canvas, .capture-toolbar {
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .capture-toolbar button {

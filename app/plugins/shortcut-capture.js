@@ -1,4 +1,5 @@
 const {
+  app,
   globalShortcut,
   ipcMain,
   BrowserWindow,
@@ -102,7 +103,7 @@ function createWindow (source, setting) {
     $win.webContents.send('dom-ready', { source, setting })
     $win.focus()
   })
-  const filename = path.join(__dirname, '../views/shortcut-capture.html')
+  const filename = path.join(app.getAppPath(), './app/views/shortcut-capture.html')
   $win.loadURL(filename)
   $windows.push($win)
 }

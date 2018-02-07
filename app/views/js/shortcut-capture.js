@@ -50,7 +50,8 @@ class Injector {
       this.onDrawImage()
     })
 
-    this.$capture.src = this.source.thumbnail
+    const file = new Blob([this.source.thumbnail], { type: 'image/png' })
+    this.$capture.src = URL.createObjectURL(file)
     this.$captureToolbar = document.querySelector('#capture-toolbar')
   }
 

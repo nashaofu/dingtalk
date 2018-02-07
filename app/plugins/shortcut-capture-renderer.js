@@ -33,7 +33,7 @@ ipcRenderer.on('shortcut-capture', () => {
             width: display.width,
             height: display.height,
             quality: 'best'
-          }).toDataURL()
+          }).toPNG()
         }
       })
     }
