@@ -1,5 +1,4 @@
 const {
-  app,
   globalShortcut,
   ipcMain,
   BrowserWindow,
