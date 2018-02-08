@@ -103,8 +103,8 @@ function createWindow (source, setting) {
     $win.webContents.send('dom-ready', { source, setting })
     $win.focus()
   })
-  const filename = path.join(app.getAppPath(), './app/views/shortcut-capture.html')
-  $win.loadURL(filename)
+  $win.loadURL(`file://${__dirname}/views/shortcut-capture.html`)
+  $win.webContents.openDevTools()
   $windows.push($win)
 }
 

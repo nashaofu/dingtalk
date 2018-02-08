@@ -12,8 +12,8 @@ const {
   dialog
 } = require('electron')
 
-const download = require('./plugins/download')
-const shortcutCapture = require('./plugins/shortcut-capture')
+const download = require('./download')
+const shortcutCapture = require('./shortcut-capture')
 
 exports = module.exports = class DingTalk {
   // 构造函数
@@ -449,7 +449,7 @@ exports = module.exports = class DingTalk {
       this.$errorWindow = null
     })
     // 加载URL地址
-    this.$errorWindow.loadURL(`file://${__dirname}/views/error.html`)
+    this.$errorWindow.loadURL(`file://${__dirname}/views/shortcut-capture.html`)
   }
 
   /**
