@@ -11,13 +11,20 @@
 4. 打包完成之后即可拷贝出dist目录下的文件到想要的文件夹下，运行里面的dingtalk文件即可安装应用。
 
 ## 截图效果
-1. 二维码登录页面![1.png](./screenshot/1.png)
-2. 账号密码登录页面![2.png](./screenshot/2.png)
-3. 登录后页面展示![3.png](./screenshot/3.png)
-4. 邮箱打开效果![4.png](./screenshot/4.png)
-5. 截图效果预览![5.png](./screenshot/5.png)
-6. 网络错误页面![6.png](./screenshot/6.png)
-7. 网络错误页面![7.png](./screenshot/7.png)
+1. 二维码登录页面
+![1.png](./screenshot/1.png)
+2. 账号密码登录页面
+![2.png](./screenshot/2.png)
+3. 登录后页面展示
+![3.png](./screenshot/3.png)
+4. 邮箱打开效果
+![4.png](./screenshot/4.png)
+5. 截图效果预览
+![5.png](./screenshot/5.png)
+6. 网络错误页面
+![6.png](./screenshot/6.png)
+7. 系统设置界面
+![7.png](./screenshot/7.png)
 
 ## 功能说明
 1. 本版本是基于网页版钉钉和electron制作的
@@ -30,7 +37,7 @@
 ## 更新说明
 1. 支持屏幕截图，并且支持多显示器截图。截图快捷键为`ctrl+alt+a`，2017-10-23
 2. 支持网络错误页面提示，网络恢复自动跳转到登陆页面，2017-12-28
-3. 修改网络错误页面，支持快捷键设置，2018-02-04
+3. 修改网络错误页面，支持快捷键设置，2018-02-07
 
 ## TODO
 - [x] 支持网络断开时显示错误页
