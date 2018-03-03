@@ -11,11 +11,10 @@ const {
   shell,
   dialog
 } = require('electron')
+const download = require('./plugins/download')
+const ShortcutCapture = require('shortcut-capture')
 
-const download = require('./download')
-const shortcutCapture = require('./shortcut-capture')
-
-exports = module.exports = class DingTalk {
+module.exports = class DingTalk {
   // 构造函数
   constructor () {
     // 应用窗体
@@ -98,8 +97,10 @@ exports = module.exports = class DingTalk {
         app.quit()
         return
       }
-      // 屏幕截图支持
-      this.$mainWindow = shortcutCapture(this)
+      this.$shortcutCapture = new ShortcutCapture({
+        winTitle: '截图',
+        hotkey: this.setting.keymap['shortcut-capture']
+      })
       // 创建窗体
       this.createWindow()
       // 创建任务栏图标
@@ -217,7 +218,7 @@ exports = module.exports = class DingTalk {
       this.setting = _.merge(this.setting, setting)
       const settingPath = path.join(app.getPath('userData'), 'setting.json')
       fs.writeFileSync(settingPath, JSON.stringify(this.setting, null, 2))
-      this.$mainWindow = shortcutCapture(this)
+      this.$shortcutCapture.registerHotkey(this.setting.keymap['shortcut-capture'])
     })
   }
 
@@ -400,7 +401,7 @@ exports = module.exports = class DingTalk {
         label: '屏幕截图',
         click: () => {
           if (this.$window) {
-            this.$mainWindow.webContents.send('shortcut-capture')
+            this.$shortcutCapture.shortcutCapture()
           }
         }
       },
@@ -449,7 +450,7 @@ exports = module.exports = class DingTalk {
       this.$errorWindow = null
     })
     // 加载URL地址
-    this.$errorWindow.loadURL(`file://${__dirname}/views/shortcut-capture.html`)
+    this.$errorWindow.loadURL(`file://${__dirname}/views/error.html`)
   }
 
   /**

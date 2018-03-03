@@ -1,6 +1,6 @@
 {
   "name": "dingtalk",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "钉钉linux桌面版，基于electron开发",
   "main": "./app/index.js",
   "scripts": {
@@ -12,7 +12,8 @@
   "dependencies": {
     "axios": "^0.16.2",
     "electron-store": "^1.3.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "shortcut-capture": "^0.1.0"
   },
   "devDependencies": {
     "chalk": "^1.1.3",

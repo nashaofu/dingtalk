@@ -34,9 +34,13 @@ class Injector {
   }
 
   shortcutCapture () {
-    this.$shortcutCapture = document.querySelector('#shortcut-capture')
-    this.keys = []
+    this.keys = this.$shortcutCapture.value ? this.$shortcutCapture.value.split('+') : []
+    this.$shortcutCapture.addEventListener('focus', () => {
+      this.keys = []
+      this.$shortcutCapture.value = ''
+    })
     this.$shortcutCapture.addEventListener('keydown', e => {
+      e.preventDefault()
       if (!e.ctrlKey) {
         this.keys = []
         return setValue()
