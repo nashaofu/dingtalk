@@ -2,49 +2,94 @@
   "name": "dingtalk",
   "version": "1.5.2",
   "description": "钉钉linux桌面版，基于electron开发",
-  "main": "./app/index.js",
+  "author": "nashaofu <diaocheng@outlook.com>",
+  "main": "dist/main.js",
   "scripts": {
-    "dev": "electron .",
     "start": "electron .",
-    "build": "node scripts/build.js",
-    "deploy": "node scripts/release.js"
+    "lint": "eslint --ext .js,.vue .",
+    "dev": "node build/dev.js",
+    "dev:main": "webpack --config build/main/webpack.dev.conf.js --watch",
+    "dev:renderer": "webpack-dev-server --inline --progress --config build/renderer/webpack.dev.conf.js",
+    "build": "npm run build:main && npm run build:renderer",
+    "build:main": "node build/main/build.js",
+    "build:renderer": "node build/renderer/build.js"
   },
+  "keywords": [
+    "dingtalk",
+    "钉钉",
+    "linux"
+  ],
   "dependencies": {
+    "normalize.css": "^8.0.0",
     "axios": "^0.16.2",
     "electron-store": "^1.3.0",
     "lodash": "^4.17.4",
     "shortcut-capture": "^0.1.0"
   },
   "devDependencies": {
-    "chalk": "^1.1.3",
-    "electron": "^1.8.1",
-    "electron-builder": "^17.10.0",
-    "eslint": "^4.2.0",
+    "autoprefixer": "^7.2.6",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.1",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "chalk": "^2.3.0",
+    "css-loader": "^0.28.9",
+    "electron": "^1.8.2",
+    "electron-debug": "^1.5.0",
+    "electron-dev-webpack-plugin": "^0.0.7",
+    "electron-devtools-installer": "^2.2.3",
+    "eslint": "^4.17.0",
     "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.1.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-vue": "^4.2.2",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.6",
+    "friendly-errors-webpack-plugin": "^1.6.1",
+    "html-webpack-plugin": "^2.30.1",
+    "optimize-css-assets-webpack-plugin": "^3.2.0",
+    "ora": "^1.4.0",
+    "portfinder": "^1.0.13",
+    "postcss-import": "^11.0.0",
+    "postcss-loader": "^2.1.0",
+    "postcss-url": "^7.3.0",
+    "pug": "^2.0.0-rc.4",
+    "pug-loader": "^2.3.0",
+    "rimraf": "^2.6.2",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "uglifyjs-webpack-plugin": "^1.1.8",
+    "url-loader": "^0.6.2",
+    "vue": "^2.5.13",
+    "vue-loader": "^14.1.1",
+    "vue-style-loader": "^4.0.1",
+    "vue-template-compiler": "^2.5.13",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1",
+    "webpack-merge": "^4.1.1"
   },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nashaofu/dingtalk.git"
   },
-  "keywords": [
-    "dingtalk",
-    "钉钉"
-  ],
-  "author": {
-    "name": "那少妇",
-    "email": "diaocheng@outlook.com"
-  },
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/nashaofu/dingtalk/issues"
   },
   "homepage": "https://github.com/nashaofu/dingtalk#readme",
   "engines": {
-    "node": ">=4.0.0",
+    "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }
