@@ -18,11 +18,11 @@ module.exports = merge(baseWebpackConfig, {
       usePostCSS: true
     })
   },
-  devtool: config.prod.sourcemap ? 'eval-source-map' : false,
+  devtool: config.prod.sourcemap ? '#source-map' : false,
   output: {
     path: config.distRendererDir,
-    filename: 'js/[name].[chunkhash].js',
-    chunkFilename: 'js/[id].[chunkhash].js'
+    filename: 'js/[name].js',
+    chunkFilename: 'js/[id].js'
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
@@ -40,7 +40,7 @@ module.exports = merge(baseWebpackConfig, {
     }),
     // extract css into its own file
     new ExtractTextPlugin({
-      filename: 'css/[name].[contenthash].css',
+      filename: 'css/[name].css',
       // Setting the following option to `false` will not extract CSS from codesplit chunks.
       // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.
       // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`,
@@ -57,20 +57,20 @@ module.exports = merge(baseWebpackConfig, {
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: path.join(config.srcRendererDir, 'index.html'),
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
-      },
-      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: 'dependency'
-    }),
+    // new HtmlWebpackPlugin({
+    //   filename: 'index.html',
+    //   template: path.join(config.srcRendererDir, 'index.html'),
+    //   inject: true,
+    //   minify: {
+    //     removeComments: true,
+    //     collapseWhitespace: true,
+    //     removeAttributeQuotes: true
+    //     // more options:
+    //     // https://github.com/kangax/html-minifier#options-quick-reference
+    //   },
+    //   // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+    //   chunksSortMode: 'dependency'
+    // }),
     // keep module.id stable when vendor modules does not change
     new webpack.HashedModuleIdsPlugin(),
     // enable scope hoisting

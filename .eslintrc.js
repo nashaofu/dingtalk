@@ -8,6 +8,9 @@ module.exports = {
   env: {
     browser: true,
   },
+  globals: {
+    angular: true
+  },
   extends: [
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
@@ -21,6 +24,7 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
+    'no-new': 'off',
     'no-return-await': 'off',
     // allow async-await
     'generator-star-spacing': 'off',

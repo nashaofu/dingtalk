@@ -1,7 +1,6 @@
 import path from 'path'
-import root from '~/root'
 import contextMenu from './contextMenu'
-import { BrowserWindow, shell } from 'electron'
+import { app, BrowserWindow, shell } from 'electron'
 
 export default dingtalk => () => {
   if (dingtalk.$mainWin) {
@@ -19,11 +18,8 @@ export default dingtalk => () => {
     frame: false,
     show: false,
     backgroundColor: '#5a83b7',
-    icon: path.join(root, './icon/32x32.png'),
-    resizable: true,
-    webPreferences: {
-      // preload: path.join(root, './views/js/main.js')
-    }
+    icon: path.join(app.getAppPath(), './icon/32x32.png'),
+    resizable: true
   })
 
   /**
@@ -66,7 +62,13 @@ export default dingtalk => () => {
       shell.openExternal(url)
     }
   })
-
+  const d = `var a = document.createElement('script')
+  a.src = 'http://127.0.0.1:8080'
+  document.body.appendChild(a)
+  `
+  $win.webContents.executeJavaScript(d, (...args) => {
+    console.log('sdasdasdas', args)
+  })
   // 加载URL地址
   $win.loadURL('https://im.dingtalk.com/')
   return $win

@@ -19,7 +19,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.json'],
     alias: {
-      '~': resolve(''),
       '@': resolve('src/main')
     }
   },
@@ -43,7 +42,7 @@ module.exports = {
     ]
   },
   node: {
-    __dirname: process.env.NODE_ENV !== 'production',
-    __filename: process.env.NODE_ENV !== 'production'
+    __dirname: false,
+    __filename: false
   }
 }
