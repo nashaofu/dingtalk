@@ -16,13 +16,11 @@
   },
   "keywords": [
     "dingtalk",
-    "钉钉",
-    "linux"
+    "linux",
+    "钉钉"
   ],
   "dependencies": {
     "normalize.css": "^8.0.0",
-    "axios": "^0.16.2",
-    "electron-store": "^1.3.0",
     "lodash": "^4.17.4",
     "shortcut-capture": "^0.1.0"
   },

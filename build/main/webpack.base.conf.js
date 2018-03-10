@@ -19,6 +19,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.json'],
     alias: {
+      '~': resolve(''),
       '@': resolve('src/main')
     }
   },
