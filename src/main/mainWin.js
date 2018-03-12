@@ -19,7 +19,10 @@ export default dingtalk => () => {
     show: false,
     backgroundColor: '#5a83b7',
     icon: path.join(app.getAppPath(), './icon/32x32.png'),
-    resizable: true
+    resizable: true,
+    webPreferences: {
+      preload: path.join(app.getAppPath(), './dist/renderer/js/mainWin.js')
+    }
   })
 
   /**
@@ -62,13 +65,11 @@ export default dingtalk => () => {
       shell.openExternal(url)
     }
   })
-  const d = `var a = document.createElement('script')
-  a.src = 'http://127.0.0.1:8080'
-  document.body.appendChild(a)
-  `
-  $win.webContents.executeJavaScript(d, (...args) => {
-    console.log('sdasdasdas', args)
+
+  $win.webContents.on('dom-ready', () => {
+    $win.webContents.send('dom-ready')
   })
+
   // 加载URL地址
   $win.loadURL('https://im.dingtalk.com/')
   return $win

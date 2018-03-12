@@ -6,24 +6,24 @@ import {
   webFrame
 } from 'electron'
 import Store from 'electron-store'
+
 import './css.styl'
 
 const store = new Store()
 
 class Injector {
   constructor () {
-    this.initialize()
+    this.init()
   }
 
   // 初始化
-  initialize () {
+  init () {
     // 只要loading结束
     // 不论页面加载是否成功都会执行
-    window.addEventListener('load', () => {
-      if (navigator.onLine) {
-        ipcRenderer.send('online')
-      } else {
-        return ipcRenderer.send('offline')
+    ipcRenderer.on('dom-ready', () => {
+      ipcRenderer.send('online', navigator.onLine)
+      if (!navigator.onLine) {
+        return
       }
       this.injectCss()
       this.injectJs()
@@ -32,7 +32,7 @@ class Injector {
 
   // 注入CSS
   injectCss () {
-    const filename = path.join(__dirname, '../css/css.css')
+    const filename = path.join(__dirname, '../css/mainWin.css')
     fs.readFile(filename, (err, css) => {
       if (!err) {
         const style = document.createElement('style')
