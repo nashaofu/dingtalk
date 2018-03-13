@@ -1,7 +1,6 @@
 'use strict'
 const path = require('path')
 const config = require('../config')
-const vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve (dir) {
   return path.join(config.baseDir, dir)
@@ -10,36 +9,30 @@ function resolve (dir) {
 module.exports = {
   context: config.baseDir,
   entry: {
-    setWin: path.resolve(config.srcRendererDir, './setWin')
+    mainWin: config.srcMainWinDir
   },
   output: {
-    path: config.distRendererDir,
+    path: config.distMainWinDir,
     filename: '[name].js'
   },
   target: 'electron-renderer',
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', '.json'],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src/renderer')
+      '@': resolve('src/mainWin')
     }
   },
   module: {
     rules: [
       {
-        test: /\.(js|vue)$/,
+        test: /\.js$/,
         loader: 'eslint-loader',
         enforce: 'pre',
-        include: [resolve('src/renderer')],
+        include: [resolve('src/mainWin')],
         options: {
           formatter: require('eslint-friendly-formatter'),
           emitWarning: true
         }
-      },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: vueLoaderConfig
       },
       {
         test: /\.js$/,

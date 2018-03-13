@@ -1,6 +1,7 @@
+import fs from 'fs'
 import path from 'path'
 import contextMenu from './contextMenu'
-import { app, BrowserWindow, shell } from 'electron'
+import { app, BrowserWindow, shell, ipcMain } from 'electron'
 
 export default dingtalk => () => {
   if (dingtalk.$mainWin) {
@@ -19,10 +20,7 @@ export default dingtalk => () => {
     show: false,
     backgroundColor: '#5a83b7',
     icon: path.join(app.getAppPath(), './icon/32x32.png'),
-    resizable: true,
-    webPreferences: {
-      preload: path.join(app.getAppPath(), './dist/renderer/js/mainWin.js')
-    }
+    resizable: true
   })
 
   /**
@@ -67,7 +65,38 @@ export default dingtalk => () => {
   })
 
   $win.webContents.on('dom-ready', () => {
-    $win.webContents.send('dom-ready')
+    const filename = path.join(app.getAppPath(), './dist/mainWin/mainWin.js')
+    // 读取js文件并执行
+    fs.access(filename, fs.constants.R_OK, err => {
+      if (err) return
+      fs.readFile(filename, (error, data) => {
+        if (error) return
+        $win.webContents.executeJavaScript(data.toString(), () => {
+          $win.webContents.send('dom-ready')
+        })
+      })
+    })
+  })
+
+  ipcMain.on('MAINWIN:window-minimize', () => {
+    if (dingtalk.$mainWin) {
+      dingtalk.$mainWin.minimize()
+    }
+  })
+
+  ipcMain.on('MAINWIN:window-maximization', () => {
+    if (!dingtalk.$mainWin) return
+    if (dingtalk.$mainWin.isMaximized()) {
+      dingtalk.$mainWin.unmaximize()
+    } else {
+      dingtalk.$mainWin.maximize()
+    }
+  })
+
+  ipcMain.on('MAINWIN:window-close', () => {
+    if (dingtalk.$mainWin) {
+      dingtalk.$mainWin.hide()
+    }
   })
 
   // 加载URL地址

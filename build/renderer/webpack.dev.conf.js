@@ -1,6 +1,6 @@
 'use strict'
 const path = require('path')
-const utils = require('./utils')
+const utils = require('../utils')
 const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
@@ -43,9 +43,11 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
+      title: '设置',
       filename: 'index.html',
       template: path.join(config.srcRendererDir, 'index.html'),
-      inject: true
+      inject: true,
+      chunks: ['setWin']
     })
   ]
 })

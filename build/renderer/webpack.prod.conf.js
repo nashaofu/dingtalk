@@ -1,6 +1,6 @@
 'use strict'
 const path = require('path')
-const utils = require('./utils')
+const utils = require('../utils')
 const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
@@ -21,8 +21,7 @@ module.exports = merge(baseWebpackConfig, {
   devtool: config.prod.sourcemap ? '#source-map' : false,
   output: {
     path: config.distRendererDir,
-    filename: 'js/[name].js',
-    chunkFilename: 'js/[id].js'
+    filename: 'js/[name].js'
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html

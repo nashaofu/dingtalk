@@ -8,9 +8,11 @@ module.exports = {
   baseDir,
   srcDir,
   srcMainDir: path.resolve(srcDir, './main'),
+  srcMainWinDir: path.resolve(srcDir, './mainWin'),
   srcRendererDir: path.resolve(srcDir, './renderer'),
   distDir: path.resolve(baseDir, './dist'),
-  distMianFile: path.resolve(distDir, './main.js'),
+  distMainFile: path.resolve(distDir, './main.js'),
+  distMainWinDir: path.resolve(distDir, './mainWin'),
   distRendererDir: path.resolve(distDir, './renderer'),
   dev: {
     host: 'localhost',

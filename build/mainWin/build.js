@@ -8,10 +8,10 @@ const webpack = require('webpack')
 const config = require('../config')
 const webpackConfig = require('./webpack.prod.conf')
 
-const spinner = ora('building for production main process...')
+const spinner = ora('building for production renderer process...')
 spinner.start()
 
-rm(config.distMainFile, err => {
+rm(config.distMainWinDir, err => {
   if (err) throw err
   webpack(webpackConfig, (err, stats) => {
     spinner.stop()
@@ -29,6 +29,6 @@ rm(config.distMainFile, err => {
       process.exit(1)
     }
 
-    console.log(chalk.cyan('  Build main process complete.\n'))
+    console.log(chalk.cyan('  Build renderer process complete.\n'))
   })
 })
