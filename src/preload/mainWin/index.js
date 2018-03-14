@@ -8,9 +8,9 @@ import { ipcRenderer, webFrame } from 'electron'
 import './css.styl'
 
 class MainWinInjector {
-  // timer循环数据
-  callback = []
   constructor () {
+    // timer循环数据
+    this.callback = []
     this.timer = setInterval(() => {
       this.callback.forEach(item => item())
     }, 1000)

@@ -1,7 +1,7 @@
 const { ipcRenderer, webFrame } = require('electron')
 class EmailWinInjector {
-  href = null
   constructor () {
+    this.href = null
     this.init()
   }
 
