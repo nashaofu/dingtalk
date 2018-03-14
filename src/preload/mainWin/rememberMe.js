@@ -1,17 +1,19 @@
 import ElectronStore from 'electron-store'
+import debounce from 'lodash/debounce'
 const electronStore = new ElectronStore()
 
 export default () => {
-  const $form = document.querySelector('.login-form.login-tab form')
-  const $tabItems = $form.querySelectorAll('.login-tab .tab-item')
-  $tabItems.forEach((item) => {
+  const $tab = document.querySelector('.login-form.login-tab .tab-items')
+  if (!$tab) return
+  const $tabItems = $tab.querySelectorAll('.tab-item')
+  $tabItems.forEach(item => {
     item.addEventListener('click', () => {
-      if (item.getAttribute('ui-sref') === '.passwordLogin') {
+      const classList = [...item.classList]
+      if (item.getAttribute('ui-sref') === '.passwordLogin' && classList.indexOf('current') === -1) {
         setTimeout(() => rememberMe(), 100)
       }
     })
   })
-  if (!$form) return
   rememberMe(true)
 }
 
@@ -31,8 +33,8 @@ const rememberMe = autoLogin => {
   const $phoneInput = $form.querySelector('phone-input>input')
   const $pwdInput = $form.querySelector('input.password')
 
-  const rememberMePhone = () => electronStore.set('phone', $phoneInput.value)
-  const rememberMePwd = () => electronStore.set('pwd', $pwdInput.value)
+  const rememberMePhone = debounce(() => electronStore.set('phone', $phoneInput.value), 1500)
+  const rememberMePwd = debounce(() => electronStore.set('pwd', $pwdInput.value), 1500)
   const rememberMe = () => {
     $phoneInput.removeEventListener('input', rememberMePhone)
     $pwdInput.removeEventListener('input', rememberMePwd)

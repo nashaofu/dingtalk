@@ -11,6 +11,7 @@ import {
 import ShortcutCapture from 'shortcut-capture'
 import mainWin from './mainWin'
 import tray from './tray'
+import emailWin from './emailWin'
 
 export default class DingTalk {
   // 托盘图标
@@ -21,6 +22,8 @@ export default class DingTalk {
   $errWin = null
   // 设置窗口
   $setWin = null
+  // 邮箱窗口
+  $emailWin = null
   // 截图对象
   $shortcutCapture = null
   // 网络情况
@@ -129,5 +132,9 @@ export default class DingTalk {
 
   initTray () {
     this.$tray = tray(this)()
+  }
+
+  openEmailWin (url) {
+    this.$emailWin = emailWin(this)(url)
   }
 }

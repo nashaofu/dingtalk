@@ -9,11 +9,11 @@
     "lint": "eslint --ext .js,.vue .",
     "dev": "node build/dev.js",
     "dev:main": "webpack --config build/main/webpack.dev.conf.js --watch",
-    "dev:mainWin": "webpack --config build/mainWin/webpack.dev.conf.js --watch",
+    "dev:preload": "webpack --config build/preload/webpack.dev.conf.js --watch",
     "dev:renderer": "webpack-dev-server --inline --progress --config build/renderer/webpack.dev.conf.js",
-    "build": "npm run build:main && npm run build:mainWin && npm run build:renderer",
+    "build": "npm run build:main && npm run build:preload && npm run build:renderer",
     "build:main": "node build/main/build.js",
-    "build:mainWin": "node build/mainWin/build.js",
+    "build:preload": "node build/preload/build.js",
     "build:renderer": "node build/renderer/build.js"
   },
   "keywords": [

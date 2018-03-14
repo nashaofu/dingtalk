@@ -1,34 +1,20 @@
 import { ipcRenderer } from 'electron'
+import findIndex from 'lodash/findIndex'
 
-export default () => {
+// 四舍五入并保留小数位数
+const toDecimal = (num, length = 0) => {
+  const len = Math.pow(10, length)
+  const dec = Math.round(num * len) / len
+  return dec === num ? dec : dec.toFixed(length)
+}
+
+export default injector => {
   const files = []
   const status = {
     completed: '下载完成',
     cancelled: '取消下载',
     interrupted: '下载失败',
     progressing: '正在下载'
-  }
-  const findIndex = (collection, condition) => {
-    for (let i = 0, len = collection.length; i < len; i++) {
-      const item = collection[i]
-      if (typeof condition === 'function') {
-        if (condition(item)) {
-          return i
-        }
-      } else {
-        if (condition === item.id) {
-          return i
-        }
-      }
-    }
-    return -1
-  }
-
-  // 四舍五入并保留小数位数
-  const toDecimal = (num, length = 0) => {
-    const len = Math.pow(10, length)
-    const dec = Math.round(num * len) / len
-    return dec === num ? dec : dec.toFixed(length)
   }
 
   ipcRenderer.on('start-download', (e, file) => {
@@ -52,8 +38,8 @@ export default () => {
   })
 
   // 下载列表状态更新
-  setInterval(() => {
-    const $progress = document.querySelector('#header > upload-list > div > div.progress.upload-task-progress')
+  injector.setTimer(() => {
+    const $progress = document.querySelector('#header>upload-list .progress.upload-task-progress')
     if ($progress) {
       const index = findIndex(files, file => file.state === 'progressing')
       if (index !== -1) {
@@ -61,9 +47,9 @@ export default () => {
       } else {
         $progress.classList.add('ng-hide')
       }
-      const $fileItems = document.querySelector('#header > upload-list > div > div.upload-list-wrap.ng-scope > div.file-items')
+      const $fileItems = document.querySelector('#header>upload-list .file-items')
       if ($fileItems && files.length) {
-        const $empty = document.querySelector('#header > upload-list > div > div.upload-list-wrap.ng-scope > div.file-items-empty-text.ng-binding.ng-scope')
+        const $empty = document.querySelector('#header>upload-list .upload-list-wrap.ng-scope>.file-items-empty-text.ng-binding.ng-scope')
         if ($empty) {
           $empty.classList.add('ng-hide')
         }
@@ -102,5 +88,5 @@ export default () => {
         })
       }
     }
-  }, 1000)
+  })
 }

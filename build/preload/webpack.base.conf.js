@@ -9,10 +9,11 @@ function resolve (dir) {
 module.exports = {
   context: config.baseDir,
   entry: {
-    mainWin: config.srcMainWinDir
+    mainWin: path.resolve(config.srcPreloadDir, './mainWin/index.js'),
+    emailWin: path.resolve(config.srcPreloadDir, './emailWin/index.js')
   },
   output: {
-    path: config.distMainWinDir,
+    path: config.distPreloadDir,
     filename: '[name].js'
   },
   target: 'electron-renderer',

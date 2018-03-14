@@ -65,7 +65,7 @@ export default dingtalk => () => {
   })
 
   $win.webContents.on('dom-ready', () => {
-    const filename = path.join(app.getAppPath(), './dist/mainWin/mainWin.js')
+    const filename = path.join(app.getAppPath(), './dist/preload/mainWin.js')
     // 读取js文件并执行
     fs.access(filename, fs.constants.R_OK, err => {
       if (err) return
@@ -98,6 +98,8 @@ export default dingtalk => () => {
       dingtalk.$mainWin.hide()
     }
   })
+
+  ipcMain.on('MAINWIN:open-email', (e, url) => dingtalk.openEmailWin(url))
 
   // 加载URL地址
   $win.loadURL('https://im.dingtalk.com/')

@@ -12,7 +12,7 @@ module.exports = merge(baseWebpackConfig, {
   },
   devtool: config.prod.sourcemap ? '#source-map' : false,
   output: {
-    path: config.distMainWinDir,
+    path: config.distPreloadDir,
     filename: '[name].js'
   },
   plugins: [
