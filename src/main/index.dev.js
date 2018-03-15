@@ -2,7 +2,7 @@ import debug from 'electron-debug'
 import { app } from 'electron'
 import './index'
 
-debug({ showDevTools: true })
+debug({ showDevTools: 'undocked' })
 
 app.on('ready', () => {
   const installExtension = require('electron-devtools-installer')

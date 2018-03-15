@@ -10,7 +10,7 @@ function resolve (dir) {
 module.exports = {
   context: config.baseDir,
   entry: {
-    setWin: path.resolve(config.srcRendererDir, './setWin')
+    settingWin: path.resolve(config.srcRendererDir, './settingWin')
   },
   output: {
     path: config.distRendererDir,

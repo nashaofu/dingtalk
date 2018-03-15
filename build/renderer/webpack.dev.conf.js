@@ -44,7 +44,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       title: '设置',
-      filename: 'index.html',
+      filename: 'settingWin.html',
       template: path.join(config.srcRendererDir, 'index.html'),
       inject: true,
       chunks: ['setWin']

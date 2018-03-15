@@ -14,10 +14,10 @@ export default () => {
       }
     })
   })
-  rememberMe(true)
+  rememberMe()
 }
 
-const rememberMe = autoLogin => {
+const rememberMe = () => {
   const $form = document.querySelector('.login-form.login-tab form')
   if (!$form) return
   const $checkboxContainer = document.createElement('div')
@@ -61,15 +61,6 @@ const rememberMe = autoLogin => {
       $scopePwd.passwordLogin.password = $pwdInput.value = pwd
       $scopePwd.passwordLogin.submitable = true
     })
-  }
-
-  if ($phoneInput.value &&
-    $pwdInput.value &&
-    $pwdInput.value.length > 3) {
-    $submitBtn.disabled = false
-    if (autoLogin) {
-      $scopePwd.passwordLogin.submit()
-    }
   }
 
   // 保存密码

@@ -5,6 +5,7 @@ import { app, BrowserWindow, shell, ipcMain } from 'electron'
 
 export default dingtalk => () => {
   if (dingtalk.$mainWin) {
+    dingtalk.showMainWin()
     return
   }
   // 创建浏览器窗口
@@ -40,16 +41,6 @@ export default dingtalk => () => {
     $win.hide()
   })
 
-  /**
-   * 每次窗口显示都会检查是否离线
-   */
-  $win.on('show', () => {
-    if (!dingtalk.online) {
-      // $win.hide()
-      // return dingtalk.showErrWin()
-    }
-  })
-
   // 右键菜单
   $win.webContents.on('context-menu', (e, params) => {
     e.preventDefault()
@@ -78,25 +69,28 @@ export default dingtalk => () => {
     })
   })
 
-  ipcMain.on('MAINWIN:window-minimize', () => {
-    if (dingtalk.$mainWin) {
-      dingtalk.$mainWin.minimize()
-    }
-  })
+  ipcMain.on('MAINWIN:window-minimize', () => $win.minimize())
 
   ipcMain.on('MAINWIN:window-maximization', () => {
-    if (!dingtalk.$mainWin) return
-    if (dingtalk.$mainWin.isMaximized()) {
-      dingtalk.$mainWin.unmaximize()
+    if ($win.isMaximized()) {
+      $win.unmaximize()
     } else {
-      dingtalk.$mainWin.maximize()
+      $win.maximize()
     }
   })
 
-  ipcMain.on('MAINWIN:window-close', () => {
-    if (dingtalk.$mainWin) {
-      dingtalk.$mainWin.hide()
+  ipcMain.on('MAINWIN:window-close', () => $win.hide())
+
+  ipcMain.on('MAINWIN:online', (e, online) => {
+    if (online === false) {
+      // 第一次启动窗口
+      if (dingtalk.online === null) {
+        dingtalk.showErrorWin()
+      }
+    } else {
+      dingtalk.hideErrorWin()
     }
+    dingtalk.online = online
   })
 
   ipcMain.on('MAINWIN:open-email', (e, url) => dingtalk.openEmailWin(url))

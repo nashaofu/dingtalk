@@ -12,22 +12,23 @@ import ShortcutCapture from 'shortcut-capture'
 import mainWin from './mainWin'
 import tray from './tray'
 import emailWin from './emailWin'
+import errorWin from './errorWin'
 
 export default class DingTalk {
   // 托盘图标
   $tray = null
   // 主窗口
   $mainWin = null
-  // 错误窗口
-  $errWin = null
-  // 设置窗口
-  $setWin = null
   // 邮箱窗口
   $emailWin = null
+  // 错误窗口
+  $errorWin = null
+  // 设置窗口
+  $settingWin = null
   // 截图对象
   $shortcutCapture = null
-  // 网络情况
-  online = false
+  // 网络情况，默认为null，必须等到页面报告状态
+  online = null
   // 默认配置
   setting = {
     keymap: {
@@ -96,12 +97,7 @@ export default class DingTalk {
 
   makeSingleInstance () {
     // 同时只能运行一个人实例
-    const isSecondInstance = app.makeSingleInstance(() => {
-      if (this.$mainWin) {
-        this.$mainWin.show()
-        this.$mainWin.focus()
-      }
-    })
+    const isSecondInstance = app.makeSingleInstance(() => this.showMainWin())
     if (isSecondInstance) {
       app.quit()
     }
@@ -126,7 +122,12 @@ export default class DingTalk {
 
   showMainWin () {
     if (this.$mainWin) {
-      this.$mainWin.show()
+      if (this.online) {
+        this.$mainWin.show()
+        this.$mainWin.focus()
+      } else {
+        this.showErrorWin()
+      }
     }
   }
 
@@ -136,5 +137,15 @@ export default class DingTalk {
 
   openEmailWin (url) {
     this.$emailWin = emailWin(this)(url)
+  }
+
+  showErrorWin () {
+    this.$errorWin = errorWin(this)()
+  }
+
+  hideErrorWin () {
+    if (this.$errorWin) {
+      this.errorWin.close()
+    }
   }
 }
