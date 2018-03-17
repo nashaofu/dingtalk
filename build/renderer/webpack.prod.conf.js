@@ -4,6 +4,7 @@ const utils = require('../utils')
 const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
+const { htmlWebpackPlugins } = require('./views')
 const baseWebpackConfig = require('./webpack.base.conf')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -56,19 +57,21 @@ module.exports = merge(baseWebpackConfig, {
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      title: '设置',
-      filename: 'index.html',
-      template: path.join(config.srcRendererDir, 'index.html'),
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
-      },
-      chunks: ['setWin']
+    ...htmlWebpackPlugins(view => {
+      return new HtmlWebpackPlugin({
+        title: view.title,
+        filename: `${view.key}.html`,
+        template: path.join(config.srcRendererDir, 'index.html'),
+        inject: true,
+        minify: {
+          removeComments: true,
+          collapseWhitespace: true,
+          removeAttributeQuotes: true
+          // more options:
+          // https://github.com/kangax/html-minifier#options-quick-reference
+        },
+        chunks: [view.key]
+      })
     })
   ]
 })

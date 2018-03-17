@@ -1,6 +1,7 @@
 'use strict'
 const path = require('path')
 const config = require('../config')
+const { entries } = require('./views')
 const vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve (dir) {
@@ -9,9 +10,7 @@ function resolve (dir) {
 
 module.exports = {
   context: config.baseDir,
-  entry: {
-    settingWin: path.resolve(config.srcRendererDir, './settingWin')
-  },
+  entry: entries(view => path.resolve(config.srcRendererDir, view.key)),
   output: {
     path: config.distRendererDir,
     filename: '[name].js'

@@ -13,6 +13,7 @@ import mainWin from './mainWin'
 import tray from './tray'
 import emailWin from './emailWin'
 import errorWin from './errorWin'
+import online from './online'
 
 export default class DingTalk {
   // 托盘图标
@@ -51,6 +52,7 @@ export default class DingTalk {
       this.initShortcutCapture()
       this.initMainWin()
       this.initTray()
+      this.initOnline()
     })
   }
 
@@ -135,6 +137,10 @@ export default class DingTalk {
     this.$tray = tray(this)()
   }
 
+  initOnline () {
+    online(this)()
+  }
+
   openEmailWin (url) {
     this.$emailWin = emailWin(this)(url)
   }
@@ -145,7 +151,7 @@ export default class DingTalk {
 
   hideErrorWin () {
     if (this.$errorWin) {
-      this.errorWin.close()
+      this.$errorWin.destroy()
     }
   }
 }

@@ -5,6 +5,7 @@ const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
 const portfinder = require('portfinder')
+const { htmlWebpackPlugins } = require('./views')
 const baseWebpackConfig = require('./webpack.base.conf')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
@@ -42,12 +43,14 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      title: '设置',
-      filename: 'settingWin.html',
-      template: path.join(config.srcRendererDir, 'index.html'),
-      inject: true,
-      chunks: ['setWin']
+    ...htmlWebpackPlugins(view => {
+      return new HtmlWebpackPlugin({
+        title: view.title,
+        filename: `${view.key}.html`,
+        template: path.join(config.srcRendererDir, 'index.html'),
+        inject: true,
+        chunks: [view.key]
+      })
     })
   ]
 })

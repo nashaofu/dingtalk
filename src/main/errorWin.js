@@ -1,5 +1,5 @@
 import path from 'path'
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 
 export default dingtalk => () => {
   if (dingtalk.$errorWin) {
@@ -31,10 +31,24 @@ export default dingtalk => () => {
   $win.on('closed', () => {
     dingtalk.$errorWin = null
   })
+
+  ipcMain.on('ERRORWIN:retry', () => {
+    dingtalk.hideErrorWin()    
+    if (dingtalk.$mainWin) {
+      dingtalk.$mainWin.reload()
+      dingtalk.showMainWin()
+    }
+  })
+
+  ipcMain.on('ERRORWIN:close', () => {
+    dingtalk.hideErrorWin()
+  })
+
   // 加载URL地址
   const URL = process.env.NODE_ENV === 'development'
-    ? 'http://localhost:8080'
+    ? 'http://localhost:8080/errorWin.html'
     : `file://${path.join(app.getAppPath(), './renderer/errorWin.html')}`
+
   $win.loadURL(URL)
   return $win
 }

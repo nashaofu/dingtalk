@@ -81,18 +81,6 @@ export default dingtalk => () => {
 
   ipcMain.on('MAINWIN:window-close', () => $win.hide())
 
-  ipcMain.on('MAINWIN:online', (e, online) => {
-    if (online === false) {
-      // 第一次启动窗口
-      if (dingtalk.online === null) {
-        dingtalk.showErrorWin()
-      }
-    } else {
-      dingtalk.hideErrorWin()
-    }
-    dingtalk.online = online
-  })
-
   ipcMain.on('MAINWIN:open-email', (e, url) => dingtalk.openEmailWin(url))
 
   // 加载URL地址

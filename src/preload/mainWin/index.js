@@ -20,7 +20,7 @@ class MainWinInjector {
   // 初始化
   init () {
     ipcRenderer.on('dom-ready', () => {
-      ipcRenderer.send('MAINWIN:online', navigator.onLine)
+      ipcRenderer.send('online', !navigator.onLine)
       if (!navigator.onLine) {
         return
       }
