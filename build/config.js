@@ -20,6 +20,6 @@ module.exports = {
     proxyTable: {}
   },
   prod: {
-    sourcemap: true
+    sourcemap: false
   }
 }

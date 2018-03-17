@@ -33,7 +33,7 @@ export default dingtalk => () => {
   })
 
   ipcMain.on('ERRORWIN:retry', () => {
-    dingtalk.hideErrorWin()    
+    dingtalk.hideErrorWin()
     if (dingtalk.$mainWin) {
       dingtalk.$mainWin.reload()
       dingtalk.showMainWin()
