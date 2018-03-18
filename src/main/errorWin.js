@@ -47,7 +47,7 @@ export default dingtalk => () => {
   // 加载URL地址
   const URL = process.env.NODE_ENV === 'development'
     ? 'http://localhost:8080/errorWin.html'
-    : `file://${path.join(app.getAppPath(), './renderer/errorWin.html')}`
+    : `file://${path.join(app.getAppPath(), './dist/renderer/errorWin.html')}`
 
   $win.loadURL(URL)
   return $win

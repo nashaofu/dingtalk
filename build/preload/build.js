@@ -8,7 +8,7 @@ const webpack = require('webpack')
 const config = require('../config')
 const webpackConfig = require('./webpack.prod.conf')
 
-const spinner = ora('building for production preload process...')
+const spinner = ora('building for production preload script...')
 spinner.start()
 
 rm(config.distPreloadDir, err => {
@@ -29,6 +29,6 @@ rm(config.distPreloadDir, err => {
       process.exit(1)
     }
 
-    console.log(chalk.cyan('  Build preload process complete.\n'))
+    console.log(chalk.cyan('  Build preload script complete.\n'))
   })
 })

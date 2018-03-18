@@ -127,7 +127,8 @@ export default class DingTalk {
       if (this.online) {
         this.$mainWin.show()
         this.$mainWin.focus()
-      } else {
+      } else if (this.online === false) {
+        // this.online === null不显示
         this.showErrorWin()
       }
     }
