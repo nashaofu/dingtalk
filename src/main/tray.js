@@ -22,7 +22,7 @@ export default dingtalk => () => {
     },
     {
       label: '设置',
-      click: () => dingtalk.showSetting()
+      click: () => dingtalk.showSettingWin()
     },
     {
       label: '退出',

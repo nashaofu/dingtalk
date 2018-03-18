@@ -14,6 +14,7 @@ import tray from './tray'
 import emailWin from './emailWin'
 import errorWin from './errorWin'
 import online from './online'
+import settingWin from './settingWin'
 
 export default class DingTalk {
   // 托盘图标
@@ -154,5 +155,9 @@ export default class DingTalk {
     if (this.$errorWin) {
       this.$errorWin.destroy()
     }
+  }
+
+  showSettingWin () {
+    this.$settingWin = settingWin(this)()
   }
 }
