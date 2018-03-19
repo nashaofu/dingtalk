@@ -33,8 +33,9 @@ export default class DingTalk {
   online = null
   // 默认配置
   setting = {
+    autoupdate: true,
     keymap: {
-      'shortcut-capture': 'Control+Alt+a'
+      'shortcut-capture': ['Control', 'Alt', 'A']
     }
   }
 
@@ -109,7 +110,7 @@ export default class DingTalk {
 
   initShortcutCapture () {
     this.$shortcutCapture = new ShortcutCapture({
-      hotkey: this.setting.keymap['shortcut-capture']
+      hotkey: this.setting.keymap['shortcut-capture'].join('+')
     })
   }
 
@@ -159,5 +160,11 @@ export default class DingTalk {
 
   showSettingWin () {
     this.$settingWin = settingWin(this)()
+  }
+
+  hideSettingWin () {
+    if (this.$settingWin) {
+      this.$settingWin.destroy()
+    }
   }
 }

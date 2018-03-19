@@ -1,7 +1,7 @@
 import path from 'path'
 import merge from 'lodash/merge'
 import contextMenu from './contextMenu'
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, globalShortcut } from 'electron'
 
 export default dingtalk => () => {
   if (dingtalk.$settingWin) {
@@ -12,7 +12,7 @@ export default dingtalk => () => {
   const $win = new BrowserWindow({
     title: '设置',
     width: 320,
-    height: 280,
+    height: 260,
     useContentSize: true,
     resizable: false,
     menu: false,
@@ -36,9 +36,15 @@ export default dingtalk => () => {
   })
 
   ipcMain.on('SETTINGWIN:setting', async (e, setting) => {
-    dingtalk.setting = merge({}, setting, dingtalk.setting)
+    dingtalk.setting = merge({}, dingtalk.setting, setting)
     await dingtalk.writeSetting()
-    dingtalk.$shortcutCapture.registerHotkey(dingtalk.setting.keymap['shortcut-capture'])
+    const shortcutCapture = dingtalk.setting.keymap['shortcut-capture']
+    // 注销说有的快捷键
+    globalShortcut.unregisterAll()
+    if (shortcutCapture.length) {
+      dingtalk.$shortcutCapture.registerHotkey(shortcutCapture.join('+'))
+    }
+    dingtalk.hideSettingWin()
   })
 
   // 加载URL地址

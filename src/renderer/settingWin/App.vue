@@ -1,25 +1,33 @@
 <template lang="pug">
 .app
   .app-item
-    dt-input(v-model="shortcutCapture", title="截图")
+    dt-keybinding(
+      v-model="shortcutCapture",
+      title="截图"
+    )
   .app-item
-    dt-switch(v-model="autoupdate", title="自动更新")
-  .app-item
-    .app-item-error {{ error }}
+    dt-switch(
+      v-model="autoupdate",
+      title="自动更新"
+    )
   .app-item
     .app-item-button
-      dt-button 取消
-      dt-button(type="primary") 确定
+      dt-button(@click="reset") 还原设置
+      dt-button(
+        type="primary"
+        @click="save"
+      ) 保存设置
 </template>
 
 <script>
+import cloneDeep from 'lodash/cloneDeep'
 import { webFrame, ipcRenderer } from 'electron'
 
 export default {
   name: 'App',
   data () {
     return {
-      error: '',
+      oldSetting: {},
       setting: {}
     }
   },
@@ -28,7 +36,7 @@ export default {
       get () {
         return this.setting.keymap
           ? this.setting.keymap['shortcut-capture']
-          : ''
+          : []
       },
       set (val) {
         const keymap = this.setting.keymap || {}
@@ -36,7 +44,7 @@ export default {
           ...this.setting,
           keymap: {
             ...keymap,
-            'shortcut-capture': keymap['shortcut-capture']
+            'shortcut-capture': val
           }
         }
       }
@@ -55,7 +63,8 @@ export default {
   },
   mounted () {
     ipcRenderer.on('dom-ready', (e, setting) => {
-      this.setting = { ...setting }
+      this.setting = cloneDeep(setting)
+      this.oldSetting = cloneDeep(setting)
       this.setZoomLevel()
     })
   },
@@ -65,6 +74,12 @@ export default {
       webFrame.setZoomFactor(100)
       webFrame.setZoomLevel(0)
       webFrame.setVisualZoomLevelLimits(1, 1)
+    },
+    reset () {
+      this.setting = cloneDeep(this.oldSetting)
+    },
+    save () {
+      ipcRenderer.send('SETTINGWIN:setting', this.setting)
     }
   }
 }
@@ -89,14 +104,8 @@ body
   &-item
     margin 10px auto
     text-align center
-    &-error
-      line-height 15px
-      font-size 14px
-      text-align left
-      color #f00
-      margin 15px auto
     &-button
-      margin 30px auto 15px auto
+      padding 40px 0 10px 0
       .dt-button
         margin 0 15px
         padding 8px 20px
