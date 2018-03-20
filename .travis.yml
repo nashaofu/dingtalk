@@ -1,9 +1,18 @@
-language: node_js
-node_js:
-  - "node"
-
 dist: trusty
 sudo: required
+
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode9.2
+      language: node_js
+      node_js:
+        - "node"
+
+    - os: linux
+      language: node_js
+      node_js:
+        - "node"
 
 cache:
   directories:
@@ -12,16 +21,25 @@ cache:
 install:
   - npm install
 
+before_script:
+  - echo $TRAVIS_OS_NAME
+  - ls
+
 script:
   - npm run build
+  - ls
+  - npm run dist
+  - cd release && ls
 
 deploy:
-  provider: script
+  provider: github
   script: npm run deploy
   skip_cleanup: true
   on:
-    branches: master
+    branches:
+      except:
+        - "/^release \\d+\\.\\d+\\.\\d+$/"
 
 branches:
-  only:
-    - master
+  except:
+    - "/^release \\d+\\.\\d+\\.\\d+$/"
