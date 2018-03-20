@@ -17,7 +17,7 @@ import { ipcRenderer, webFrame } from 'electron'
 
 export default {
   name: 'App',
-  mounted () {
+  created () {
     this.setZoomLevel()
     ipcRenderer.send('online', navigator.onLine)
     window.addEventListener('online', () => ipcRenderer.send('online', navigator.onLine))

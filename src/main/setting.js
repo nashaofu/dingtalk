@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 import { app } from 'electron'
-import merge from 'lodash/merge'
 
 /**
  * 初始化设置选项
@@ -31,7 +30,7 @@ export const readSetting = dingtalk => () => {
     fs.readFile(filename, (err, data) => {
       if (err) return reject(err)
       try {
-        return resolve(merge({}, dingtalk.setting, JSON.parse(data)))
+        return resolve({ ...dingtalk.setting, ...JSON.parse(data) })
       } catch (e) {
         resolve(dingtalk.setting)
       }

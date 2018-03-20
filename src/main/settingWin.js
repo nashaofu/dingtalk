@@ -1,5 +1,4 @@
 import path from 'path'
-import merge from 'lodash/merge'
 import contextMenu from './contextMenu'
 import { app, BrowserWindow, ipcMain, globalShortcut } from 'electron'
 
@@ -36,10 +35,10 @@ export default dingtalk => () => {
   })
 
   ipcMain.on('SETTINGWIN:setting', async (e, setting) => {
-    dingtalk.setting = merge({}, dingtalk.setting, setting)
+    dingtalk.setting = setting
     await dingtalk.writeSetting()
     const shortcutCapture = dingtalk.setting.keymap['shortcut-capture']
-    // 注销说有的快捷键
+    // 注销所有的快捷键
     globalShortcut.unregisterAll()
     if (shortcutCapture.length) {
       dingtalk.$shortcutCapture.registerHotkey(shortcutCapture.join('+'))

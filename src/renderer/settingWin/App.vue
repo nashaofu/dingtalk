@@ -61,7 +61,7 @@ export default {
       }
     }
   },
-  mounted () {
+  created () {
     ipcRenderer.on('dom-ready', (e, setting) => {
       this.setting = cloneDeep(setting)
       this.oldSetting = cloneDeep(setting)

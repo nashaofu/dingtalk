@@ -42,7 +42,7 @@
 
 ## TODO
 - [x] 支持网络断开时显示错误页
-- [x] 消息提示在windows上不出来的BUG，或者替换为node-notifier模块
+- [ ] 消息提示在windows上不出来的BUG，或者替换为node-notifier模块
 
 ## 关于支持加密信息的说明
 加密信息暂不支持，详情请看[企业信息加密相关](https://github.com/nashaofu/dingtalk/issues/2)，也欢迎各位朋友能够去研究一下，帮助实现这个功能
