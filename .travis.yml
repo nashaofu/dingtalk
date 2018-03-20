@@ -1,13 +1,35 @@
-language: node_js
-node_js:
-  - "node"
-
 dist: trusty
 sudo: required
+
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode9.2
+      language: node_js
+      node_js:
+        - "node"
+      env:
+        - ELECTRON_CACHE=$HOME/.cache/electron
+        - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+
+    - os: linux
+      services: docker
+      language: generic
 
 cache:
   directories:
     - node_modules
+    - "$HOME/.electron"
+    - "$HOME/.cache"
+
+before_install:
+  - |
+    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+      mkdir -p /tmp/git-lfs && curl -L https://github.com/github/git-lfs/releases/download/v2.3.1/git-lfs-$([ "$TRAVIS_OS_NAME" == "linux" ] && echo "linux" || echo "darwin")-amd64-2.3.1.tar.gz | tar -xz -C /tmp/git-lfs --strip-components 1
+      export PATH="/tmp/git-lfs:$PATH"
+    fi
+before_script:
+  - git lfs pull
 
 install:
   - npm install
@@ -16,12 +38,14 @@ script:
   - npm run build
 
 deploy:
-  provider: script
+  provider: github
   script: npm run deploy
   skip_cleanup: true
   on:
-    branches: master
+    branches:
+      except:
+        - "/^release \\d+\\.\\d+\\.\\d+$/"
 
 branches:
-  only:
-    - master
+  except:
+    - "/^release \\d+\\.\\d+\\.\\d+$/"

@@ -9,6 +9,7 @@ import {
   writeSetting
 } from './setting'
 import ShortcutCapture from 'shortcut-capture'
+import { autoUpdater } from 'electron-updater'
 import mainWin from './mainWin'
 import tray from './tray'
 import emailWin from './emailWin'
@@ -166,5 +167,9 @@ export default class DingTalk {
     if (this.$settingWin) {
       this.$settingWin.destroy()
     }
+  }
+
+  autoupdate () {
+    autoUpdater.checkForUpdatesAndNotify()
   }
 }
