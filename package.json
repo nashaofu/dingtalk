@@ -104,22 +104,7 @@
       "icon": "icon/icon.ico"
     },
     "linux": {
-      "target": [
-        {
-          "target": "deb",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        },
-        {
-          "target": "rpm",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        }
-      ],
+      "target": "deb",
       "icon": "icon",
       "category": "InstantMessaging"
     }

@@ -28,8 +28,8 @@ before_script:
 script:
   - npm run build
   - ls
-  - cd release && ls
   - npm run dist
+  - cd release && ls
 
 deploy:
   provider: github
