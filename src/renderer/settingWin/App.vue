@@ -55,8 +55,8 @@ export default {
       },
       set (val) {
         this.setting = {
-         ...this.setting,
-         autoupdate: val
+          ...this.setting,
+          autoupdate: val
         }
       }
     }

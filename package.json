@@ -15,8 +15,8 @@
     "build:main": "node build/main/build.js",
     "build:preload": "node build/preload/build.js",
     "build:renderer": "node build/renderer/build.js",
-    "pack": "electron-builder -mwl --dir",
-    "dist": "electron-builder -mwl",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
     "release": "build"
   },
   "keywords": [
