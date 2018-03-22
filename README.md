@@ -1,14 +1,8 @@
-# dingtalk[![Build Status](https://travis-ci.org/nashaofu/dingtalk.svg?branch=master)](https://travis-ci.org/nashaofu/dingtalk)
-基于网页版钉钉的linux版封装，解决linux上打开网页被关闭后要重新登陆的问题!
+# dingtalk[![Build Status](https://travis-ci.org/nashaofu/dingtalk.svg?branch=master)](https://travis-ci.org/nashaofu/dingtalk)[![Build status](https://ci.appveyor.com/api/projects/status/jptk80n78gdogd18/branch/master?svg=true)](https://ci.appveyor.com/project/nashaofu/dingtalk/branch/master)
+钉钉桌面版，基于electron和钉钉网页版开发，支持Windows、Linux和macOS
 
 ## 安装步骤
 > 直接从[GitHub relase](https://github.com/nashaofu/dingtalk/releases/latest)页面下载最新版安装包即可
-
-## 手动构建步骤
-1. 安装node与npm，版本必须大于4.0.0,npm版本必须高于3.0.0
-2. 运行`npm install`安装项目依赖
-3. 运行`npm run build`开始打包应用
-4. 打包完成之后即可拷贝出dist目录下的文件到想要的文件夹下，运行里面的dingtalk文件即可安装应用。
 
 ## 截图效果
 1. 二维码登录页面
@@ -33,12 +27,14 @@
     * 除了少数的功能未能够完全实现，其余的使用体验和PC版钉钉基本一致
 3. 支持屏幕截图，并且支持多显示器截图。截图快捷键为`ctrl+alt+a`
 4. 添加应用分类，[Linux系统分类](https://specifications.freedesktop.org/menu-spec/latest/apa.html#main-category-registry)
+5. 目前已经支持Linux、macOS和Windows三个平台
 
 ## 更新说明
 1. 支持屏幕截图，并且支持多显示器截图。截图快捷键为`ctrl+alt+a`，2017-10-23
 2. 支持网络错误页面提示，网络恢复自动跳转到登陆页面，2017-12-28
 3. 修改网络错误页面，支持快捷键设置，2018-02-07
 4. 更新截图功能，支持多显示器截图，目前确认支持Ubuntn16，Ubuntn17不支持，其他Linux系统未测试，其中使用了[shortcut-capture](https://github.com/nashaofu/shortcut-capture)模块来实现截图；修复设置页面不修改快捷键时，点击保存时提示错误的BUG，2018-03-03
+5. 整个项目采用webpack打包，采用electron-builder来构建应用，分别构建生成三大平台安装包，2018-03-22
 
 ## TODO
 - [x] 支持网络断开时显示错误页

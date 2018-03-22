@@ -1,0 +1,22 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+platform: Any CPU
+environment:
+  nodejs_version: 8
+  GH_TOKEN:
+    secure: xdnnENSuvDPoe93wuR2RayHBr4opZ+r6YGbMh68EZAkqSCk049zMHTmiOq6wpG1t
+
+cache:
+  - node_modules
+
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - npm install
+
+build_script:
+  - npm run build
+  - npm run release
+
+branches:
+  only:
+    - master

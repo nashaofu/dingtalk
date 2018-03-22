@@ -56,6 +56,7 @@ export default class DingTalk {
       this.initMainWin()
       this.initTray()
       this.initOnline()
+      this.autoupdate()
     })
   }
 
