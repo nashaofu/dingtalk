@@ -14,6 +14,7 @@ install:
   - npm install
 
 build_script:
+  - npm run lint
   - npm run build
   - npm run release
 
