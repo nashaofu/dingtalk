@@ -130,7 +130,7 @@
         }
       ],
       "icon": "icon",
-      "category": "InstantMessaging"
+      "category": "InstantMessaging;Network"
     },
     "nsis": {
       "oneClick": false,
