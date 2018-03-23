@@ -30,7 +30,11 @@ export const readSetting = dingtalk => () => {
     fs.readFile(filename, (err, data) => {
       if (err) return reject(err)
       try {
-        return resolve({ ...dingtalk.setting, ...JSON.parse(data) })
+        const setting = JSON.parse(data)
+        if (typeof setting.keymap['shortcut-capture'] === 'string') {
+          setting.keymap['shortcut-capture'] = setting.keymap['shortcut-capture'].split('+')
+        }
+        resolve({ ...dingtalk.setting, ...setting })
       } catch (e) {
         resolve(dingtalk.setting)
       }
