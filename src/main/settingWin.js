@@ -1,5 +1,6 @@
 import path from 'path'
 import contextMenu from './contextMenu'
+import { autoUpdater } from 'electron-updater'
 import { app, BrowserWindow, ipcMain, globalShortcut } from 'electron'
 
 export default dingtalk => () => {
@@ -48,6 +49,9 @@ export default dingtalk => () => {
     globalShortcut.unregisterAll()
     if (shortcutCapture.length) {
       dingtalk.$shortcutCapture.registerHotkey(shortcutCapture.join('+'))
+    }
+    if (dingtalk.setting.autoupdate) {
+      autoUpdater.checkForUpdates()
     }
     dingtalk.hideSettingWin()
   })
