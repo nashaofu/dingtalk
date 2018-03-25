@@ -30,6 +30,7 @@ export default dingtalk => () => {
     }
   ]))
 
+  $tray.on('click', () => dingtalk.showMainWin())
   $tray.on('double-click', () => dingtalk.showMainWin())
   return $tray
 }
