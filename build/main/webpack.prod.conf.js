@@ -13,8 +13,7 @@ module.exports = merge(baseWebpackConfig, {
     libraryExport: 'default',
     libraryTarget: 'commonjs2'
   },
-  devtool: false,
-
+  devtool: config.prod.sourcemap ? '#source-map' : false,
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
@@ -26,7 +25,7 @@ module.exports = merge(baseWebpackConfig, {
           warnings: false
         }
       },
-      sourceMap: false,
+      sourceMap: config.prod.sourcemap,
       parallel: true
     })
   ]

@@ -17,12 +17,18 @@ export default dingtalk => () => {
     menu: false,
     parent: dingtalk.$mainWin,
     modal: true,
+    show: false,
     icon: path.join(app.getAppPath(), './icon/32x32.png')
   })
   // 右键上下文菜单
   $win.webContents.on('context-menu', (e, params) => {
     e.preventDefault()
     contextMenu($win, params)
+  })
+
+  $win.on('ready-to-show', () => {
+    $win.show()
+    $win.focus()
   })
 
   // 窗口关闭后手动让$window为null

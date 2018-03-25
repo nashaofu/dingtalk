@@ -93,7 +93,8 @@
     ],
     "publish": {
       "provider": "github",
-      "releaseType": "release"
+      "owner": "nashaofu",
+      "repo": "dingtalk"
     },
     "mac": {
       "target": "dmg",
