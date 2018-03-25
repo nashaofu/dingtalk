@@ -128,13 +128,6 @@
             "x64",
             "ia32"
           ]
-        },
-        {
-          "target": "AppImage",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
         }
       ],
       "icon": "icon",
