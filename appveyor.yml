@@ -17,8 +17,9 @@ build_script:
   - npm run lint
   - npm run build
   - npm run release
+  - cd release
   - ls
-  - cat latest-mac.yml
+  - cat latest.yml
 
 branches:
   only:
