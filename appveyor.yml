@@ -22,4 +22,4 @@ build_script:
 
 branches:
   only:
-    - master
+    - dev
