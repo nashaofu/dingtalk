@@ -116,14 +116,14 @@
     "linux": {
       "target": [
         {
-          "target": "deb",
+          "target": "AppImage",
           "arch": [
             "x64",
             "ia32"
           ]
         },
         {
-          "target": "AppImage",
+          "target": "deb",
           "arch": [
             "x64",
             "ia32"
