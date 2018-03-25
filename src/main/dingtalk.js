@@ -9,13 +9,13 @@ import {
   writeSetting
 } from './setting'
 import ShortcutCapture from 'shortcut-capture'
-import { autoUpdater } from 'electron-updater'
 import mainWin from './mainWin'
 import tray from './tray'
 import emailWin from './emailWin'
 import errorWin from './errorWin'
 import online from './online'
 import settingWin from './settingWin'
+import autoUpdate from './autoUpdate'
 
 export default class DingTalk {
   // 托盘图标
@@ -56,7 +56,7 @@ export default class DingTalk {
       this.initMainWin()
       this.initTray()
       this.initOnline()
-      this.autoupdate()
+      this.autoUpdate()
     })
   }
 
@@ -170,7 +170,7 @@ export default class DingTalk {
     }
   }
 
-  autoupdate () {
-    autoUpdater.checkForUpdatesAndNotify()
+  autoUpdate () {
+    autoUpdate(this)()
   }
 }
