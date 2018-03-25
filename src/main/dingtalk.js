@@ -1,8 +1,7 @@
 import {
   app,
   Menu,
-  BrowserWindow,
-  dialog
+  BrowserWindow
 } from 'electron'
 import {
   initSetting,
@@ -172,24 +171,6 @@ export default class DingTalk {
   }
 
   autoupdate () {
-    console.log(
-      autoUpdater.checkForUpdatesAndNotify(),
-      autoUpdater.checkForUpdates(),
-      autoUpdater.getFeedURL()
-    )
-    autoUpdater.on('error', error => {
-      dialog.showErrorBox('Error: ', error == null ? 'unknown' : (error.stack || error).toString())
-    })
-
-    autoUpdater.on('update-available', () => {
-      dialog.showMessageBox({
-        type: 'info',
-        title: 'Found Updates',
-        message: 'Found updates, do you want update now?',
-        buttons: ['Sure', 'No']
-      }, (buttonIndex) => {
-        console.log(buttonIndex)
-      })
-    })
+    autoUpdater.checkForUpdatesAndNotify()
   }
 }

@@ -21,10 +21,7 @@ script:
   - npm run lint
   - npm run build
   - npm run release
-  - cd release
-  - ls
-  - cat latest.yml
 
 branches:
   only:
-  - dev
+    - master
