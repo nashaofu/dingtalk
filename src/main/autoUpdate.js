@@ -1,8 +1,10 @@
 import {
+  app,
   dialog,
   shell
 } from 'electron'
 import { autoUpdater } from 'electron-updater'
+import axios from 'axios'
 
 export default dingtalk => () => {
   autoUpdater.on('update-downloaded', info => {
@@ -23,17 +25,24 @@ export default dingtalk => () => {
 
   autoUpdater.on('error', e => {
     if (dingtalk.setting.autoupdate) {
-      dialog.showMessageBox(dingtalk.$mainWin, {
-        type: 'question',
-        title: '版本更新',
-        message: '已有新版本更新，是否立即前往下载最新安装包？',
-        noLink: true,
-        buttons: ['是', '否']
-      }, index => {
-        if (index === 0) {
-          shell.openExternal('https://github.com/nashaofu/dingtalk/releases/latest')
-        }
-      })
+      axios.get('https://api.github.com/repos/nashaofu/dingtalk/releases/latest')
+        .then(({ data }) => {
+          // 检查版本号
+          // 如果本地版本小于远程版本则更新
+          if (data.tag_name.slice(1) > app.getVersion()) {
+            dialog.showMessageBox(dingtalk.$mainWin, {
+              type: 'question',
+              title: '版本更新',
+              message: '已有新版本更新，是否立即前往下载最新安装包？',
+              noLink: true,
+              buttons: ['是', '否']
+            }, index => {
+              if (index === 0) {
+                shell.openExternal('https://github.com/nashaofu/dingtalk/releases/latest')
+              }
+            })
+          }
+        })
     }
   })
 
