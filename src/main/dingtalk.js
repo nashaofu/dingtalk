@@ -16,6 +16,7 @@ import errorWin from './errorWin'
 import online from './online'
 import settingWin from './settingWin'
 import autoUpdate from './autoUpdate'
+import aboutWin from './aboutWin'
 
 export default class DingTalk {
   // 托盘图标
@@ -28,6 +29,8 @@ export default class DingTalk {
   $errorWin = null
   // 设置窗口
   $settingWin = null
+  // 关于窗口
+  $aboutWin = null
   // 截图对象
   $shortcutCapture = null
   // 网络情况，默认为null，必须等到页面报告状态
@@ -146,7 +149,7 @@ export default class DingTalk {
     online(this)()
   }
 
-  openEmailWin (url) {
+  showEmailWin (url) {
     this.$emailWin = emailWin(this)(url)
   }
 
@@ -168,6 +171,10 @@ export default class DingTalk {
     if (this.$settingWin) {
       this.$settingWin.destroy()
     }
+  }
+
+  showAboutWin () {
+    this.$aboutWin = aboutWin(this)()
   }
 
   autoUpdate () {

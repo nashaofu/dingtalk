@@ -81,7 +81,7 @@ export default dingtalk => () => {
 
   ipcMain.on('MAINWIN:window-close', () => $win.hide())
 
-  ipcMain.on('MAINWIN:open-email', (e, url) => dingtalk.openEmailWin(url))
+  ipcMain.on('MAINWIN:open-email', (e, url) => dingtalk.showEmailWin(url))
 
   // 加载URL地址
   $win.loadURL('https://im.dingtalk.com/')

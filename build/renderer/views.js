@@ -6,6 +6,10 @@ const views = [
   {
     key: 'settingWin',
     title: '设置'
+  },
+  {
+    key: 'aboutWin',
+    title: '关于'
   }
 ]
 
