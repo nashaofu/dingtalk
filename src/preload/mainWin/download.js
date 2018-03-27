@@ -23,13 +23,13 @@ export default injector => {
     files.push(file)
   })
   ipcRenderer.on('DOWNLOAD:downloading', (e, file) => {
-    const index = findIndex(files, file.id)
+    const index = findIndex(files, { id: file.id })
     if (index !== -1) {
       files[index] = file
     }
   })
   ipcRenderer.on('DOWNLOAD:end', (e, file) => {
-    const index = findIndex(files, file.id)
+    const index = findIndex(files, { id: file.id })
     if (index !== -1) {
       files[index] = file
     }
@@ -44,7 +44,7 @@ export default injector => {
   injector.setTimer(() => {
     const $progress = document.querySelector('#header>upload-list .progress.upload-task-progress')
     if ($progress) {
-      const index = findIndex(files, file => file.state === 'progressing')
+      const index = findIndex(files, { state: 'progressing' })
       if (index !== -1) {
         $progress.classList.remove('ng-hide')
       } else {

@@ -95,7 +95,9 @@ export default class DingTalk {
       }
       if (app.isReady()) return ready()
       app.once('ready', () => ready())
-      app.once('window-all-closed', () => this.quit())
+      app.once('window-all-closed', () => {
+        if (!this.$tray.isDestroyed()) this.$tray.destroy()
+      })
     })
   }
 

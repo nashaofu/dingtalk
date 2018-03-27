@@ -4,6 +4,9 @@ import { ipcRenderer, remote } from 'electron'
 
 export default injector => {
   let oldCount = 0
+  notifier.on('click', () => {
+    ipcRenderer.send('MAINWIN:window-show')
+  })
   injector.setTimer(() => {
     let count = 0
     const $mainMenus = document.querySelector('#menu-pannel>.main-menus')
@@ -24,9 +27,6 @@ export default injector => {
           title: '钉钉',
           message: `您有${count}条消息未查收！`,
           icon: path.join(remote.app.getAppPath(), './icon/32x32.png')
-        })
-        notifier.on('click', () => {
-          ipcRenderer.send('MAINWIN:window-show')
         })
       }
       oldCount = count

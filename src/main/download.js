@@ -7,16 +7,18 @@ export default dingtalk => $win => {
       name: item.getFilename(),
       size: item.getTotalBytes(),
       receivedbytes: item.getReceivedBytes(),
-      state: null
+      state: item.getState()
     }
-    webContents.send('DOWNLOAD:start', file)
+    if (!$win.isDestroyed()) {
+      webContents.send('DOWNLOAD:start', file)
+    }
 
     // 监听下载过程，计算并设置进度条进度
-    item.on('updated', (event, state) => {
-      file.receivedbytes = item.getReceivedBytes()
+    item.on('updated', (e, state) => {
       file.state = state
-      webContents.send('DOWNLOAD:downloading', file)
-      if ($win && !$win.isDestroyed()) {
+      file.receivedbytes = item.getReceivedBytes()
+      if (!$win.isDestroyed()) {
+        webContents.send('DOWNLOAD:downloading', file)
         $win.setProgressBar(file.receivedbytes / file.size)
       }
     })
@@ -24,12 +26,13 @@ export default dingtalk => $win => {
     // 监听下载结束事件
     item.on('done', (e, state) => {
       file.state = state
-      webContents.send('DOWNLOAD:end', file)
-      app.dock.bounce('informational')
-
-      // 如果窗口还在的话，去掉进度条
-      if ($win && !$win.isDestroyed()) {
+      file.receivedbytes = item.getReceivedBytes()
+      if (!$win.isDestroyed()) {
+        webContents.send('DOWNLOAD:end', file)
         $win.setProgressBar(-1)
+      }
+      if (app.dock) {
+        app.dock.bounce('informational')
       }
     })
   })
