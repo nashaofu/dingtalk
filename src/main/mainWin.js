@@ -80,8 +80,14 @@ export default dingtalk => () => {
   })
 
   ipcMain.on('MAINWIN:window-close', () => $win.hide())
-
+  ipcMain.on('MAINWIN:window-show', () => $win.show())
   ipcMain.on('MAINWIN:open-email', (e, url) => dingtalk.showEmailWin(url))
+
+  ipcMain.on('MAINWIN:badge', (e, count) => {
+    app.dock.show()
+    app.dock.bounce('critical')
+    app.setBadgeCount(count)
+  })
 
   // 加载URL地址
   $win.loadURL('https://im.dingtalk.com/')

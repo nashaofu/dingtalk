@@ -17,6 +17,7 @@ import online from './online'
 import settingWin from './settingWin'
 import autoUpdate from './autoUpdate'
 import aboutWin from './aboutWin'
+import download from './download'
 
 export default class DingTalk {
   // 托盘图标
@@ -94,13 +95,16 @@ export default class DingTalk {
       }
       if (app.isReady()) return ready()
       app.once('ready', () => ready())
+      app.once('window-all-closed', () => this.quit())
     })
   }
 
   quit () {
-    this.$tray.destroy()
+    if (!this.$tray.isDestroyed()) this.$tray.destroy()
     BrowserWindow.getAllWindows()
-      .forEach(item => item.destroy())
+      .forEach(item => {
+        if (!item.isDestroyed()) item.destroy()
+      })
     app.quit()
   }
 
@@ -127,6 +131,7 @@ export default class DingTalk {
 
   initMainWin () {
     this.$mainWin = mainWin(this)()
+    download(this)(this.$mainWin)
   }
 
   showMainWin () {

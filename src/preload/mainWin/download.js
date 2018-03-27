@@ -1,5 +1,7 @@
-import { ipcRenderer } from 'electron'
+import path from 'path'
+import notifier from 'node-notifier'
 import findIndex from 'lodash/findIndex'
+import { ipcRenderer, remote } from 'electron'
 
 // 四舍五入并保留小数位数
 const toDecimal = (num, length = 0) => {
@@ -17,23 +19,24 @@ export default injector => {
     progressing: '正在下载'
   }
 
-  ipcRenderer.on('start-download', (e, file) => {
+  ipcRenderer.on('DOWNLOAD:start', (e, file) => {
     files.push(file)
   })
-  ipcRenderer.on('downloading', (e, file) => {
+  ipcRenderer.on('DOWNLOAD:downloading', (e, file) => {
     const index = findIndex(files, file.id)
     if (index !== -1) {
       files[index] = file
     }
   })
-  ipcRenderer.on('end-download', (e, file) => {
+  ipcRenderer.on('DOWNLOAD:end', (e, file) => {
     const index = findIndex(files, file.id)
     if (index !== -1) {
       files[index] = file
     }
-    new Notification('钉钉', {
-      body: `${file.name}${status[file.state]}`,
-      tag: 'download-notify'
+    notifier.notify({
+      title: '钉钉',
+      message: `${file.name}${status[file.state]}`,
+      icon: path.join(remote.app.getAppPath(), './icon/32x32.png')
     })
   })
 

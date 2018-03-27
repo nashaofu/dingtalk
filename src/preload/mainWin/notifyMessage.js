@@ -1,9 +1,9 @@
-import { ipcRenderer } from 'electron'
-// import notifier from 'node-notifier'
+import path from 'path'
+import notifier from 'node-notifier'
+import { ipcRenderer, remote } from 'electron'
 
 export default injector => {
   let oldCount = 0
-  let $notify = null
   injector.setTimer(() => {
     let count = 0
     const $mainMenus = document.querySelector('#menu-pannel>.main-menus')
@@ -20,28 +20,17 @@ export default injector => {
     if (oldCount !== count) {
       // 当有新消息来时才发送提示信息
       if (count !== 0 && oldCount < count) {
-        // 关闭上一条消息提示
-        if ($notify && typeof $notify.close === 'function') {
-          $notify.close()
-        }
-        $notify = new Notification('钉钉', {
-          body: `您有${count}条消息未查收`,
-          tag: 'notify'
+        notifier.notify({
+          title: '钉钉',
+          message: `您有${count}条消息未查收！`,
+          icon: path.join(remote.app.getAppPath(), './icon/32x32.png')
         })
-        // // Object
-        // notifier.notify({
-        //   title: 'My notification',
-        //   message: 'Hello, there!'
-        // })
-        console.log(count, oldCount, $notify)
-
-        // linux上不支持点击事件
-        $notify.addEventListener('click', () => {
+        notifier.on('click', () => {
           ipcRenderer.send('MAINWIN:window-show')
         })
       }
       oldCount = count
-      ipcRenderer.send('MAINWIN:set-badge', count)
+      ipcRenderer.send('MAINWIN:badge', count)
     }
   })
 }
