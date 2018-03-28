@@ -67,7 +67,7 @@ export default ($win, params) => {
     .sort((a, b) => a.id > b.id)
 
   // 用模板生成菜单
-  if (template.length) {
+  if (template.length && !$win.isDestroyed()) {
     const menu = Menu.buildFromTemplate(template)
     menu.popup($win)
   }

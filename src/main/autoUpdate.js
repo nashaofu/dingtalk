@@ -3,8 +3,8 @@ import {
   dialog,
   shell
 } from 'electron'
-import { autoUpdater } from 'electron-updater'
 import axios from 'axios'
+import { autoUpdater } from 'electron-updater'
 
 export default dingtalk => () => {
   autoUpdater.on('update-downloaded', info => {

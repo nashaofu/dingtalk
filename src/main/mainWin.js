@@ -41,6 +41,20 @@ export default dingtalk => () => {
     $win.hide()
   })
 
+  $win.webContents.on('dom-ready', () => {
+    const filename = path.join(app.getAppPath(), './dist/preload/mainWin.js')
+    // 读取js文件并执行
+    fs.access(filename, fs.constants.R_OK, err => {
+      if (err) return
+      fs.readFile(filename, (error, data) => {
+        if (error || $win.webContents.isDestroyed()) return
+        $win.webContents.executeJavaScript(data.toString(), () => {
+          if (!$win.webContents.isDestroyed()) $win.webContents.send('dom-ready')
+        })
+      })
+    })
+  })
+
   // 右键菜单
   $win.webContents.on('context-menu', (e, params) => {
     e.preventDefault()
@@ -55,17 +69,40 @@ export default dingtalk => () => {
     }
   })
 
-  $win.webContents.on('dom-ready', () => {
-    const filename = path.join(app.getAppPath(), './dist/preload/mainWin.js')
-    // 读取js文件并执行
-    fs.access(filename, fs.constants.R_OK, err => {
-      if (err) return
-      fs.readFile(filename, (error, data) => {
-        if (error) return
-        $win.webContents.executeJavaScript(data.toString(), () => {
-          $win.webContents.send('dom-ready')
-        })
-      })
+  // 文件下载拦截
+  $win.webContents.session.on('will-download', (event, item, webContents) => {
+    const file = {
+      id: `${new Date().getTime()}${Math.round(Math.random() * 10000)}`,
+      name: item.getFilename(),
+      size: item.getTotalBytes(),
+      receivedbytes: item.getReceivedBytes(),
+      state: item.getState()
+    }
+    if (!$win.isDestroyed()) {
+      webContents.send('MAINWIN:start', file)
+    }
+
+    // 监听下载过程，计算并设置进度条进度
+    item.on('updated', (e, state) => {
+      file.state = state
+      file.receivedbytes = item.getReceivedBytes()
+      if (!$win.isDestroyed()) {
+        webContents.send('MAINWIN:downloading', file)
+        $win.setProgressBar(file.receivedbytes / file.size)
+      }
+    })
+
+    // 监听下载结束事件
+    item.on('done', (e, state) => {
+      file.state = state
+      file.receivedbytes = item.getReceivedBytes()
+      if (!$win.isDestroyed()) {
+        webContents.send('MAINWIN:end', file)
+        $win.setProgressBar(-1)
+      }
+      if (app.dock) {
+        app.dock.bounce('informational')
+      }
     })
   })
 

@@ -1,7 +1,7 @@
 import path from 'path'
 import contextMenu from './contextMenu'
-import { app, BrowserWindow, ipcMain } from 'electron'
 import { autoUpdater } from 'electron-updater'
+import { app, BrowserWindow, ipcMain } from 'electron'
 
 export default dingtalk => () => {
   if (dingtalk.$aboutWin) {
@@ -21,11 +21,6 @@ export default dingtalk => () => {
     show: false,
     icon: path.join(app.getAppPath(), './icon/32x32.png')
   })
-  // 右键上下文菜单
-  $win.webContents.on('context-menu', (e, params) => {
-    e.preventDefault()
-    contextMenu($win, params)
-  })
 
   $win.on('ready-to-show', () => {
     $win.show()
@@ -38,7 +33,13 @@ export default dingtalk => () => {
   })
 
   $win.webContents.on('dom-ready', () => {
-    $win.webContents.send('dom-ready')
+    if (!$win.webContents.isDestroyed()) $win.webContents.send('dom-ready')
+  })
+
+  // 右键上下文菜单
+  $win.webContents.on('context-menu', (e, params) => {
+    e.preventDefault()
+    contextMenu($win, params)
   })
 
   ipcMain.on('ABOUTWIN:checkForUpdates', () => {
