@@ -20,7 +20,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.json'],
     alias: {
-      '@': resolve('src/mainWin')
+      '@': resolve('src/preload')
     }
   },
   module: {
@@ -29,7 +29,7 @@ module.exports = {
         test: /\.js$/,
         loader: 'eslint-loader',
         enforce: 'pre',
-        include: [resolve('src/mainWin')],
+        include: [resolve('src/preload')],
         options: {
           formatter: require('eslint-friendly-formatter'),
           emitWarning: true
@@ -38,7 +38,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src/renderer'), resolve('node_modules/webpack-dev-server/client')]
+        include: [resolve('src/preload'), resolve('node_modules/webpack-dev-server/client')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
