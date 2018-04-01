@@ -1,9 +1,8 @@
-import path from 'path'
 import FileTask from './fileTask'
-import notifier from 'node-notifier'
+import notify from './notify'
 import cloneDeep from 'lodash/cloneDeep'
 import findIndex from 'lodash/findIndex'
-import { ipcRenderer, remote } from 'electron'
+import { ipcRenderer } from 'electron'
 
 export default injector => {
   const files = []
@@ -49,7 +48,10 @@ export default injector => {
     }
   }
 
-  ipcRenderer.on('MAINWIN:download-start', (e, file) => addFile(file))
+  ipcRenderer.on('MAINWIN:download-start', (e, file) => {
+    addFile(file)
+    updateList()
+  })
 
   ipcRenderer.on('MAINWIN:download-updated', (e, file) => {
     const index = findIndex(files, { clientId: file.clientId })
@@ -58,6 +60,7 @@ export default injector => {
     } else {
       addFile(file)
     }
+    updateList()
   })
 
   ipcRenderer.on('MAINWIN:download-done', (e, file) => {
@@ -67,25 +70,17 @@ export default injector => {
     } else {
       addFile(file)
     }
-
+    updateList()
     const status = {
       completed: '下载完成',
       interrupted: '下载失败'
     }
     if (status[file.state]) {
-      /***
-       * 提示信息要修改
-       */
-      notifier.notify({
-        title: '钉钉',
-        message: `${file.name}${status[file.state]}`,
-        icon: path.join(remote.app.getAppPath(), './icon/32x32.png')
-      })
+      notify(`${file.name}${status[file.state]}`)
     }
   })
 
-  // 下载列表状态更新
-  injector.setTimer(() => {
+  const updateList = () => {
     const uploadList = angular.element('#header>upload-list')
     if (!uploadList.length) {
       return
@@ -94,11 +89,10 @@ export default injector => {
       const data = uploadList.data()
       const $uploadListController = data.$uploadListController
       const fileTaskList = $uploadListController.fileTaskList
-      $uploadListController.uploadListCount = files.reduce((progressing, file) => {
-        if (file.state === 'progressing') progressing += 1
+      files.forEach(file => {
         const index = findIndex(fileTaskList, { clientId: file.clientId })
         if (index === -1) {
-          fileTaskList.push(new FileTask(cloneDeep(file)))
+          fileTaskList.unshift(new FileTask(cloneDeep(file)))
         } else {
           if (file.state === 'progressing') {
             fileTaskList[index].onProgress(cloneDeep(file))
@@ -109,14 +103,12 @@ export default injector => {
             fileTaskList[index].onProgress(cloneDeep(file))
             fileTaskList[index].onDownloadError(cloneDeep(file))
           } else if (file.state === 'cancelled') {
-            setTimeout(() => {
-              files.splice(index, 1)
-              fileTaskList.splice(index, 1)
-            })
+            files.splice(index, 1)
+            fileTaskList.splice(index, 1)
           }
         }
-        return progressing
-      }, 0)
+      })
+      $uploadListController.uploadListCount = fileTaskList.filter(({ isFinish }) => !isFinish).length
     })
-  })
+  }
 }
