@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import download from './download'
 import contextMenu from './contextMenu'
 import { app, BrowserWindow, shell, ipcMain } from 'electron'
 
@@ -41,6 +42,20 @@ export default dingtalk => () => {
     $win.hide()
   })
 
+  $win.webContents.on('dom-ready', () => {
+    const filename = path.join(app.getAppPath(), './dist/preload/mainWin.js')
+    // 读取js文件并执行
+    fs.access(filename, fs.constants.R_OK, err => {
+      if (err) return
+      fs.readFile(filename, (error, data) => {
+        if (error || $win.webContents.isDestroyed()) return
+        $win.webContents.executeJavaScript(data.toString(), () => {
+          if (!$win.webContents.isDestroyed()) $win.webContents.send('dom-ready')
+        })
+      })
+    })
+  })
+
   // 右键菜单
   $win.webContents.on('context-menu', (e, params) => {
     e.preventDefault()
@@ -55,20 +70,6 @@ export default dingtalk => () => {
     }
   })
 
-  $win.webContents.on('dom-ready', () => {
-    const filename = path.join(app.getAppPath(), './dist/preload/mainWin.js')
-    // 读取js文件并执行
-    fs.access(filename, fs.constants.R_OK, err => {
-      if (err) return
-      fs.readFile(filename, (error, data) => {
-        if (error) return
-        $win.webContents.executeJavaScript(data.toString(), () => {
-          $win.webContents.send('dom-ready')
-        })
-      })
-    })
-  })
-
   ipcMain.on('MAINWIN:window-minimize', () => $win.minimize())
 
   ipcMain.on('MAINWIN:window-maximization', () => {
@@ -80,9 +81,21 @@ export default dingtalk => () => {
   })
 
   ipcMain.on('MAINWIN:window-close', () => $win.hide())
+  ipcMain.on('MAINWIN:open-email', (e, url) => dingtalk.showEmailWin(url))
 
-  ipcMain.on('MAINWIN:open-email', (e, url) => dingtalk.openEmailWin(url))
+  ipcMain.on('MAINWIN:window-show', () => {
+    $win.show()
+    $win.focus()
+  })
+  ipcMain.on('MAINWIN:badge', (e, count) => {
+    if (app.dock) {
+      app.dock.show()
+      app.dock.bounce('critical')
+    }
+    app.setBadgeCount(count)
+  })
 
+  download($win)
   // 加载URL地址
   $win.loadURL('https://im.dingtalk.com/')
   return $win

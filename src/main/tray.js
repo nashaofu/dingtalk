@@ -25,6 +25,10 @@ export default dingtalk => () => {
       click: () => dingtalk.showSettingWin()
     },
     {
+      label: '关于',
+      click: () => dingtalk.showAboutWin()
+    },
+    {
       label: '退出',
       click: () => dingtalk.quit()
     }

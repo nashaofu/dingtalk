@@ -21,11 +21,6 @@ export default dingtalk => () => {
     show: false,
     icon: path.join(app.getAppPath(), './icon/32x32.png')
   })
-  // 右键上下文菜单
-  $win.webContents.on('context-menu', (e, params) => {
-    e.preventDefault()
-    contextMenu($win, params)
-  })
 
   $win.on('ready-to-show', () => {
     $win.show()
@@ -39,6 +34,12 @@ export default dingtalk => () => {
 
   $win.webContents.on('dom-ready', () => {
     $win.webContents.send('dom-ready', dingtalk.setting)
+  })
+
+  // 右键上下文菜单
+  $win.webContents.on('context-menu', (e, params) => {
+    e.preventDefault()
+    contextMenu($win, params)
   })
 
   ipcMain.on('SETTINGWIN:setting', async (e, setting) => {

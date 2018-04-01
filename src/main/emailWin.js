@@ -18,31 +18,40 @@ export default dingtalk => url => {
     useContentSize: true,
     resizable: true,
     menu: false,
+    show: false,
     icon: path.join(app.getAppPath(), './icon/32x32.png')
   })
-  // 右键菜单
-  $win.webContents.on('context-menu', (e, params) => {
-    e.preventDefault()
-    contextMenu($win, params)
-  })
-  $win.webContents.on('dom-ready', () => {
-    const filename = path.join(app.getAppPath(), './dist/preload/emailWin.js')
-    // 读取js文件并执行
-    fs.access(filename, fs.constants.R_OK, err => {
-      if (err) return
-      fs.readFile(filename, (error, data) => {
-        if (error) return
-        $win.webContents.executeJavaScript(data.toString(), () => {
-          $win.webContents.send('dom-ready', url)
-        })
-      })
-    })
+
+  $win.on('ready-to-show', () => {
+    $win.show()
+    $win.focus()
   })
 
   // 窗口关闭后手动让$window为null
   $win.on('closed', () => {
     dingtalk.$emailWin = null
   })
+
+  $win.webContents.on('dom-ready', () => {
+    const filename = path.join(app.getAppPath(), './dist/preload/emailWin.js')
+    // 读取js文件并执行
+    fs.access(filename, fs.constants.R_OK, err => {
+      if (err) return
+      fs.readFile(filename, (error, data) => {
+        if (error || $win.webContents.isDestroyed()) return
+        $win.webContents.executeJavaScript(data.toString(), () => {
+          if (!$win.webContents.isDestroyed()) $win.webContents.send('dom-ready', url)
+        })
+      })
+    })
+  })
+
+  // 右键菜单
+  $win.webContents.on('context-menu', (e, params) => {
+    e.preventDefault()
+    contextMenu($win, params)
+  })
+
   // 加载URL地址
   $win.loadURL(url)
   return $win

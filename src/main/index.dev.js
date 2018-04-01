@@ -1,6 +1,6 @@
-import debug from 'electron-debug'
 import { app } from 'electron'
 import dingtalk from './index'
+import debug from 'electron-debug'
 
 app.on('ready', () => {
   const installExtension = require('electron-devtools-installer')
