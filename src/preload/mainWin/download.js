@@ -111,4 +111,5 @@ export default injector => {
       $uploadListController.uploadListCount = fileTaskList.filter(({ isFinish }) => !isFinish).length
     })
   }
+  injector.setTimer(() => updateList())
 }

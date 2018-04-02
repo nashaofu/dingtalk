@@ -10,7 +10,7 @@ export default message => {
   notifier.notify({
     title: '钉钉',
     message,
-    icon: path.join(remote.app.getAppPath(), './icon/128x128.png')
+    icon: path.join(remote.app.getAppPath(), './icon/32x32.png')
   }, () => {
     if (Notification.permission === 'granted') {
       new Notification('钉钉', {

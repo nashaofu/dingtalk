@@ -13,6 +13,7 @@ module.exports = {
   entry: entries(view => path.resolve(config.srcRendererDir, view.key)),
   output: {
     path: config.distRendererDir,
+    libraryTarget: 'commonjs2',
     filename: '[name].js'
   },
   target: 'electron-renderer',
@@ -23,6 +24,9 @@ module.exports = {
       '@': resolve('src/renderer'),
       '~': resolve('')
     }
+  },
+  externals: {
+    'node-notifier': 'node-notifier'
   },
   module: {
     rules: [
@@ -73,7 +77,7 @@ module.exports = {
     ]
   },
   node: {
-    __dirname: false,
-    __filename: false
+    __dirname: true,
+    __filename: true
   }
 }

@@ -13,6 +13,7 @@ module.exports = {
   },
   output: {
     path: config.distDir,
+    libraryTarget: 'commonjs2',
     filename: '[name].js'
   },
   target: 'electron-main',
@@ -21,6 +22,9 @@ module.exports = {
     alias: {
       '@': resolve('src/main')
     }
+  },
+  externals: {
+    'node-notifier': 'node-notifier'
   },
   module: {
     rules: [
@@ -42,7 +46,7 @@ module.exports = {
     ]
   },
   node: {
-    __dirname: false,
-    __filename: false
+    __dirname: true,
+    __filename: true
   }
 }

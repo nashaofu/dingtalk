@@ -14,6 +14,7 @@ module.exports = {
   },
   output: {
     path: config.distPreloadDir,
+    libraryTarget: 'commonjs2',
     filename: '[name].js'
   },
   target: 'electron-renderer',
@@ -22,6 +23,9 @@ module.exports = {
     alias: {
       '@': resolve('src/preload')
     }
+  },
+  externals: {
+    'node-notifier': 'node-notifier'
   },
   module: {
     rules: [
