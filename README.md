@@ -19,6 +19,8 @@
 ![6.png](./screenshot/6.png)
 7. 系统设置界面
 ![7.png](./screenshot/7.png)
+8. 关于界面
+![8.png](./screenshot/8.png)
 
 ## 功能说明
 1. 本版本是基于网页版钉钉和electron制作的
@@ -36,11 +38,12 @@
 4. 更新截图功能，支持多显示器截图，目前确认支持Ubuntn16，Ubuntn17不支持，其他Linux系统未测试，其中使用了[shortcut-capture](https://github.com/nashaofu/shortcut-capture)模块来实现截图；修复设置页面不修改快捷键时，点击保存时提示错误的BUG，2018-03-03
 5. 整个项目采用webpack打包，采用electron-builder来构建应用，分别构建生成三大平台安装包，2018-03-22
 6. 添加关于页面，文件下载进度支持，消息提示不弹出问题修复，修复Linux更新问题，2018-04-01
+7. 修复消息提示node-notifier图标显示问题，2018-04-07
 
 ## TODO
 - [x] 支持网络断开时显示错误页
 - [x] 添加关于页面
-- [ ] 消息提示在windows上不出来的BUG，或者替换为node-notifier模块
+- [x] 消息提示在windows上不出来的BUG，或者替换为node-notifier模块
 
 ## 关于支持加密信息的说明
 加密信息暂不支持，详情请看[企业信息加密相关](https://github.com/nashaofu/dingtalk/issues/2)，也欢迎各位朋友能够去研究一下，帮助实现这个功能
