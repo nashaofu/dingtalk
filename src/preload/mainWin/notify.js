@@ -10,8 +10,9 @@ export default message => {
   notifier.notify({
     title: '钉钉',
     message,
-    icon: path.join(remote.app.getAppPath(), './icon/128x128.png')
-  }, () => {
+    icon: `file://${path.join(remote.app.getAppPath(), './icon/128x128.png')}`
+  }, err => {
+    if (!err) return
     if (Notification.permission === 'granted') {
       new Notification('钉钉', {
         body: message,
