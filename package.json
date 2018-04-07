@@ -86,6 +86,7 @@
     "appId": "com.electron.dingtalk",
     "productName": "钉钉",
     "copyright": "Copyright © year nashaofu",
+    "asar": false,
     "directories": {
       "output": "release"
     },
