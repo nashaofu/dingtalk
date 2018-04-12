@@ -24,7 +24,9 @@ const rememberMe = () => {
   const $checkbox = document.createElement('input')
   const $text = document.createTextNode('记住我')
   $checkbox.setAttribute('type', 'checkbox')
-  $checkbox.setAttribute('checked', true)
+  if (electronStore.get('remember')) {
+    $checkbox.setAttribute('checked', true)
+  }
   $checkboxContainer.appendChild($checkbox)
   $checkboxContainer.appendChild($text)
   const $submitBtn = $form.querySelector('button[type="submit"]')
@@ -35,7 +37,7 @@ const rememberMe = () => {
 
   const rememberMePhone = debounce(() => electronStore.set('phone', $phoneInput.value), 1500)
   const rememberMePwd = debounce(() => electronStore.set('pwd', $pwdInput.value), 1500)
-  const rememberMe = () => {
+  const remember = () => {
     $phoneInput.removeEventListener('input', rememberMePhone)
     $pwdInput.removeEventListener('input', rememberMePwd)
     $phoneInput.addEventListener('input', rememberMePhone)
@@ -65,19 +67,20 @@ const rememberMe = () => {
 
   // 保存密码
   if ($checkbox.checked) {
-    rememberMe()
+    remember()
     rememberMePhone()
     rememberMePwd()
   }
 
   $checkbox.addEventListener('change', () => {
     if ($checkbox.checked) {
-      rememberMe()
+      remember()
       rememberMePhone()
       rememberMePwd()
     } else {
       electronStore.delete('phone')
       electronStore.delete('pwd')
     }
+    electronStore.set('remember', !!$checkbox.checked)
   })
 }
