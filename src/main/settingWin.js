@@ -45,12 +45,7 @@ export default dingtalk => () => {
   ipcMain.on('SETTINGWIN:setting', async (e, setting) => {
     dingtalk.setting = setting
     await dingtalk.writeSetting()
-    const shortcutCapture = dingtalk.setting.keymap['shortcut-capture']
-    // 注销所有的快捷键
-    globalShortcut.unregisterAll()
-    if (shortcutCapture.length) {
-      dingtalk.$shortcutCapture.registerHotkey(shortcutCapture.join('+'))
-    }
+    dingtalk.bindShortcut()
     if (dingtalk.setting.autoupdate) {
       autoUpdater.checkForUpdates()
     }

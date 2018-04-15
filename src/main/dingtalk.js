@@ -16,6 +16,7 @@ import errorWin from './errorWin'
 import aboutWin from './aboutWin'
 import settingWin from './settingWin'
 import autoUpdate from './autoUpdate'
+import shortcut from './shortcut'
 import ShortcutCapture from 'shortcut-capture'
 
 export default class DingTalk {
@@ -57,6 +58,7 @@ export default class DingTalk {
           this.initTray()
           this.initShortcutCapture()
           this.autoUpdate()
+          this.bindShortcut()
         })
       })
   }
@@ -88,9 +90,7 @@ export default class DingTalk {
    * 初始化截图
    */
   initShortcutCapture () {
-    this.$shortcutCapture = new ShortcutCapture({
-      hotkey: this.setting.keymap['shortcut-capture'].join('+')
-    })
+    this.$shortcutCapture = new ShortcutCapture()
   }
 
   /**
@@ -140,6 +140,13 @@ export default class DingTalk {
         if (!item.isDestroyed()) item.destroy()
       })
     app.quit()
+  }
+
+  /**
+   * 绑定快捷键
+   */
+  bindShortcut () {
+    shortcut(this)()
   }
 
   /**

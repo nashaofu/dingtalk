@@ -6,6 +6,7 @@ notifier.on('click', () => {
   ipcRenderer.send('MAINWIN:window-show')
 })
 
+let notify
 export default message => {
   notifier.notify({
     title: '钉钉',
@@ -13,8 +14,11 @@ export default message => {
     icon: `file://${path.join(remote.app.getAppPath(), './icon/128x128.png')}`
   }, err => {
     if (!err) return
+    if (notify instanceof Notification) {
+      notify.close()
+    }
     if (Notification.permission === 'granted') {
-      new Notification('钉钉', {
+      notify = new Notification('钉钉', {
         body: message,
         icon: 'https://g.alicdn.com/dingding/web/0.1.8/img/logo.png'
       })
@@ -22,7 +26,7 @@ export default message => {
       Notification.requestPermission(permission => {
         // 如果用户同意，就可以向他们发送通知
         if (permission === 'granted') {
-          new Notification('钉钉', {
+          notify = new Notification('钉钉', {
             body: message,
             icon: 'https://g.alicdn.com/dingding/web/0.1.8/img/logo.png'
           })
