@@ -2,7 +2,7 @@ import { globalShortcut } from 'electron'
 
 export default dingtalk => () => {
   const actions = {
-    'shortcut-capture': () => dingtalk.shortcutCapture(),
+    'shortcut-capture': () => dingtalk.shortcutCapture()
   }
   const keymap = dingtalk.setting.keymap
 

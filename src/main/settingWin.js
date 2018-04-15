@@ -1,7 +1,7 @@
 import path from 'path'
 import contextMenu from './contextMenu'
 import { autoUpdater } from 'electron-updater'
-import { app, BrowserWindow, ipcMain, globalShortcut } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 
 export default dingtalk => () => {
   if (dingtalk.$settingWin) {
