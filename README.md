@@ -7,6 +7,10 @@
 
 邮箱：diao.cheng@hekr.me
 
+拉钩地址：https://www.lagou.com/jobs/4439026.html
+
+公司官网：https://www.hekr.me/cn/
+
 有意向者可直接发送简历到邮箱，或者通过GitHub联系我
 
 工作职责：
