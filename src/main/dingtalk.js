@@ -1,6 +1,7 @@
 import {
   app,
   Menu,
+  ipcMain,
   BrowserWindow
 } from 'electron'
 import {
@@ -10,6 +11,7 @@ import {
 } from './setting'
 import tray from './tray'
 import online from './online'
+import Notify from './notify'
 import mainWin from './mainWin'
 import emailWin from './emailWin'
 import errorWin from './errorWin'
@@ -57,6 +59,7 @@ export default class DingTalk {
           this.initMainWin()
           this.initTray()
           this.initShortcutCapture()
+          this.initNotify()
           this.autoUpdate()
           this.bindShortcut()
         })
@@ -91,6 +94,15 @@ export default class DingTalk {
    */
   initShortcutCapture () {
     this.$shortcutCapture = new ShortcutCapture()
+  }
+
+  /**
+   * 初始化消息提示
+   */
+  initNotify () {
+    this.$notify = new Notify()
+    ipcMain.on('notify', (e, body) => this.$notify.show(body))
+    this.$notify.on('click', () => this.showMainWin())
   }
 
   /**
