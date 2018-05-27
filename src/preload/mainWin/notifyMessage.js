@@ -1,4 +1,3 @@
-import notify from './notify'
 import { ipcRenderer } from 'electron'
 
 export default injector => {
@@ -19,7 +18,7 @@ export default injector => {
     if (oldCount !== count) {
       // 当有新消息来时才发送提示信息
       if (count !== 0 && oldCount < count) {
-        notify(`您有${count}条消息未查收！`)
+        ipcRenderer.send('notify', `您有${count}条消息未查收！`)
       }
       oldCount = count
       ipcRenderer.send('MAINWIN:badge', count)

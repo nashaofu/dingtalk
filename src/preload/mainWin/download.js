@@ -1,5 +1,4 @@
 import FileTask from './fileTask'
-import notify from './notify'
 import cloneDeep from 'lodash/cloneDeep'
 import findIndex from 'lodash/findIndex'
 import { ipcRenderer } from 'electron'
@@ -76,7 +75,7 @@ export default injector => {
       interrupted: '下载失败'
     }
     if (status[file.state]) {
-      notify(`${file.name}${status[file.state]}`)
+      ipcRenderer.send('notify', `${file.name}${status[file.state]}`)
     }
   })
 

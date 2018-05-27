@@ -1,40 +1,6 @@
 # dingtalk[![Build Status](https://travis-ci.org/nashaofu/dingtalk.svg?branch=master)](https://travis-ci.org/nashaofu/dingtalk)[![Build status](https://ci.appveyor.com/api/projects/status/jptk80n78gdogd18/branch/master?svg=true)](https://ci.appveyor.com/project/nashaofu/dingtalk/branch/master)
 钉钉桌面版，基于electron和钉钉网页版开发，支持Windows、Linux和macOS
 
-## 公司招聘
-
-杭州氦氪科技有限公司(项目作者公司)招聘初级、中级前端工程师，欢迎投递简历
-
-邮箱：diao.cheng@hekr.me
-
-拉钩地址：https://www.lagou.com/jobs/4439026.html
-
-公司官网：https://www.hekr.me/cn/
-
-有意向者可直接发送简历到邮箱，或者通过GitHub联系我
-
-工作职责：
-1. 负责产品的的前端系统设计、开发，实现页面原型效果；
-2. 优化前端框架，封装公共js，实现页面复杂功能实现，解决开发过程中遇到的问题；
-3. 编写可复用的用户界面组件；
-4. 协助后台开发人员实现页面及交互，完成前后端合并。
-
-职位要求：
-1. 2年以上的前端领域开发经验，
-2. 精通HTML5、CSS3、 DIV+CSS，能够高效构建WEB前端项目与应用
-3. 熟悉前端性能优化，熟练使用各种调试抓包工具，能独立分析、解决和归纳问题
-4. 熟悉前端MVVM架构（Vue.js或React.js）2年以上开发经验者优先
-5. 熟练使用gulp，webpack，babel等前端工具
-6. 熟悉git，有良好的代码习惯
-7. 前端性能优化，熟练使用各种调试抓包工具，能独立分析、解决和归纳问题
-8. 较好的问题解决能力、沟通能力及学习能力，能反馈并主动Push项目问题的解决
-
-加分项：
-1. 了解mvvm框架实现原理
-2. 有参与开源项目
-3. 有代码洁癖
-4. 阅读过开源项目源码
-
 ## 安装步骤
 > 直接从[GitHub relase](https://github.com/nashaofu/dingtalk/releases/latest)页面下载最新版安装包即可
 
