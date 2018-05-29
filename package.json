@@ -16,7 +16,7 @@
     "build:preload": "node build/preload/build.js",
     "build:renderer": "node build/renderer/build.js",
     "pack": "electron-builder",
-    "release": "electron-builder --publish"
+    "release": "electron-builder --publish -p always"
   },
   "keywords": [
     "dingtalk",
