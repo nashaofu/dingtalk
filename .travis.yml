@@ -8,7 +8,7 @@ node_js:
 matrix:
   include:
     - os: linux
-      install
+      install:
         - sudo apt-get install --no-install-recommends -y libopenjp2-tools
         - sudo apt-get install --no-install-recommends -y gcc-multilib g++-multilib
         - sudo apt-get install --no-install-recommends -y rpm
