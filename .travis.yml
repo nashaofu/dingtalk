@@ -8,10 +8,13 @@ node_js:
 matrix:
   include:
     - os: linux
-      install:
-        - apt-get install --no-install-recommends -y libopenjp2-tools
-        - apt-get install --no-install-recommends -y gcc-multilib g++-multilib
-        - apt-get install --no-install-recommends -y rpm
+      addons:
+        apt:
+          packages:
+          - libopenjp2-tools
+          - gcc-multilib
+          - g++-multilib
+          - rpm
     - os: osx
 
 cache:
