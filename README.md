@@ -7,7 +7,12 @@
 ## 手动构建
 ```bash
 # 安装依赖
-npm i
+# linux系统构建rpm请运行如下命令，否则可能会打包失败
+# sudo apt-get -qq update
+# sudo apt-get install --no-install-recommends -y gcc-multilib g++-multilib
+# sudo apt-get install --no-install-recommends -y rpm
+
+npm istall
 
 # 打包源码
 npm run build
@@ -52,11 +57,14 @@ npm run pack
 5. 整个项目采用webpack打包，采用electron-builder来构建应用，分别构建生成三大平台安装包，2018-03-22
 6. 添加关于页面，文件下载进度支持，消息提示不弹出问题修复，修复Linux更新问题，2018-04-01
 7. 修复消息提示node-notifier图标显示问题，2018-04-07
+8. 修改消息提示太多不能关闭导致卡顿问题，支持rpm打包，2018-05-30
 
 ## TODO
 - [x] 支持网络断开时显示错误页
 - [x] 添加关于页面
 - [x] 消息提示在windows上不出来的BUG，或者替换为node-notifier模块
+- [x] windows弹出下载提示问题
+- [ ] 邮箱打不开问题
 
 ## 关于支持加密信息的说明
 加密信息暂不支持，详情请看[企业信息加密相关](https://github.com/nashaofu/dingtalk/issues/2)，也欢迎各位朋友能够去研究一下，帮助实现这个功能
