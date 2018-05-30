@@ -93,6 +93,7 @@ export default dingtalk => () => {
       app.dock.bounce('critical')
     }
     app.setBadgeCount(count)
+    // dingtalk.$tray.setImage(count ? '' : '')
   })
 
   download($win)

@@ -13,7 +13,7 @@ npm i
 npm run build
 
 # 生成安装包
-npm run release
+npm run pack
 ```
 注：最后一个命令运行会报错，如果报错信息为token相关，直接忽略即可，该报错为部署到GitHub release时token不存在的错误，生成的包是完全正常的
 
