@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import download from './download'
 import contextMenu from './contextMenu'
-import { app, BrowserWindow, shell, ipcMain } from 'electron'
+import { app, BrowserWindow, shell, ipcMain, screen } from 'electron'
 
 export default dingtalk => () => {
   if (dingtalk.$mainWin) {
@@ -93,7 +93,16 @@ export default dingtalk => () => {
       app.dock.bounce('critical')
     }
     app.setBadgeCount(count)
-    // dingtalk.$tray.setImage(count ? '' : '')
+    const trayIcon = count
+      ? screen.getPrimaryDisplay().scaleFactor > 1
+        ? path.join(app.getAppPath(), './icon/128x128.png')
+        : path.join(app.getAppPath(), './icon/24x24.png')
+      : screen.getPrimaryDisplay().scaleFactor > 1
+        ? path.join(app.getAppPath(), './icon/128x128.png')
+        : path.join(app.getAppPath(), './icon/24x24.png')
+    if (dingtalk.$tray) {
+      dingtalk.$tray.setImage(trayIcon)
+    }
   })
 
   download($win)

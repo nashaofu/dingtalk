@@ -1,5 +1,5 @@
 import path from 'path'
-import { app, Tray, Menu } from 'electron'
+import { app, Tray, Menu, screen } from 'electron'
 
 export default dingtalk => () => {
   if (dingtalk.$tray) {
@@ -33,7 +33,9 @@ export default dingtalk => () => {
       click: () => dingtalk.quit()
     }
   ]))
-
+  if (screen.getPrimaryDisplay().scaleFactor > 1) {
+    $tray.setImage(path.join(app.getAppPath(), './icon/128x128.png'))
+  }
   $tray.on('click', () => dingtalk.showMainWin())
   $tray.on('double-click', () => dingtalk.showMainWin())
   return $tray
