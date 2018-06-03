@@ -81,27 +81,27 @@ export default dingtalk => () => {
   })
 
   ipcMain.on('MAINWIN:window-close', () => $win.hide())
-  ipcMain.on('MAINWIN:open-email', (e, url) => dingtalk.showEmailWin(url))
+  ipcMain.on('MAINWIN:open-email', (e, storage) => dingtalk.showEmailWin(storage))
 
   ipcMain.on('MAINWIN:window-show', () => {
     $win.show()
     $win.focus()
   })
   ipcMain.on('MAINWIN:badge', (e, count) => {
-    if (app.dock) {
-      app.dock.show()
-      app.dock.bounce('critical')
-    }
     app.setBadgeCount(count)
     const trayIcon = count
       ? screen.getPrimaryDisplay().scaleFactor > 1
-        ? path.join(app.getAppPath(), './icon/128x128.png')
-        : path.join(app.getAppPath(), './icon/24x24.png')
+        ? path.join(app.getAppPath(), './icon/64x64-n.png')
+        : path.join(app.getAppPath(), './icon/24x24-n.png')
       : screen.getPrimaryDisplay().scaleFactor > 1
-        ? path.join(app.getAppPath(), './icon/128x128.png')
+        ? path.join(app.getAppPath(), './icon/64x64.png')
         : path.join(app.getAppPath(), './icon/24x24.png')
     if (dingtalk.$tray) {
       dingtalk.$tray.setImage(trayIcon)
+    }
+    if (app.dock) {
+      app.dock.show()
+      app.dock.bounce('critical')
     }
   })
 

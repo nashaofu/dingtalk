@@ -18,13 +18,11 @@ export default () => {
       // 停止事件冒泡和默认事件
       e.stopPropagation()
       e.preventDefault()
-      const storage = localStorage
-      for (let key in storage) {
-        if (/^\d+_mailUrl/.test(key)) {
-          ipcRenderer.send('MAINWIN:open-email', decodeURIComponent(storage[key]))
-          break
-        }
-      }
+      ipcRenderer.send('MAINWIN:open-email', {
+        localStorage,
+        sessionStorage,
+        cookie: document.cookie
+      })
     }
   })
 }

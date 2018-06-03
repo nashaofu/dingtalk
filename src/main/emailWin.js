@@ -3,12 +3,22 @@ import path from 'path'
 import contextMenu from './contextMenu'
 import { app, BrowserWindow } from 'electron'
 
-export default dingtalk => url => {
+export default dingtalk => ({
+  cookie,
+  localStorage,
+  sessionStorage
+}) => {
   if (dingtalk.$emailWin) {
     dingtalk.$emailWin.show()
     dingtalk.$emailWin.focus()
     return dingtalk.$emailWin
   }
+  let url = Object
+    .keys(localStorage)
+    .find(key => /^\d+_mailUrl/.test(key))
+  if (!url) return
+  url = decodeURIComponent(localStorage[url])
+
   const $win = new BrowserWindow({
     title: '钉邮',
     width: 980,
@@ -40,7 +50,13 @@ export default dingtalk => url => {
       fs.readFile(filename, (error, data) => {
         if (error || $win.webContents.isDestroyed()) return
         $win.webContents.executeJavaScript(data.toString(), () => {
-          if (!$win.webContents.isDestroyed()) $win.webContents.send('dom-ready', url)
+          if (!$win.webContents.isDestroyed()) {
+            $win.webContents.send('dom-ready', {
+              cookie,
+              localStorage,
+              sessionStorage
+            })
+          }
         })
       })
     })
