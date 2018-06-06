@@ -15,7 +15,7 @@ class EmailWinInjector {
       const url = Object
         .keys(storage.localStorage)
         .find(key => /^\d+_mailUrl/.test(key))
-      this.href = decodeURIComponent(url)
+      this.href = decodeURIComponent(storage.localStorage[url])
       this.cookie = storage.cookie
       this.localStorage = storage.localStorage
       this.sessionStorage = storage.sessionStorage

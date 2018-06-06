@@ -3,21 +3,16 @@ import path from 'path'
 import contextMenu from './contextMenu'
 import { app, BrowserWindow } from 'electron'
 
-export default dingtalk => ({
-  cookie,
-  localStorage,
-  sessionStorage
-}) => {
+export default dingtalk => storage => {
   if (dingtalk.$emailWin) {
     dingtalk.$emailWin.show()
     dingtalk.$emailWin.focus()
     return dingtalk.$emailWin
   }
-  let url = Object
-    .keys(localStorage)
+  const url = Object
+    .keys(storage.localStorage)
     .find(key => /^\d+_mailUrl/.test(key))
   if (!url) return
-  url = decodeURIComponent(localStorage[url])
 
   const $win = new BrowserWindow({
     title: '钉邮',
@@ -50,13 +45,7 @@ export default dingtalk => ({
       fs.readFile(filename, (error, data) => {
         if (error || $win.webContents.isDestroyed()) return
         $win.webContents.executeJavaScript(data.toString(), () => {
-          if (!$win.webContents.isDestroyed()) {
-            $win.webContents.send('dom-ready', {
-              cookie,
-              localStorage,
-              sessionStorage
-            })
-          }
+          if (!$win.webContents.isDestroyed()) $win.webContents.send('dom-ready', storage)
         })
       })
     })
@@ -69,6 +58,6 @@ export default dingtalk => ({
   })
 
   // 加载URL地址
-  $win.loadURL(url)
+  $win.loadURL(decodeURIComponent(storage.localStorage[url]))
   return $win
 }

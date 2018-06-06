@@ -34,7 +34,7 @@ export default dingtalk => () => {
     }
   ]))
   if (screen.getPrimaryDisplay().scaleFactor > 1) {
-    $tray.setImage(path.join(app.getAppPath(), './icon/128x128.png'))
+    $tray.setImage(path.join(app.getAppPath(), './icon/96x96.png'))
   }
   $tray.on('click', () => dingtalk.showMainWin())
   $tray.on('double-click', () => dingtalk.showMainWin())
