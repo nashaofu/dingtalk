@@ -11,7 +11,10 @@ export default dingtalk => msg => {
   // var content = qs.stringify(data);
 
   console.log(msg)
-  var atnick = msg.match(/\u0001\u0003@.*\u0002/)[0]
+  // msg.match(/\u0001\u0003@.*\u0002/)[0]
+  /* eslint no-control-regex: "off" */
+
+  var atnick = msg.match(new RegExp('\u0001\u0003@.*\u0002'))[0]
   var nick = atnick.slice(3, -2)
   var msgbody = msg.slice(atnick.length)
 
