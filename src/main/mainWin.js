@@ -95,6 +95,7 @@ export default dingtalk => () => {
     app.setBadgeCount(count)
     // dingtalk.$tray.setImage(count ? '' : '')
   })
+  ipcMain.on("MAINWIN:send-at-msg",(e,msg) => dingtalk.sendAtMsg(msg))
 
   download($win)
   // 加载URL地址
