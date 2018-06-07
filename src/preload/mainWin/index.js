@@ -56,9 +56,8 @@ class MainWinInjector {
      * 文件下载监听
      */
     this.download()
-
     /**
-     * hubot 
+     * hubot
      */
     this.hubot()
   }
@@ -101,7 +100,7 @@ class MainWinInjector {
   /**
    * hook send msg
   */
-  hubot() {
+  hubot () {
     hubot(this)
   }
 }
