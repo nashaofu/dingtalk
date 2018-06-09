@@ -3,7 +3,6 @@ import openEmail from './openEmail'
 import rememberMe from './rememberMe'
 import winOperation from './winOperation'
 import notifyMessage from './notifyMessage'
-import hubot from './hubot'
 import { ipcRenderer, webFrame } from 'electron'
 
 import './css.styl'
@@ -56,10 +55,6 @@ class MainWinInjector {
      * 文件下载监听
      */
     this.download()
-    /**
-     * hubot
-     */
-    this.hubot()
   }
 
   // 设置缩放等级
@@ -96,12 +91,6 @@ class MainWinInjector {
 
   download () {
     download(this)
-  }
-  /**
-   * hook send msg
-  */
-  hubot () {
-    hubot(this)
   }
 }
 
