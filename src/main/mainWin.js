@@ -105,7 +105,6 @@ export default dingtalk => () => {
       app.dock.bounce('critical')
     }
   })
-  ipcMain.on('MAINWIN:send-at-msg', (e, msg) => dingtalk.sendAtMsg(msg))
 
   download($win)
   // 加载URL地址
