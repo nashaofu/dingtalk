@@ -12,7 +12,7 @@
 # sudo apt-get install --no-install-recommends -y gcc-multilib g++-multilib
 # sudo apt-get install --no-install-recommends -y rpm
 
-npm istall
+npm install
 
 # 打包源码
 npm run build
@@ -20,7 +20,6 @@ npm run build
 # 生成安装包
 npm run pack
 ```
-注：最后一个命令运行会报错，如果报错信息为token相关，直接忽略即可，该报错为部署到GitHub release时token不存在的错误，生成的包是完全正常的
 
 ## 截图效果
 1. 二维码登录页面
@@ -57,7 +56,7 @@ npm run pack
 5. 整个项目采用webpack打包，采用electron-builder来构建应用，分别构建生成三大平台安装包，2018-03-22
 6. 添加关于页面，文件下载进度支持，消息提示不弹出问题修复，修复Linux更新问题，2018-04-01
 7. 修复消息提示node-notifier图标显示问题，2018-04-07
-8. 修改消息提示太多不能关闭导致卡顿问题，支持rpm打包，2018-05-30
+8. 修改消息提示太多不能关闭导致卡顿问题，支持rpm打包，升级截图工具，2018-05-30
 
 ## TODO
 - [x] 支持网络断开时显示错误页

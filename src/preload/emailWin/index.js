@@ -1,14 +1,24 @@
 const { ipcRenderer, webFrame } = require('electron')
+
 class EmailWinInjector {
   constructor () {
     this.href = null
+    this.cookie = null
+    this.localStorage = null
+    this.sessionStorage = null
     this.init()
   }
 
   // 初始化
   init () {
-    ipcRenderer.on('dom-ready', (e, url) => {
-      this.href = url
+    ipcRenderer.on('dom-ready', (e, storage) => {
+      const url = Object
+        .keys(storage.localStorage)
+        .find(key => /^\d+_mailUrl/.test(key))
+      this.href = decodeURIComponent(storage.localStorage[url])
+      this.cookie = storage.cookie
+      this.localStorage = storage.localStorage
+      this.sessionStorage = storage.sessionStorage
       this.injectJs()
     })
   }
@@ -16,8 +26,7 @@ class EmailWinInjector {
   // 注入JS
   injectJs () {
     this.setZoomLevel()
-    // 代理重写console.error
-    this.proxyConsoleError()
+    this.setStorage()
   }
 
   setZoomLevel () {
@@ -27,32 +36,20 @@ class EmailWinInjector {
     webFrame.setVisualZoomLevelLimits(1, 1)
   }
 
-  proxyConsoleError () {
-    const errorDiv = document.querySelector('#errorDiv')
-    if (errorDiv) {
-      errorDiv.innerHTML = '加载中...'
-    }
-    const consoleError = console.error
-    // 劫持重写console.error
-    console.error = err => {
-      if (err === 'Not in DingTalk PC webview') {
-        setTimeout(() => {
-          const errorDiv = document.querySelector('#errorDiv')
-          if (errorDiv) {
-            errorDiv.innerHTML = '<h2>加载失败,正在重试</h2>'
-            setTimeout(() => {
-              // 页面没有加载出来时刷新页面
-              if (window.location.href === this.href) {
-                window.location.reload()
-              } else {
-                window.location.href = this.href
-              }
-            }, 1000)
-          }
-        })
-      }
-      consoleError(err)
-    }
+  /**
+   * 本来以为在本地写入localStorage等信息
+   * 就可以正常使用钉邮了
+   * 结果我想是我想多了
+   * 代码先留着吧
+   */
+  setStorage () {
+    document.cookie = this.cookie
+    Object
+      .keys(this.localStorage)
+      .forEach(key => localStorage.setItem(key, this.localStorage[key]))
+    Object
+      .keys(this.sessionStorage)
+      .forEach(key => sessionStorage.setItem(key, this.sessionStorage[key]))
   }
 }
 

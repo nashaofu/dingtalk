@@ -191,10 +191,10 @@ export default class DingTalk {
 
   /**
    * 显示邮箱窗口
-   * @param {String} url
+   * @param {Object} storage
    */
-  showEmailWin (url) {
-    this.$emailWin = emailWin(this)(url)
+  showEmailWin (storage) {
+    this.$emailWin = emailWin(this)(storage)
   }
 
   /**
