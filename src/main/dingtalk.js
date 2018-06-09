@@ -20,6 +20,7 @@ import settingWin from './settingWin'
 import autoUpdate from './autoUpdate'
 import shortcut from './shortcut'
 import ShortcutCapture from 'shortcut-capture'
+import sendAtMsg from './sendAtMsg'
 
 export default class DingTalk {
   // 托盘图标
@@ -241,5 +242,14 @@ export default class DingTalk {
    */
   autoUpdate () {
     autoUpdate(this)()
+  }
+
+  /**
+   * 发送消息给hubot
+   * 消息格式为:\u0001\u0003@{who} \u0003{body}
+   * @param {String} msg
+   */
+  sendAtMsg (msg) {
+    sendAtMsg(this)(msg)
   }
 }
