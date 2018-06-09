@@ -36,6 +36,12 @@ class EmailWinInjector {
     webFrame.setVisualZoomLevelLimits(1, 1)
   }
 
+  /**
+   * 本来以为在本地写入localStorage等信息
+   * 就可以正常使用钉邮了
+   * 结果我想是我想多了
+   * 代码先留着吧
+   */
   setStorage () {
     document.cookie = this.cookie
     Object

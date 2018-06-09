@@ -12,7 +12,7 @@
 # sudo apt-get install --no-install-recommends -y gcc-multilib g++-multilib
 # sudo apt-get install --no-install-recommends -y rpm
 
-npm istall
+npm install
 
 # 打包源码
 npm run build
