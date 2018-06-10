@@ -21,6 +21,9 @@ npm run build
 npm run pack
 ```
 
+## 贡献指南
+非常欢迎有兴趣的小伙伴一起来贡献力量，我写了一份很简单的[贡献指南](./CONTRIBUTING.md)，希望能帮助你快速上手
+
 ## 截图效果
 1. 二维码登录页面
 ![1.png](./screenshot/1.png)
