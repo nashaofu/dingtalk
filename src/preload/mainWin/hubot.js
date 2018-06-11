@@ -17,11 +17,13 @@ export default () => {
       if (needsendmessage !== '') {
         // send and clean
         // \u0001\u0003@爱爱 \u0002
-        if (needsendmessage.indexOf('\u0001\u0003@') === 0) {
-          console.log('发送@:' + needsendmessage)
-          // ipcRenderer.send('notify', `发送@${needsendmessage}`)
-          ipcRenderer.send('MAINWIN:send-at-msg', needsendmessage)
+        const $grouptxt = document.querySelector('#content-pannel > div > div > div > div > span > span.ng-binding')
+        let needsendmessageLayOut = {
+          'group': $grouptxt.innerHTML,
+          'msg': needsendmessage
         }
+        console.log(needsendmessageLayOut.group + '发送@:' + needsendmessage)
+        ipcRenderer.send('MAINWIN:send-at-msg', needsendmessageLayOut)
         needsendmessage = ''
       }
     } else {
