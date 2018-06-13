@@ -59,3 +59,4 @@ typings/
 
 dist/
 release/
+package-lock.json
