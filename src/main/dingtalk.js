@@ -21,6 +21,7 @@ import autoUpdate from './autoUpdate'
 import shortcut from './shortcut'
 import ShortcutCapture from 'shortcut-capture'
 import sendAtMsg from './sendAtMsg'
+import IrcManager from './irc'
 
 export default class DingTalk {
   // 托盘图标
@@ -39,12 +40,18 @@ export default class DingTalk {
   $shortcutCapture = null
   // 网络情况，默认为null，必须等到页面报告状态
   online = null
+  // irc 服务器,实现消息自动应答
+  $ircManager = null
+
+  /* eslint no-useless-escape: "off" */
   // 默认配置
   setting = {
     autoupdate: true,
     keymap: {
       'shortcut-capture': ['Control', 'Alt', 'A']
-    }
+    },
+    irc: [],
+    at: []
   }
 
   constructor () {
@@ -63,6 +70,8 @@ export default class DingTalk {
           this.initNotify()
           this.autoUpdate()
           this.bindShortcut()
+          // ipcMain.on('log', (e, body) => console.log(body))
+          this.$ircManager = new IrcManager(this.setting.irc)
         })
       })
   }

@@ -1,5 +1,4 @@
-import http from 'http'
-// import qs from 'querystring'
+import qq from './qq'
 
 /**
  * 发送消息给hubot
@@ -15,32 +14,6 @@ export default dingtalk => msglayout => {
   // var content = qs.stringify(data)
   console.log(msglayout)
 
-  var $config = [{
-    'match': {
-      'group': '^hubot$',
-      'msg': '\u0001\u0003@qqproxy \u0002@[^\s]+( |　)'
-    },
-    'action': {
-      'do': 'sendqqbyproxy',
-      'qqbot': {
-        'host': '127.0.0.1',
-        'port': 8188
-      }
-    }
-  }, {
-    'match': {
-      'group': '^hubot$',
-      'msg': '\u0001\u0003@.*\u0002'
-    },
-    'action': {
-      'do': 'sendqq',
-      'qqbot': {
-        'host': '127.0.0.1',
-        'port': 8188
-      }
-    }
-  }]
-
   /**
    * 通过@qqproxy 标记代理qq转发
    * @param {*} conf
@@ -51,32 +24,11 @@ export default dingtalk => msglayout => {
     /* eslint no-control-regex: "off" */
     /* eslint no-useless-escape: "off" */
 
-    var atnick = msglayout.msg.match(new RegExp('\u0001\u0003@qqproxy \u0002@[^\s]+[ |　]'))[0]
-    var nick = atnick.slice('\u0001\u0003@qqproxy \u0002@'.length, -1)
+    var atnick = msglayout.msg.match(new RegExp(conf.match.msg))[0]
+    var nick = atnick.slice(conf.match.proxynick.length, -1)
     var msgbody = msglayout.msg.slice(atnick.length)
 
-    var path = '/send/buddy/' + encodeURIComponent(nick) + '/' + encodeURIComponent(msgbody)
-    // path.replace(/([\u4e00-\u9fa5])/g, (str) => encodeURIComponent(str) )
-    var options = {
-      hostname: conf.action.qqbot.host,
-      port: conf.action.qqbot.port,
-      path: path,
-      method: 'GET'
-    }
-    console.log(options)
-    var req = http.request(options, function (res) {
-      console.log('STATUS: ' + res.statusCode)
-      console.log('HEADERS: ' + JSON.stringify(res.headers))
-      res.setEncoding('utf8')
-      res.on('data', function (chunk) {
-        console.log('BODY: ' + chunk)
-      })
-    })
-    req.on('error', function (e) {
-      console.log('problem with request: ' + e.message)
-    })
-
-    req.end()
+    qq(dingtalk)(conf.action.qqbot.host, conf.action.qqbot.port, nick, msgbody)
   }
 
   /**
@@ -88,37 +40,34 @@ export default dingtalk => msglayout => {
     // msglayout.msg.match(/\u0001\u0003@.*\u0002/)[0]
     /* eslint no-control-regex: "off" */
 
-    var atnick = msglayout.msg.match(new RegExp('\u0001\u0003@.*\u0002'))[0]
+    var atnick = msglayout.msg.match(new RegExp(conf.match.msg))[0]
     var nick = atnick.slice(3, -2)
     var msgbody = msglayout.msg.slice(atnick.length)
 
-    var path = '/send/buddy/' + encodeURIComponent(nick) + '/' + encodeURIComponent(msgbody)
-    // path.replace(/([\u4e00-\u9fa5])/g, (str) => encodeURIComponent(str) )
-    var options = {
-      hostname: conf.action.qqbot.host,
-      port: conf.action.qqbot.port,
-      path: path,
-      method: 'GET'
-    }
-    console.log(options)
-    var req = http.request(options, function (res) {
-      console.log('STATUS: ' + res.statusCode)
-      console.log('HEADERS: ' + JSON.stringify(res.headers))
-      res.setEncoding('utf8')
-      res.on('data', function (chunk) {
-        console.log('BODY: ' + chunk)
-      })
-    })
-    req.on('error', function (e) {
-      console.log('problem with request: ' + e.message)
-    })
+    qq(dingtalk)(conf.action.qqbot.host, conf.action.qqbot.port, nick, msgbody)
+  }
 
-    req.end()
+  /**
+  * 发送消息到irc
+  * @param {object} conf
+  * @param {object} msglayout
+  */
+  function sendtoirc (conf, msglayout) {
+    var atnick = msglayout.msg.match(new RegExp(conf.match.msg))[0]
+    var msgbody = msglayout.msg.slice(atnick.length)
+
+    dingtalk.$ircManager.send({
+      'irc_server': conf.action.irc.server,
+      'irc_channel': conf.action.irc.channel,
+      'irc_messageEncryption': conf.action.irc.aes,
+      'msg': msgbody
+    })
   }
 
   var functions = {
     'sendqqbyproxy': sendqqbyproxy,
-    'sendqq': sendqq
+    'sendqq': sendqq,
+    'sendtoirc': sendtoirc
   }
 
   function action (config, msglayout) {
@@ -132,5 +81,5 @@ export default dingtalk => msglayout => {
       fn(conf, msglayout)
     }
   }
-  action($config, msglayout)
+  action(dingtalk.setting.at, msglayout)
 }

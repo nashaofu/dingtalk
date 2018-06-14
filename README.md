@@ -1,5 +1,5 @@
 # dingtalk[![Build Status](https://travis-ci.org/nashaofu/dingtalk.svg?branch=master)](https://travis-ci.org/nashaofu/dingtalk)[![Build status](https://ci.appveyor.com/api/projects/status/jptk80n78gdogd18/branch/master?svg=true)](https://ci.appveyor.com/project/nashaofu/dingtalk/branch/master)
-钉钉桌面版，基于electron和钉钉网页版开发，支持Windows、Linux和macOS
+钉钉桌面版，基于electron和钉钉网页版开发，支持Windows、Linux和macOS，扩展支持QQ和irc服务，通过结合hubot和irc 可以实现chatops
 
 ## 安装步骤
 > 直接从[GitHub relase](https://github.com/nashaofu/dingtalk/releases/latest)页面下载最新版安装包即可
@@ -21,6 +21,81 @@ npm run build
 npm run pack
 ```
 注：最后一个命令运行会报错，如果报错信息为token相关，直接忽略即可，该报错为部署到GitHub release时token不存在的错误，生成的包是完全正常的
+
+## 配置 `qqbot/irc` 消息转发
+dingtalk的配置文件`$HOME/.config/dingtalk/setting.json`中新增如下:
+```json
+{
+    "autoupdate": true,
+    "keymap": {
+      "shortcut-capture": ["Control", "Alt", "A"]
+    },
+    "irc": [{
+      "server": "irc.freenode.net",
+      "channel": "...",
+      "user": "...",
+      "aes": "...",
+      "webhook": "..."
+    }],
+    "at": [{
+      "match": {
+        "group": "^hubot$",
+        "msg": "\u0001\u0003@老秦 \u0002"
+      },
+      "action": {
+        "do": "sendtoirc",
+        "irc": {
+          "server": "irc.freenode.net",
+          "channel": "...",
+          "aes": "..."
+        }
+      }
+    }, {
+      "match": {
+        "group": "^hubot$",
+        "msg": "\u0001\u0003@qqproxy \u0002@[^\\s]+( |　)",
+        "proxynick": "\u0001\u0003@qqproxy \u0002@"
+      },
+      "action": {
+        "do": "sendqqbyproxy",
+        "qqbot": {
+          "host": "127.0.0.1",
+          "port": 8188
+        }
+      }
+    }, {
+      "match": {
+        "group": "^hubot$",
+        "msg": "\u0001\u0003@.*\u0002"
+      },
+      "action": {
+        "do": "sendqq",
+        "qqbot": {
+          "host": "127.0.0.1",
+          "port": 8188
+        }
+      }
+    }]
+  }
+```
+- irc 数组，配置接收irc服务消息的配置项,
+
+  - server irc服务器地址
+  - channel irc服务器channel
+  - user channel中hubot用户
+  - aes　消息解密密码
+  - webhook 订钉webhook地址
+
+
+- at 数组,配置发送消息时根据配置的匹配规则转发消息到qqbot 或 irc
+- at.match.group 匹配发送消息所在的订钉群 `群名称`
+- at.match.msg 匹配发送消息中 `＠某人`
+- at.match.action 具体转发参数配置,目前支持
+
+  - sendtoirc 转发消息到irc服务器,aes选项指定消息传输加密密码,如果为空字符串,消息不加密,加密后的消息格式如 `{"encrypt":true,"msg":"..."}`格式
+  - sendqq 转发qq消息给`＠某人`, 如`@张山　hello`
+  - sendqqbyproxy 如果qq好有没有对应的订钉机器人,通过指定一个代理用户[机器人]转发qq消息给`＠某人`，如`＠qqproxy　@李四　hello`
+
 
 ## 截图效果
 1. 二维码登录页面

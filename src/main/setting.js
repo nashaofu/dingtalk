@@ -7,6 +7,7 @@ import { app } from 'electron'
  */
 export const initSetting = dingtalk => () => {
   const filename = path.join(app.getPath('userData'), 'setting.json')
+  console.log('配置文件地址:' + filename)
   return new Promise((resolve, reject) => {
     fs.access(filename, fs.constants.R_OK | fs.constants.W_OK, async err => {
       if (err) {
@@ -36,6 +37,7 @@ export const readSetting = dingtalk => () => {
         }
         resolve({ ...dingtalk.setting, ...setting })
       } catch (e) {
+        console.log(`setting:${filename} parse error:${e}`)
         resolve(dingtalk.setting)
       }
     })

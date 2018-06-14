@@ -56,7 +56,7 @@ typings/
 
 # dotenv environment variables file
 .env
-
+.vscode
 dist/
 release/
 package-lock.json
