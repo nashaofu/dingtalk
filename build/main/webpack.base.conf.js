@@ -39,6 +39,30 @@ module.exports = {
         }
       },
       {
+        test: /iconv\.js$/,
+        loader: 'webpack-replace-loader',
+        enforce: 'pre',
+        options: {
+          arr: [
+            {search: 'Debug', replace: 'Release', attr: 'g'}
+          ]
+        }
+      },
+      {
+        test: /node-icu-charset-detector\.js$/,
+        loader: 'webpack-replace-loader',
+        enforce: 'pre',
+        options: {
+          arr: [
+            {search: 'node-icu-charset-detector', replace: 'node-icu-charset-detector.node', attr: 'g'}
+          ]
+        }
+      },
+      {
+        test: /\.node$/,
+        use: 'node-loader'
+      },
+      {
         test: /\.js$/,
         loader: 'babel-loader',
         include: [resolve('src/main')]
