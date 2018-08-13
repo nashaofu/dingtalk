@@ -17,7 +17,7 @@ export default dingtalk => () => {
     resizable: false,
     menu: false,
     parent: dingtalk.$mainWin,
-    modal: true,
+    modal: process.platform !== 'darwin',
     show: false,
     icon: path.join(app.getAppPath(), './icon/32x32.png')
   })

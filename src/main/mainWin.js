@@ -90,13 +90,18 @@ export default dingtalk => () => {
   ipcMain.on('MAINWIN:badge', (e, count) => {
     app.setBadgeCount(count)
     const isHScaleFactor = screen.getPrimaryDisplay().scaleFactor > 1
-    const trayIcon = count
+    let trayIcon = count
       ? isHScaleFactor
-        ? path.join(app.getAppPath(), './icon/96x96-n.png')
+        ? path.join(app.getAppPath(), './icon/64x64-n.png')
         : path.join(app.getAppPath(), './icon/24x24-n.png')
       : isHScaleFactor
-        ? path.join(app.getAppPath(), './icon/96x96.png')
+        ? path.join(app.getAppPath(), './icon/64x64.png')
         : path.join(app.getAppPath(), './icon/24x24.png')
+    if (process.platform === 'darwin') {
+      trayIcon = count
+        ? path.join(app.getAppPath(), './icon/16x16-n.png')
+        : path.join(app.getAppPath(), './icon/16x16.png')
+    }
     if (dingtalk.$tray) {
       dingtalk.$tray.setImage(trayIcon)
     }
