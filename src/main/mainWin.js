@@ -70,6 +70,14 @@ export default dingtalk => () => {
     }
   })
 
+  // 主窗口导航拦截
+  $win.webContents.on('will-navigate', (e, url) => {
+    e.preventDefault()
+    if (url !== 'about:blank') {
+      shell.openExternal(url)
+    }
+  })
+
   ipcMain.on('MAINWIN:window-minimize', () => $win.minimize())
 
   ipcMain.on('MAINWIN:window-maximization', () => {
