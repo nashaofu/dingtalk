@@ -55,7 +55,7 @@ npm run pack
 1. 支持屏幕截图，并且支持多显示器截图。截图快捷键为`ctrl+alt+a`，2017-10-23
 2. 支持网络错误页面提示，网络恢复自动跳转到登陆页面，2017-12-28
 3. 修改网络错误页面，支持快捷键设置，2018-02-07
-4. 更新截图功能，支持多显示器截图，目前确认支持Ubuntn16，Ubuntn17不支持，其他Linux系统未测试，其中使用了[shortcut-capture](https://github.com/nashaofu/shortcut-capture)模块来实现截图；修复设置页面不修改快捷键时，点击保存时提示错误的BUG，2018-03-03
+4. 更新截图功能，支持多显示器截图，目前确认支持Ubuntu16，Ubuntu17不支持，其他Linux系统未测试，其中使用了[shortcut-capture](https://github.com/nashaofu/shortcut-capture)模块来实现截图；修复设置页面不修改快捷键时，点击保存时提示错误的BUG，2018-03-03
 5. 整个项目采用webpack打包，采用electron-builder来构建应用，分别构建生成三大平台安装包，2018-03-22
 6. 添加关于页面，文件下载进度支持，消息提示不弹出问题修复，修复Linux更新问题，2018-04-01
 7. 修复消息提示node-notifier图标显示问题，2018-04-07
