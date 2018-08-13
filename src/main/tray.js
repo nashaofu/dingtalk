@@ -6,7 +6,7 @@ export default dingtalk => () => {
     return
   }
   // 生成托盘图标及其菜单项实例
-  const $tray = new Tray(path.join(app.getAppPath(), './icon/24x24.png'))
+  const $tray = new Tray(path.join(app.getAppPath(), './icon/20x20.png'))
 
   // 设置鼠标悬浮时的标题
   $tray.setToolTip('钉钉')
@@ -33,8 +33,10 @@ export default dingtalk => () => {
       click: () => dingtalk.quit()
     }
   ]))
-  if (screen.getPrimaryDisplay().scaleFactor > 1) {
-    $tray.setImage(path.join(app.getAppPath(), './icon/96x96.png'))
+  if (screen.getPrimaryDisplay().scaleFactor > 1 && process.platform !== 'darwin') {
+    $tray.setImage(path.join(app.getAppPath(), './icon/64x64.png'))
+  } else if (process.platform === 'darwin') {
+    $tray.setImage(path.join(app.getAppPath(), './icon/16x16.png'))
   }
   $tray.on('click', () => dingtalk.showMainWin())
   $tray.on('double-click', () => dingtalk.showMainWin())
