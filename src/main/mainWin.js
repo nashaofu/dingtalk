@@ -73,7 +73,7 @@ export default dingtalk => () => {
   // 主窗口导航拦截
   $win.webContents.on('will-navigate', (e, url) => {
     e.preventDefault()
-    if (url !== 'about:blank') {
+    if (url !== 'about:blank' && url !== 'https://im.dingtalk.com/') {
       shell.openExternal(url)
     }
   })
