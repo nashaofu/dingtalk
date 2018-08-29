@@ -4,6 +4,10 @@
 ## 安装步骤
 > 直接从[GitHub relase](https://github.com/nashaofu/dingtalk/releases/latest)页面下载最新版安装包即可
 
+## 国内仓库与版本安装包
+* 国内git地址：[https://gitee.com/diaocheng/dingtalk](https://gitee.com/diaocheng/dingtalk)
+* 安装包：[https://pan.baidu.com/s/12pM3fi5nphCdgGH9WAnXvw](https://pan.baidu.com/s/12pM3fi5nphCdgGH9WAnXvw)
+
 ## 手动构建
 ```bash
 # 安装依赖
@@ -71,3 +75,7 @@ npm run pack
 
 ## 关于支持加密信息的说明
 加密信息暂不支持，详情请看[企业信息加密相关](https://github.com/nashaofu/dingtalk/issues/2)，也欢迎各位朋友能够去研究一下，帮助实现这个功能
+
+## 打赏
+如果你觉的作者德辛苦付出有帮助到你，你可以给作者买杯咖啡！🤣
+![打赏](./screenshot/reward.png)
