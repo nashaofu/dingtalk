@@ -5,8 +5,10 @@
 > 直接从[GitHub relase](https://github.com/nashaofu/dingtalk/releases/latest)页面下载最新版安装包即可
 
 ## 国内仓库与版本安装包
-* 国内git地址：[https://gitee.com/diaocheng/dingtalk](https://gitee.com/diaocheng/dingtalk)
+* 国内git地址：[https://gitee.com/nashaofu/dingtalk](https://gitee.com/nashaofu/dingtalk)
 * 安装包：[https://pan.baidu.com/s/12pM3fi5nphCdgGH9WAnXvw](https://pan.baidu.com/s/12pM3fi5nphCdgGH9WAnXvw)
+
+### 特别说明，提issue请尽量到[GitHub](https://github.com/nashaofu/dingtalk)，分别处理多个仓库实在精力有限
 
 ## 手动构建
 ```bash
