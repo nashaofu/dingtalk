@@ -46,7 +46,7 @@
     "electron": "^3.0.6",
     "electron-builder": "^20.27.1",
     "electron-debug": "^2.0.0",
-    "electron-dev-webpack-plugin": "0.0.9",
+    "electron-dev-webpack-plugin": "0.0.10",
     "electron-devtools-installer": "^2.2.4",
     "eslint": "^4.17.0",
     "eslint-config-standard": "^10.2.1",
