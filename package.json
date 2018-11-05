@@ -1,6 +1,6 @@
 {
   "name": "dingtalk",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "钉钉桌面版，基于electron和钉钉网页版开发，支持Windows、Linux和macOS",
   "author": "nashaofu <diaocheng@outlook.com>",
   "main": "dist/main.js",
@@ -43,7 +43,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "chalk": "^2.3.0",
     "css-loader": "^0.28.9",
-    "electron": "^2.0.7",
+    "electron": "^2.0.9",
     "electron-builder": "^20.27.1",
     "electron-debug": "^2.0.0",
     "electron-dev-webpack-plugin": "^0.0.9",
