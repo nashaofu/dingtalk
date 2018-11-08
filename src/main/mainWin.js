@@ -100,14 +100,14 @@ export default dingtalk => () => {
     const isHScaleFactor = screen.getPrimaryDisplay().scaleFactor > 1
     let trayIcon = count
       ? isHScaleFactor
-        ? path.join(app.getAppPath(), './icon/64x64-n.png')
-        : path.join(app.getAppPath(), './icon/24x24-n.png')
+        ? path.join(app.getAppPath(), './icon/n-64x64.png')
+        : path.join(app.getAppPath(), './icon/n-24x24.png')
       : isHScaleFactor
         ? path.join(app.getAppPath(), './icon/64x64.png')
         : path.join(app.getAppPath(), './icon/24x24.png')
     if (process.platform === 'darwin') {
       trayIcon = count
-        ? path.join(app.getAppPath(), './icon/16x16-n.png')
+        ? path.join(app.getAppPath(), './icon/n-16x16.png')
         : path.join(app.getAppPath(), './icon/16x16.png')
     }
     if (dingtalk.$tray) {
