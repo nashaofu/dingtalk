@@ -1,4 +1,5 @@
 import path from 'path'
+import logo from './logo'
 import contextMenu from './contextMenu'
 import { autoUpdater } from 'electron-updater'
 import { app, BrowserWindow, ipcMain } from 'electron'
@@ -19,7 +20,7 @@ export default dingtalk => () => {
     parent: dingtalk.$mainWin,
     modal: process.platform !== 'darwin',
     show: false,
-    icon: path.join(app.getAppPath(), './icon/32x32.png')
+    icon: logo
   })
 
   $win.on('ready-to-show', () => {

@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import logo from './logo'
 import download from './download'
 import contextMenu from './contextMenu'
 import { app, BrowserWindow, shell, ipcMain, screen } from 'electron'
@@ -21,7 +22,7 @@ export default dingtalk => () => {
     frame: false,
     show: false,
     backgroundColor: '#5a83b7',
-    icon: path.join(app.getAppPath(), './icon/32x32.png'),
+    icon: logo,
     resizable: true
   })
 
@@ -100,15 +101,15 @@ export default dingtalk => () => {
     const isHScaleFactor = screen.getPrimaryDisplay().scaleFactor > 1
     let trayIcon = count
       ? isHScaleFactor
-        ? path.join(app.getAppPath(), './icon/n-64x64.png')
-        : path.join(app.getAppPath(), './icon/n-24x24.png')
+        ? path.join(app.getAppPath(), './resources/icon/n-64x64.png')
+        : path.join(app.getAppPath(), './resources/icon/n-24x24.png')
       : isHScaleFactor
-        ? path.join(app.getAppPath(), './icon/64x64.png')
-        : path.join(app.getAppPath(), './icon/24x24.png')
+        ? path.join(app.getAppPath(), './resources/icon/64x64.png')
+        : path.join(app.getAppPath(), './resources/icon/24x24.png')
     if (process.platform === 'darwin') {
       trayIcon = count
-        ? path.join(app.getAppPath(), './icon/n-16x16.png')
-        : path.join(app.getAppPath(), './icon/16x16.png')
+        ? path.join(app.getAppPath(), './resources/icon/n-16x16.png')
+        : path.join(app.getAppPath(), './resources/icon/16x16.png')
     }
     if (dingtalk.$tray) {
       dingtalk.$tray.setImage(trayIcon)

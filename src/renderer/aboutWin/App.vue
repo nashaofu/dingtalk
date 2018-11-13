@@ -1,7 +1,7 @@
 <template lang="pug">
 .app
   .app-logo
-    img.app-logo-image(src="../../../icon/128x128.png")
+    img.app-logo-image(src="./logo.png")
     .app-logo-title 钉钉 {{ version }}
 
   .app-update
@@ -26,7 +26,7 @@ import {
   author,
   license,
   homepage
-} from '~/package.json'
+} from '#/package.json'
 import {
   webFrame,
   ipcRenderer,

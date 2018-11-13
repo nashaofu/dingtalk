@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import logo from './logo'
 import contextMenu from './contextMenu'
 import { app, BrowserWindow } from 'electron'
 
@@ -24,7 +25,7 @@ export default dingtalk => storage => {
     resizable: true,
     menu: false,
     show: false,
-    icon: path.join(app.getAppPath(), './icon/32x32.png')
+    icon: logo
   })
 
   $win.on('ready-to-show', () => {

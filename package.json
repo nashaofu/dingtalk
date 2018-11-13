@@ -88,6 +88,7 @@
     "copyright": "Copyright © year nashaofu",
     "asar": true,
     "directories": {
+      "buildResources": "resources",
       "output": "release"
     },
     "files": [
