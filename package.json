@@ -102,11 +102,11 @@
     },
     "mac": {
       "target": "dmg",
-      "icon": "icon/icon.icns",
+      "icon": "./resources/icons/icon.icns",
       "category": "public.app-category.instant-messaging"
     },
     "win": {
-      "icon": "icon/icon.ico",
+      "icon": "./resources/icons/icon.ico",
       "target": [
         {
           "target": "nsis",
@@ -141,7 +141,7 @@
           ]
         }
       ],
-      "icon": "icon",
+      "icon": "./resources/icons",
       "category": "InstantMessaging;Network"
     },
     "nsis": {
