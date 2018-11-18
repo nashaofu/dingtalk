@@ -1,8 +1,9 @@
 import fs from 'fs'
 import path from 'path'
+import logo, { getNoMessageTrayIcon, getMessageTrayIcon } from './logo'
 import download from './download'
 import contextMenu from './contextMenu'
-import { app, BrowserWindow, shell, ipcMain, screen } from 'electron'
+import { app, BrowserWindow, shell, ipcMain } from 'electron'
 
 export default dingtalk => () => {
   if (dingtalk.$mainWin) {
@@ -21,7 +22,7 @@ export default dingtalk => () => {
     frame: false,
     show: false,
     backgroundColor: '#5a83b7',
-    icon: path.join(app.getAppPath(), './icon/32x32.png'),
+    icon: logo,
     resizable: true
   })
 
@@ -37,7 +38,7 @@ export default dingtalk => () => {
    * 窗体关闭事件处理
    * 默认只会隐藏窗口
    */
-  $win.on('close', (e) => {
+  $win.on('close', e => {
     e.preventDefault()
     $win.hide()
   })
@@ -97,21 +98,8 @@ export default dingtalk => () => {
   })
   ipcMain.on('MAINWIN:badge', (e, count) => {
     app.setBadgeCount(count)
-    const isHScaleFactor = screen.getPrimaryDisplay().scaleFactor > 1
-    let trayIcon = count
-      ? isHScaleFactor
-        ? path.join(app.getAppPath(), './icon/n-64x64.png')
-        : path.join(app.getAppPath(), './icon/n-24x24.png')
-      : isHScaleFactor
-        ? path.join(app.getAppPath(), './icon/64x64.png')
-        : path.join(app.getAppPath(), './icon/24x24.png')
-    if (process.platform === 'darwin') {
-      trayIcon = count
-        ? path.join(app.getAppPath(), './icon/n-16x16.png')
-        : path.join(app.getAppPath(), './icon/16x16.png')
-    }
     if (dingtalk.$tray) {
-      dingtalk.$tray.setImage(trayIcon)
+      dingtalk.$tray.setImage(count ? getMessageTrayIcon() : getNoMessageTrayIcon())
     }
     if (app.dock) {
       app.dock.show()

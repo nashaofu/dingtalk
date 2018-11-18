@@ -1,14 +1,5 @@
-import {
-  app,
-  Menu,
-  ipcMain,
-  BrowserWindow
-} from 'electron'
-import {
-  initSetting,
-  readSetting,
-  writeSetting
-} from './setting'
+import { app, Menu, ipcMain, BrowserWindow } from 'electron'
+import { initSetting, readSetting, writeSetting } from './setting'
 import tray from './tray'
 import online from './online'
 import Notify from './notify'
@@ -47,23 +38,18 @@ export default class DingTalk {
   }
 
   constructor () {
-    this.init()
-      .then(() => {
-        this.ready(() => {
-          // 同时只能运行一个人实例
-          if (app.makeSingleInstance(() => this.showMainWin())) {
-            return app.quit()
-          }
-          // 移除窗口菜单
-          Menu.setApplicationMenu(null)
-          this.initMainWin()
-          this.initTray()
-          this.initShortcutCapture()
-          this.initNotify()
-          this.autoUpdate()
-          this.bindShortcut()
-        })
-      })
+    // 同时只能运行一个人实例
+    if (!app.requestSingleInstanceLock()) return app.quit()
+    this.init().then(() => {
+      // 移除窗口菜单
+      Menu.setApplicationMenu(null)
+      this.initMainWin()
+      this.initTray()
+      this.initShortcutCapture()
+      this.initNotify()
+      this.autoUpdate()
+      this.bindShortcut()
+    })
   }
 
   /**
@@ -71,8 +57,11 @@ export default class DingTalk {
    * @return {Promise} setting
    */
   async init () {
-    this.setting = await initSetting(this)()
     online(this)()
+    this.setting = await initSetting(this)()
+    // 第二次打开应用，显示主窗口
+    app.on('second-instance', (event, commandLine, workingDirectory) => this.showMainWin())
+    return app.whenReady()
   }
 
   /**
@@ -122,39 +111,17 @@ export default class DingTalk {
   }
 
   /**
-   * 应用初始化之后执行回掉函数
-   * @param {Function} callback
-   * @return {Promise}
-   */
-  ready (callback) {
-    return new Promise((resolve, reject) => {
-      const ready = () => {
-        if (typeof callback === 'function') {
-          callback()
-        }
-        resolve()
-      }
-      if (app.isReady()) return ready()
-      app.once('ready', () => ready())
-      app.once('window-all-closed', () => {
-        if (!this.$tray.isDestroyed()) this.$tray.destroy()
-        if (process.platform !== 'darwin') {
-          app.quit()
-        }
-      })
-    })
-  }
-
-  /**
    * 退出应用
    */
   quit () {
-    if (!this.$tray.isDestroyed()) this.$tray.destroy()
-    BrowserWindow.getAllWindows()
-      .forEach(item => {
-        if (!item.isDestroyed()) item.destroy()
-      })
+    BrowserWindow.getAllWindows().forEach(item => {
+      if (!item.isDestroyed()) item.destroy()
+    })
     if (process.platform !== 'darwin') {
+      if (this.$tray && !this.$tray.isDestroyed()) {
+        this.$tray.destroy()
+        this.$tray = null
+      }
       app.quit()
     }
   }
@@ -172,6 +139,7 @@ export default class DingTalk {
   showMainWin () {
     if (this.$mainWin) {
       if (this.online) {
+        if (this.$mainWin.isMinimized()) this.$mainWin.restore()
         this.$mainWin.show()
         this.$mainWin.focus()
       } else if (this.online === false) {

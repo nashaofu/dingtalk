@@ -1,14 +1,13 @@
+import './index'
 import { app } from 'electron'
-import dingtalk from './index'
 import debug from 'electron-debug'
 
 app.on('ready', () => {
   const installExtension = require('electron-devtools-installer')
-  installExtension.default(installExtension.VUEJS_DEVTOOLS)
-    .catch(err => {
-      console.log('Unable to install `vue-devtools`: \n', err)
-    })
-  dingtalk.ready(() => {
+  installExtension.default(installExtension.VUEJS_DEVTOOLS).catch(err => {
+    console.log('Unable to install `vue-devtools`: \n', err)
+  })
+  app.whenReady().then(() => {
     debug({ showDevTools: 'undocked' })
   })
 })
