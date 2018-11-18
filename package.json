@@ -28,7 +28,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "electron-store": "^2.0.0",
-    "electron-updater": "3.2.0",
+    "electron-updater": "^4.0.4",
     "lodash": "^4.17.10",
     "normalize.css": "^8.0.0",
     "shortcut-capture": "^1.0.1"
@@ -44,7 +44,7 @@
     "chalk": "^2.3.0",
     "css-loader": "^0.28.9",
     "electron": "^3.0.9",
-    "electron-builder": "^20.34.0",
+    "electron-builder": "^20.36.2",
     "electron-debug": "^2.0.0",
     "electron-dev-webpack-plugin": "0.0.10",
     "electron-devtools-installer": "^2.2.4",
