@@ -88,12 +88,13 @@
     "copyright": "Copyright © year nashaofu",
     "asar": true,
     "directories": {
-      "buildResources": "resources",
+      "buildResources": "resources/icons",
       "output": "release"
     },
     "files": [
       "dist/**/*",
-      "icon/*"
+      "resources/tray/*",
+      "resources/logo.png"
     ],
     "publish": {
       "provider": "github",
