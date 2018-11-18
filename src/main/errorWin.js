@@ -1,4 +1,5 @@
 import path from 'path'
+import logo from './logo'
 import { app, BrowserWindow, ipcMain } from 'electron'
 
 export default dingtalk => () => {
@@ -21,7 +22,7 @@ export default dingtalk => () => {
     show: false,
     closable: false,
     skipTaskbar: true,
-    icon: path.join(app.getAppPath(), './icon/32x32.png')
+    icon: logo
   })
 
   $win.on('ready-to-show', () => {

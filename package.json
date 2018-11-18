@@ -28,7 +28,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "electron-store": "^2.0.0",
-    "electron-updater": "^3.1.6",
+    "electron-updater": "^4.0.4",
     "lodash": "^4.17.10",
     "normalize.css": "^8.0.0",
     "shortcut-capture": "^1.0.1"
@@ -43,8 +43,8 @@
     "babel-preset-stage-2": "^6.24.1",
     "chalk": "^2.3.0",
     "css-loader": "^0.28.9",
-    "electron": "^3.0.8",
-    "electron-builder": "^20.31.2",
+    "electron": "^3.0.9",
+    "electron-builder": "^20.36.2",
     "electron-debug": "^2.0.0",
     "electron-dev-webpack-plugin": "0.0.10",
     "electron-devtools-installer": "^2.2.4",
@@ -88,11 +88,13 @@
     "copyright": "Copyright © year nashaofu",
     "asar": true,
     "directories": {
+      "buildResources": "resources/icons",
       "output": "release"
     },
     "files": [
       "dist/**/*",
-      "icon/*"
+      "resources/tray/*",
+      "resources/logo.png"
     ],
     "publish": {
       "provider": "github",
@@ -101,11 +103,11 @@
     },
     "mac": {
       "target": "dmg",
-      "icon": "icon/icon.icns",
+      "icon": "./resources/icons/icon.icns",
       "category": "public.app-category.instant-messaging"
     },
     "win": {
-      "icon": "icon/icon.ico",
+      "icon": "./resources/icons/icon.ico",
       "target": [
         {
           "target": "nsis",
@@ -140,7 +142,7 @@
           ]
         }
       ],
-      "icon": "icon",
+      "icon": "./resources/icons",
       "category": "InstantMessaging;Network"
     },
     "nsis": {

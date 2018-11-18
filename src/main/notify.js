@@ -1,6 +1,6 @@
-import path from 'path'
+import logo from './logo'
 import Events from 'events'
-import { app, Notification } from 'electron'
+import { Notification } from 'electron'
 
 export default class Notify extends Events {
   $notify = null
@@ -13,7 +13,7 @@ export default class Notify extends Events {
     this.$notify = new Notification({
       title: '钉钉',
       body,
-      icon: path.join(app.getAppPath(), './icon/128x128.png')
+      icon: logo
     })
     this.$notify.on('click', () => {
       this.close()
