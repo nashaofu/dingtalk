@@ -114,6 +114,7 @@ export default class DingTalk {
    * 退出应用
    */
   quit () {
+    this.$shortcutCapture.quit()
     BrowserWindow.getAllWindows().forEach(item => {
       if (!item.isDestroyed()) item.destroy()
     })

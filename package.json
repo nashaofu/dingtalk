@@ -31,7 +31,7 @@
     "electron-updater": "^4.0.4",
     "lodash": "^4.17.10",
     "normalize.css": "^8.0.0",
-    "shortcut-capture": "^1.0.1"
+    "shortcut-capture": "^1.0.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.6",
