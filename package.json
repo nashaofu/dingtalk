@@ -44,7 +44,7 @@
     "chalk": "^2.3.0",
     "css-loader": "^0.28.9",
     "electron": "^2.0.14",
-    "electron-builder": "^20.38.2",
+    "electron-builder": "^20.34.0",
     "electron-debug": "^2.0.0",
     "electron-dev-webpack-plugin": "0.0.11",
     "electron-devtools-installer": "^2.2.4",
