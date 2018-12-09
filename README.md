@@ -2,7 +2,7 @@
 钉钉桌面版，基于electron和钉钉网页版开发，支持Windows、Linux和macOS
 
 ## 安装步骤
-> 直接从[GitHub relase](https://github.com/nashaofu/dingtalk/releases/latest)页面下载最新版安装包即可
+> 直接从[GitHub releases](https://github.com/nashaofu/dingtalk/releases/latest)页面下载最新版安装包即可
 
 ## 国内仓库与版本安装包
 * 国内git地址：[https://gitee.com/nashaofu/dingtalk](https://gitee.com/nashaofu/dingtalk)
@@ -79,5 +79,5 @@ npm run pack
 加密信息暂不支持，详情请看[企业信息加密相关](https://github.com/nashaofu/dingtalk/issues/2)，也欢迎各位朋友能够去研究一下，帮助实现这个功能
 
 ## 打赏
-如果你觉的作者德辛苦付出有帮助到你，你可以给作者买杯咖啡！🤣
+如果你觉得作者的辛苦付出有帮助到你，你可以给作者买杯咖啡！🤣
 ![打赏](./screenshot/reward.png)

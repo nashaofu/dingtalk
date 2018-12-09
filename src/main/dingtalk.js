@@ -13,6 +13,8 @@ import shortcut from './shortcut'
 import ShortcutCapture from 'shortcut-capture'
 
 export default class DingTalk {
+  // app对象是否ready
+  _ready = null
   // 托盘图标
   $tray = null
   // 主窗口
@@ -38,18 +40,18 @@ export default class DingTalk {
   }
 
   constructor () {
-    // 同时只能运行一个人实例
-    if (!app.requestSingleInstanceLock()) return app.quit()
-    this.init().then(() => {
-      // 移除窗口菜单
-      Menu.setApplicationMenu(null)
-      this.initMainWin()
-      this.initTray()
-      this.initShortcutCapture()
-      this.initNotify()
-      this.autoUpdate()
-      this.bindShortcut()
-    })
+    if (!this.requestSingleInstanceLock()) {
+      this.init().then(() => {
+        // 移除窗口菜单
+        Menu.setApplicationMenu(null)
+        this.initMainWin()
+        this.initTray()
+        this.initShortcutCapture()
+        this.initNotify()
+        this.autoUpdate()
+        this.bindShortcut()
+      })
+    }
   }
 
   /**
@@ -59,9 +61,20 @@ export default class DingTalk {
   async init () {
     online(this)()
     this.setting = await initSetting(this)()
-    // 第二次打开应用，显示主窗口
-    app.on('second-instance', (event, commandLine, workingDirectory) => this.showMainWin())
-    return app.whenReady()
+    return this.whenReady()
+  }
+
+  /**
+   * 使应用程序成为单个实例应用程序
+   * 而不是允许应用程序的多个实例运行
+   * 这将确保只有一个应用程序的实例正在运行
+   * 其余的实例全部会被终止并退出
+   */
+  requestSingleInstanceLock () {
+    // 同时只能运行一个人实例
+    const isSecond = app.makeSingleInstance(() => this.showMainWin())
+    if (isSecond) app.quit()
+    return isSecond
   }
 
   /**
@@ -111,12 +124,35 @@ export default class DingTalk {
   }
 
   /**
+   * app是否ready
+   * @return {Promise} setting
+   */
+  whenReady () {
+    if (this._ready) return this._ready
+    this._ready = new Promise((resolve, reject) => {
+      if (app.isReady()) return resolve()
+      app.once('ready', () => resolve())
+      // 所有窗口关闭之后退出应用
+      app.once('window-all-closed', () => {
+        if (process.platform !== 'darwin') {
+          if (this.$tray && !this.$tray.isDestroyed()) {
+            this.$tray.destroy()
+            this.$tray = null
+          }
+          app.quit()
+        }
+      })
+    })
+    return this._ready
+  }
+
+  /**
    * 退出应用
    */
   quit () {
-    BrowserWindow.getAllWindows().forEach(item => {
-      if (!item.isDestroyed()) item.destroy()
-    })
+    this.$shortcutCapture.destroy()
+    const windows = BrowserWindow.getAllWindows()
+    windows.forEach(item => !item.isDestroyed() && item.destroy())
     if (process.platform !== 'darwin') {
       if (this.$tray && !this.$tray.isDestroyed()) {
         this.$tray.destroy()

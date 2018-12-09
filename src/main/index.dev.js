@@ -7,7 +7,5 @@ app.on('ready', () => {
   installExtension.default(installExtension.VUEJS_DEVTOOLS).catch(err => {
     console.log('Unable to install `vue-devtools`: \n', err)
   })
-  app.whenReady().then(() => {
-    debug({ showDevTools: 'undocked' })
-  })
+  debug({ showDevTools: 'undocked' })
 })
