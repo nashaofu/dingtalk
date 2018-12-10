@@ -99,7 +99,25 @@ export default dingtalk => () => {
   ipcMain.on('MAINWIN:badge', (e, count) => {
     app.setBadgeCount(count)
     if (dingtalk.$tray) {
-      dingtalk.$tray.setImage(count ? getMessageTrayIcon() : getNoMessageTrayIcon())
+      let messageTrayIcon = getMessageTrayIcon()
+      let noMessageTrayIcon = getNoMessageTrayIcon()
+      if (count) {
+        if (!$win.intervalRunning) {
+          // icon的flag，用来让图片每500毫秒交替显示
+          let iconFlag = true
+          $win['trayIconInterval'] = setInterval(() => {
+            dingtalk.$tray.setImage(iconFlag ? messageTrayIcon : noMessageTrayIcon)
+            iconFlag = !iconFlag
+          }, 500)
+          $win['intervalRunning'] = true
+        }
+      } else {
+        if ($win.intervalRunning) {
+          clearInterval($win.trayIconInterval)
+          $win.intervalRunning = false
+        }
+        dingtalk.$tray.setImage(noMessageTrayIcon)
+      }
     }
     if (app.dock) {
       app.dock.show()
