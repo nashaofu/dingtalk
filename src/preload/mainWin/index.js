@@ -1,3 +1,4 @@
+import open from './open'
 import download from './download'
 import openEmail from './openEmail'
 import rememberMe from './rememberMe'
@@ -40,6 +41,12 @@ class MainWinInjector {
      * 检测是否需要插入记住我选项
      */
     this.rememberMe()
+
+    /**
+     * 劫持window.open
+     */
+
+    this.open()
 
     /**
      * 检测是否有未读消息
@@ -89,8 +96,14 @@ class MainWinInjector {
     openEmail(this)
   }
 
+  // 文件下载劫持
   download () {
     download(this)
+  }
+
+  // window.open重写
+  open () {
+    open(this)
   }
 }
 
