@@ -4,17 +4,13 @@ import logo from './logo'
 import contextMenu from './contextMenu'
 import { app, BrowserWindow } from 'electron'
 
-export default dingtalk => storage => {
+export default dingtalk => url => {
   if (dingtalk.$emailWin) {
     dingtalk.$emailWin.show()
     dingtalk.$emailWin.focus()
     return dingtalk.$emailWin
   }
-  const url = Object
-    .keys(storage.localStorage)
-    .find(key => /^\d+_mailUrl/.test(key))
   if (!url) return
-
   const $win = new BrowserWindow({
     title: '钉邮',
     width: 980,
@@ -39,6 +35,23 @@ export default dingtalk => storage => {
   })
 
   $win.webContents.on('dom-ready', () => {
+    dingtalk.$mainWin.webContents.session.cookies.get({ domain: '.dingtalk.com' }, (err, cookies) => {
+      if (err) return
+      cookies.forEach(cookie => {
+        if (cookie.domain !== '.dingtalk.com') return
+        $win.webContents.session.cookies.set(
+          {
+            ...cookie,
+            url: 'https://mail.dingtalk.com'
+          },
+          err => {
+            // 回调函数为必传，否则会报错
+            console.log('dingtalk emailWin cookies log:', err)
+          }
+        )
+      })
+    })
+
     const filename = path.join(app.getAppPath(), './dist/preload/emailWin.js')
     // 读取js文件并执行
     fs.access(filename, fs.constants.R_OK, err => {
@@ -46,7 +59,7 @@ export default dingtalk => storage => {
       fs.readFile(filename, (error, data) => {
         if (error || $win.webContents.isDestroyed()) return
         $win.webContents.executeJavaScript(data.toString(), () => {
-          if (!$win.webContents.isDestroyed()) $win.webContents.send('dom-ready', storage)
+          if (!$win.webContents.isDestroyed()) $win.webContents.send('dom-ready')
         })
       })
     })
@@ -59,6 +72,6 @@ export default dingtalk => storage => {
   })
 
   // 加载URL地址
-  $win.loadURL(decodeURIComponent(storage.localStorage[url]))
+  $win.loadURL(url)
   return $win
 }

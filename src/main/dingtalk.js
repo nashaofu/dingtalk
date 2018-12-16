@@ -1,15 +1,15 @@
 import { app, Menu, ipcMain, BrowserWindow } from 'electron'
 import { initSetting, readSetting, writeSetting } from './setting'
-import tray from './tray'
 import online from './online'
 import Notify from './notify'
 import mainWin from './mainWin'
 import emailWin from './emailWin'
 import errorWin from './errorWin'
 import aboutWin from './aboutWin'
-import settingWin from './settingWin'
-import autoUpdate from './autoUpdate'
 import shortcut from './shortcut'
+import autoUpdate from './autoUpdate'
+import settingWin from './settingWin'
+import DingtalkTray from './dingtalkTray'
 import ShortcutCapture from 'shortcut-capture'
 
 export default class DingTalk {
@@ -88,7 +88,7 @@ export default class DingTalk {
    * 初始化托盘图标
    */
   initTray () {
-    this.$tray = tray(this)()
+    this.$tray = new DingtalkTray({ dingtalk: this })
   }
 
   /**
