@@ -35,9 +35,10 @@ export default dingtalk => url => {
   })
 
   $win.webContents.on('dom-ready', () => {
-    dingtalk.$mainWin.webContents.session.cookies.get({ domain: 'dingtalk.com' }, (err, cookies) => {
+    dingtalk.$mainWin.webContents.session.cookies.get({ domain: '.dingtalk.com' }, (err, cookies) => {
       if (err) return
-      cookies.forEach((cookie, index) => {
+      cookies.forEach(cookie => {
+        if (cookie.domain !== '.dingtalk.com') return
         $win.webContents.session.cookies.set(
           {
             ...cookie,
