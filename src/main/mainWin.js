@@ -99,7 +99,7 @@ export default dingtalk => () => {
   })
 
   ipcMain.on('MAINWIN:window-close', () => $win.hide())
-  ipcMain.on('MAINWIN:open-email', (e, storage) => dingtalk.showEmailWin(storage))
+  ipcMain.on('MAINWIN:open-email', (e, url) => dingtalk.showEmailWin(url))
 
   ipcMain.on('MAINWIN:window-show', () => {
     $win.show()
