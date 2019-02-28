@@ -25,4 +25,5 @@ class EmailWinInjector {
   }
 }
 
+/* eslint-disable no-new */
 new EmailWinInjector()

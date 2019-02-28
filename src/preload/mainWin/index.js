@@ -6,7 +6,7 @@ import winOperation from './winOperation'
 import notifyMessage from './notifyMessage'
 import { ipcRenderer, webFrame } from 'electron'
 
-import './css.styl'
+import './css.less'
 
 class MainWinInjector {
   constructor () {
@@ -107,4 +107,5 @@ class MainWinInjector {
   }
 }
 
+/* eslint-disable no-new */
 new MainWinInjector()

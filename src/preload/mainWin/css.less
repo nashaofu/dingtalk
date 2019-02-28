@@ -1,0 +1,93 @@
+body {
+  border: 1px solid rgba(90, 131, 183, 0.3);
+}
+
+#layout-main {
+  width: 100% !important;
+  height: 100% !important;
+  flex: 0 1 100% !important;
+}
+
+#header {
+  display: block !important;
+
+  // 登录时去掉背景
+  &.login-header {
+    background: none;
+  }
+
+  > upload-list > .upload-container-wrap.ng-isolate-scope {
+    margin-right: 96px !important;
+  }
+}
+
+#body {
+  height: 100% !important;
+  flex: 0 1 100% !important;
+}
+
+@font-face {
+  font-family: 'dingtalk-font';
+  src: url('//at.alicdn.com/t/font_zib5yatbnvw5qaor.eot?t=1498576064752');
+  src: url('//at.alicdn.com/t/font_zib5yatbnvw5qaor.eot?t=1498576064752#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_zib5yatbnvw5qaor.woff?t=1498576064752') format('woff'),
+    url('//at.alicdn.com/t/font_zib5yatbnvw5qaor.ttf?t=1498576064752') format('truetype'),
+    url('//at.alicdn.com/t/font_zib5yatbnvw5qaor.svg?t=1498576064752#iconfont') format('svg');
+}
+
+ul.dingtalk-window-operations {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 7px 3px;
+  z-index: 1;
+
+  > li {
+    font-family: 'dingtalk-font' !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    float: right;
+    width: 23px;
+    height: 23px;
+    line-height: 23px;
+    margin: 0 1px;
+    font-size: 14px;
+    text-align: center;
+    color: #666;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+
+    &:hover {
+      color: #1f1f1f;
+      font-weight: 400;
+    }
+
+    &.window-minimize:before {
+      content: '\e776';
+    }
+
+    &.window-maximization:before {
+      content: '\e777';
+    }
+
+    &.window-close:before {
+      content: '\e778';
+    }
+  }
+}
+
+.login-form {
+  &.login-tab {
+    height: 360px;
+  }
+}
+
+.ding-modal {
+  .login-form {
+    height: 310px;
+  }
+}
+
+.client-download-guide {
+  display: none;
+}

@@ -1,33 +1,13 @@
 'use strict'
-const utils = require('../utils')
-const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
+const styleLoader = require('../style-loader')
 const baseWebpackConfig = require('./webpack.base.conf')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = merge(baseWebpackConfig, {
+  mode: 'production',
   module: {
-    rules: utils.styleLoaders({ sourceMap: config.prod.sourcemap, usePostCSS: true })
+    rules: styleLoader({ sourceMap: config.prod.sourcemap })
   },
-  devtool: config.prod.sourcemap ? '#source-map' : false,
-  output: {
-    path: config.distPreloadDir,
-    filename: '[name].js'
-  },
-  plugins: [
-    // http://vuejs.github.io/vue-loader/en/workflow/production.html
-    new webpack.DefinePlugin({
-      'process.env': require('../env.prod')
-    }),
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        compress: {
-          warnings: false
-        }
-      },
-      sourceMap: config.prod.sourcemap,
-      parallel: true
-    })
-  ]
+  devtool: config.prod.sourcemap ? '#source-map' : false
 })

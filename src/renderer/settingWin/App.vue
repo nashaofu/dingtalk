@@ -85,28 +85,41 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-@import "normalize.css"
+<style lang="less">
+@import "~normalize.css";
 
-$font-family = "PingFang-SC-Medium", "Source Han Sans", "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", sans-serif
+@font-family: "PingFang-SC-Medium", "Source Han Sans", "Segoe UI",
+  "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo,
+  "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3",
+  sans-serif;
+
 *,
 *:before,
-*:after
-  box-sizing border-box
+*:after {
+  box-sizing: border-box;
+}
 
 html,
-body
-  font-family $font-family
-  color #333
+body {
+  font-family: @font-family;
+  color: #333;
+}
 
-.app
-  padding 15px
-  &-item
-    margin 10px auto
-    text-align center
-    &-button
-      padding 40px 0 10px 0
-      .dt-button
-        margin 0 15px
-        padding 8px 20px
+.app {
+  padding: 15px;
+
+  &-item {
+    margin: 10px auto;
+    text-align: center;
+
+    &-button {
+      padding: 40px 0 10px 0;
+
+      .dt-button {
+        margin: 0 15px;
+        padding: 8px 20px;
+      }
+    }
+  }
+}
 </style>

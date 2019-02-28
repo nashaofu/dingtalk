@@ -1,24 +1,22 @@
 'use strict'
-const utils = require('../utils')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
+const styleLoader = require('../style-loader')
 const baseWebpackConfig = require('./webpack.base.conf')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 module.exports = merge(baseWebpackConfig, {
+  mode: 'development',
+  watch: true,
   module: {
-    rules: utils.styleLoaders({ sourceMap: true, usePostCSS: true })
+    rules: styleLoader({ sourceMap: true })
   },
-  // cheap-module-eval-source-map is faster for development
-  devtool: 'cheap-module-eval-source-map',
+  devtool: false,
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': require('../env.dev')
-    }),
     new webpack.NoEmitOnErrorsPlugin(),
     new FriendlyErrorsPlugin({
       compilationSuccessInfo: {
-        messages: ['Your application mainWin file is running here']
+        messages: ['Your application preload process is running here']
       }
     })
   ]

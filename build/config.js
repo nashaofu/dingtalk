@@ -11,13 +11,11 @@ module.exports = {
   srcPreloadDir: path.resolve(srcDir, './preload'),
   srcRendererDir: path.resolve(srcDir, './renderer'),
   distDir: path.resolve(baseDir, './dist'),
-  distMainFile: path.resolve(distDir, './main.js'),
   distPreloadDir: path.resolve(distDir, './preload'),
   distRendererDir: path.resolve(distDir, './renderer'),
   dev: {
     host: 'localhost',
-    port: 8080,
-    proxyTable: {}
+    port: 8080
   },
   prod: {
     sourcemap: false

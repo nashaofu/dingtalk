@@ -150,9 +150,8 @@ export default class DingTalk {
    * 退出应用
    */
   quit () {
-    this.$shortcutCapture.destroy()
     const windows = BrowserWindow.getAllWindows()
-    windows.forEach(item => !item.isDestroyed() && item.destroy())
+    windows.forEach(item => item.close())
     if (process.platform !== 'darwin') {
       if (this.$tray && !this.$tray.isDestroyed()) {
         this.$tray.destroy()
@@ -218,7 +217,7 @@ export default class DingTalk {
    */
   hideErrorWin () {
     if (this.$errorWin) {
-      this.$errorWin.destroy()
+      this.$errorWin.close()
     }
   }
 
@@ -234,7 +233,7 @@ export default class DingTalk {
    */
   hideSettingWin () {
     if (this.$settingWin) {
-      this.$settingWin.destroy()
+      this.$settingWin.close()
     }
   }
 

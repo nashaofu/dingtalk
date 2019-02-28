@@ -27,6 +27,7 @@ import {
   license,
   homepage
 } from '#/package.json'
+
 import {
   webFrame,
   ipcRenderer,
@@ -66,71 +67,100 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-@import "normalize.css"
+<style lang="less">
+@import "~normalize.css";
 
-$font-family = "PingFang-SC-Medium", "Source Han Sans", "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", sans-serif
+@font-family: "PingFang-SC-Medium", "Source Han Sans", "Segoe UI",
+  "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo,
+  "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3",
+  sans-serif;
+
 *,
 *:before,
-*:after
-  box-sizing border-box
+*:after {
+  box-sizing: border-box;
+}
 
 html,
-body
-  font-family $font-family
-  color #333
-  overflow hidden
+body {
+  font-family: @font-family;
+  color: #333;
+  overflow: hidden;
+}
 
-.app
-  padding 40px 15px 15px 15px
-  &-logo
-    text-align center
-    &-image
-      margin 0 auto
-      display block
-      width 96px
-      height 96px
-    &-title
-      margin 10px auto
-      font-size 18px
-      font-weight 600
-  &-update
-    text-align center
-    margin 10px auto
-    &-button
-      display inline-block
-      padding 7px 14px
-      background-color #fff
-      font-size 14px
-      border-radius 3px
-      border 1px solid #ccc
-      cursor pointer
-      outline none
-      &:hover
-        background-color #f3f3f3
-      &:active
-        box-shadow inset 0 2px 20px rgba(0, 0, 0, 0.1)
-  &-desc
-    margin 30px auto
-    text-align center
-    font-size 15px
-    color #555
-    word-break break-all
-  &-info
-    display flex
-    margin 10px auto
-    font-size 15px
-    &-title
-      width 42px
-      min-width 42px
-      font-weight 600
-      color #777
-    &-desc
-      flex 1
-      overflow hidden
-      white-space nowrap
-      text-overflow ellipsis
-      color #08f
-      text-decoration underline
-      cursor pointer
+.app {
+  padding: 40px 15px 15px 15px;
+
+  &-logo {
+    text-align: center;
+
+    &-image {
+      margin: 0 auto;
+      display: block;
+      width: 96px;
+      height: 96px;
+    }
+
+    &-title {
+      margin: 10px auto;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+
+  &-update {
+    text-align: center;
+    margin: 10px auto;
+
+    &-button {
+      display: inline-block;
+      padding: 7px 14px;
+      background-color: #fff;
+      font-size: 14px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      outline: none;
+
+      &:hover {
+        background-color: #f3f3f3;
+      }
+
+      &:active {
+        box-shadow: inset 0 2px 20px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  &-desc {
+    margin: 30px auto;
+    text-align: center;
+    font-size: 15px;
+    color: #555;
+    word-break: break-all;
+  }
+
+  &-info {
+    display: flex;
+    margin: 10px auto;
+    font-size: 15px;
+
+    &-title {
+      width: 42px;
+      min-width: 42px;
+      font-weight: 600;
+      color: #777;
+    }
+
+    &-desc {
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: #08f;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
 </style>

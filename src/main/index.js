@@ -1,3 +1,4 @@
 import DingTalk from './dingtalk'
 
-export default new DingTalk()
+/* eslint-disable no-new */
+new DingTalk()

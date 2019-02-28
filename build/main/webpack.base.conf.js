@@ -9,16 +9,14 @@ function resolve (dir) {
 module.exports = {
   context: config.baseDir,
   entry: {
-    main: config.srcMainDir
+    main: path.resolve(config.srcMainDir, 'index.dev.js')
   },
   output: {
     path: config.distDir,
-    libraryTarget: 'commonjs2',
     filename: '[name].js'
   },
   target: 'electron-main',
   resolve: {
-    extensions: ['.js', '.json'],
     alias: {
       '@': resolve('src/main')
     }
@@ -40,8 +38,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        include: [resolve('src/main')]
+        loader: 'babel-loader'
       }
     ]
   },
