@@ -40,6 +40,7 @@
     "@babel/plugin-proposal-export-default-from": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.3.4",
     "@babel/preset-env": "^7.3.1",
+    "@babel/runtime": "^7.3.4",
     "@vue/eslint-config-standard": "^4.0.0",
     "autoprefixer": "^9.4.8",
     "babel-eslint": "^10.0.1",
