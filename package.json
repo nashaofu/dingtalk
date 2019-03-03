@@ -6,7 +6,7 @@
   "main": "dist/main.js",
   "scripts": {
     "start": "electron .",
-    "lint": "eslint --ext .js,.vue .",
+    "lint": "eslint --ext .js,.vue src",
     "dev": "node build/webpack.dev.conf.js",
     "dev:main": "webpack --config build/main/webpack.dev.conf.js",
     "dev:preload": "webpack --config build/preload/webpack.dev.conf.js",
@@ -28,7 +28,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "electron-store": "^2.0.0",
-    "electron-updater": "<=3.2.3",
+    "electron-updater": "3.2.3",
     "lodash": "^4.17.11",
     "normalize.css": "^8.0.1",
     "shortcut-capture": "^1.1.3",
