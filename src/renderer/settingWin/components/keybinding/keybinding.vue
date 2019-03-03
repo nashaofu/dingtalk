@@ -126,36 +126,48 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-.dt-keybinding
-  display block
-  padding 5px 0
-  &-title
-    text-align left
-  &-value
-    margin-top 7px
-    input
-      display block
-      width 100%
-      height 36px
-      line-height 36px
-      border 1px solid #ccc
-      background-color #fff
-      border-radius 2px
-      padding 0 6px
-      outline none
-      &:not([disabled])
+<style lang="less">
+.dt-keybinding {
+  display: block;
+  padding: 5px 0;
+
+  &-title {
+    text-align: left;
+  }
+
+  &-value {
+    margin-top: 7px;
+
+    input {
+      display: block;
+      width: 100%;
+      height: 36px;
+      line-height: 36px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      border-radius: 2px;
+      padding: 0 6px;
+      outline: none;
+
+      &:not([disabled]) {
         &:hover,
         &:focus,
-        &:active
-          border 1px solid #0ef
-          outline none
+        &:active {
+          border: 1px solid #0ef;
+          outline: none;
+        }
+
         &:focus,
-        &:active
-          box-shadow 0 0 1px #0bf
+        &:active {
+          box-shadow: 0 0 1px #0bf;
+        }
+      }
 
-      &[disabled]
-        background-color #eee
-        cursor not-allowed
-
+      &[disabled] {
+        background-color: #eee;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
 </style>

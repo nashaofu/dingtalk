@@ -48,38 +48,41 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-$color-info = #909399
-$color-primary = #409eff
-$color-warning = #e6a23c
-type(name)
-  &-{name}
-    color #fff
-    background-color lookup('$color-' + name)
-    border-color lookup('$color-' + name)
-    &:active:not(^[-1]-disabled)
-      background-color darken(lookup('$color-' + name), 20%)
-      border-color darken(lookup('$color-' + name), 20%)
+<style lang="less">
+.type(@name, @color) {
+  &-@{name} {
+    color: #fff;
+    background-color: @color;
+    border-color: @color;
+    &:active:not(.dt-button-disabled) {
+      background-color: darken(@color, 20%);
+      border-color: darken(@color, 20%);
+    }
+  }
+}
 
-.dt-button
-  display inline-block
-  padding 8px 12px
-  background-color #fff
-  font-size 16px
-  border-radius 3px
-  border 1px solid #ccc
-  cursor pointer
-  position relative
-  outline none
-  &:active:not(&-disabled)
-    box-shadow inset 0 2px 20px rgba(0, 0, 0, 0.1)
+.dt-button {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #fff;
+  font-size: 16px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  position: relative;
+  outline: none;
 
-  &-disabled
-    opacity 0.65
-    cursor not-allowed
+  &:active:not(&-disabled) {
+    box-shadow: inset 0 2px 20px rgba(0, 0, 0, 0.1);
+  }
 
-  type(info)
-  type(primary)
-  type(warning)
+  &-disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
 
+  .type("info", #909399);
+  .type("primary", #409eff);
+  .type("warning", #e6a23c);
+}
 </style>

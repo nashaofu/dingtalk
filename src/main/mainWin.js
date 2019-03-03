@@ -5,14 +5,21 @@ import download from './download'
 import contextMenu from './contextMenu'
 import { app, BrowserWindow, shell, ipcMain } from 'electron'
 
+let lastUrl
+let time = Date.now()
 /**
  * 打开外部链接
  * @param {String} url
  */
 function openExternal (url) {
+  console.log(lastUrl, url, time, Date.now() - time)
   if (url === 'about:blank') return
   if (url === 'https://im.dingtalk.com/') return
   if (url.indexOf('https://space.dingtalk.com/auth/download') === 0) return
+  // 防止短时间快速点击链接
+  if (lastUrl === url && Date.now() - time < 800) return
+  lastUrl = url
+  time = Date.now()
   shell.openExternal(url)
 }
 

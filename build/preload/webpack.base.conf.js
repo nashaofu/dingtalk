@@ -14,12 +14,10 @@ module.exports = {
   },
   output: {
     path: config.distPreloadDir,
-    libraryTarget: 'commonjs2',
     filename: '[name].js'
   },
   target: 'electron-renderer',
   resolve: {
-    extensions: ['.js', '.json'],
     alias: {
       '@': resolve('src/preload')
     }
@@ -41,8 +39,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        include: [resolve('src/preload'), resolve('node_modules/webpack-dev-server/client')]
+        loader: 'babel-loader'
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
