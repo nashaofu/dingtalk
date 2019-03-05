@@ -151,7 +151,7 @@ export default class DingTalk {
    */
   quit () {
     const windows = BrowserWindow.getAllWindows()
-    windows.forEach(item => item.close())
+    windows.forEach(item => item.destroy())
     if (process.platform !== 'darwin') {
       if (this.$tray && !this.$tray.isDestroyed()) {
         this.$tray.destroy()
