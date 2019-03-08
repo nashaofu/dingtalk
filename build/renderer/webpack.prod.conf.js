@@ -30,7 +30,7 @@ module.exports = merge(baseWebpackConfig, {
     ...htmlWebpackPlugins(view => {
       return new HtmlWebpackPlugin({
         title: view.title,
-        filename: 'index.html',
+        filename: `${view.key}.html`,
         template: path.join(config.srcRendererDir, 'index.html'),
         inject: true,
         minify: {
