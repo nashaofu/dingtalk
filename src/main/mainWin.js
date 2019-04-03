@@ -12,10 +12,10 @@ let time = Date.now()
  * @param {String} url
  */
 function openExternal (url) {
-  console.log(lastUrl, url, time, Date.now() - time)
   if (url === 'about:blank') return
   if (url === 'https://im.dingtalk.com/') return
   if (url.indexOf('https://space.dingtalk.com/auth/download') === 0) return
+  if (url.indexOf('https://space.dingtalk.com/attachment') === 0) return
   // 防止短时间快速点击链接
   if (lastUrl === url && Date.now() - time < 800) return
   lastUrl = url
