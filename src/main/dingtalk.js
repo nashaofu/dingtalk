@@ -42,6 +42,7 @@ export default class DingTalk {
   constructor () {
     if (!this.requestSingleInstanceLock()) {
       this.init().then(() => {
+        app.setAppUserModelId('com.electron.dingtalk')
         // 移除窗口菜单
         Menu.setApplicationMenu(null)
         this.initMainWin()
