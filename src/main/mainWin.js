@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import logo from './logo'
 import download from './download'
+import autoUpdate from './autoUpdate'
 import contextMenu from './contextMenu'
 import { app, BrowserWindow, shell, ipcMain } from 'electron'
 
@@ -50,6 +51,14 @@ export default dingtalk => () => {
   $win.once('ready-to-show', () => {
     $win.show()
     $win.focus()
+
+    /**
+     * 先让主窗口显示后在执行检查更新
+     * 防止对话框跑到主窗口后面
+     * 导致窗口点击不了
+     * https://github.com/nashaofu/dingtalk/issues/186
+     */
+    autoUpdate(dingtalk)
   })
 
   /**
