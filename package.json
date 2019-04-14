@@ -45,7 +45,7 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.0",
-    "electron": "^2.0.17",
+    "electron": "^2.0.18",
     "electron-builder": "<=20.34.0",
     "electron-debug": "^2.1.0",
     "electron-dev-webpack-plugin": "^1.0.0",

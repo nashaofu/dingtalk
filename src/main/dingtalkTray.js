@@ -1,5 +1,8 @@
-import { Tray, Menu } from 'electron'
+import { Tray, Menu, nativeImage } from 'electron'
 import { getMessageTrayIcon, getNoMessageTrayIcon } from './logo'
+
+const messageTrayIcon = nativeImage.createFromPath(getMessageTrayIcon())
+const noMessageTrayIcon = nativeImage.createFromPath(getNoMessageTrayIcon())
 
 export default class DingtalkTray {
   _dingtalk = null
@@ -12,7 +15,7 @@ export default class DingtalkTray {
   constructor ({ dingtalk }) {
     this._dingtalk = dingtalk
     // 生成托盘图标及其菜单项实例
-    this.$tray = new Tray(getNoMessageTrayIcon())
+    this.$tray = new Tray(noMessageTrayIcon)
     // 设置鼠标悬浮时的标题
     this.$tray.setToolTip('钉钉')
     this.initMenu()
@@ -63,16 +66,14 @@ export default class DingtalkTray {
    * @param {Boolean} is
    */
   flicker (is) {
-    const messageTrayIcon = getMessageTrayIcon()
-    const noMessageTrayIcon = getNoMessageTrayIcon()
     if (is) {
-      // 防止连续调用多次，导致图标切换时间间隔不是500ms
+      // 防止连续调用多次，导致图标切换时间间隔不是1000ms
       if (this._flickerTimer !== null) return
       let icon = messageTrayIcon
       this._flickerTimer = setInterval(() => {
         this.$tray.setImage(icon)
         icon = icon === messageTrayIcon ? noMessageTrayIcon : messageTrayIcon
-      }, 500)
+      }, 1000)
     } else {
       clearInterval(this._flickerTimer)
       this._flickerTimer = null
