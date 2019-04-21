@@ -7,7 +7,6 @@ import emailWin from './emailWin'
 import errorWin from './errorWin'
 import aboutWin from './aboutWin'
 import shortcut from './shortcut'
-import autoUpdate from './autoUpdate'
 import settingWin from './settingWin'
 import DingtalkTray from './dingtalkTray'
 import ShortcutCapture from 'shortcut-capture'
@@ -49,7 +48,6 @@ export default class DingTalk {
         this.initTray()
         this.initShortcutCapture()
         this.initNotify()
-        this.autoUpdate()
         this.bindShortcut()
       })
     }
@@ -243,12 +241,5 @@ export default class DingTalk {
    */
   showAboutWin () {
     this.$aboutWin = aboutWin(this)()
-  }
-
-  /**
-   * 检查更新
-   */
-  autoUpdate () {
-    autoUpdate(this)()
   }
 }
