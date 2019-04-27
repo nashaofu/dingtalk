@@ -59,13 +59,8 @@ export default class DingTalk {
   async init () {
     online(this)()
     this.setting = await initSetting(this)()
-    app.on('second-instance', (event, commandLine, workingDirectory) => {
-      // 当运行第二个实例时,将会聚焦到myWindow这个窗口
-      if (this.$mainWin) {
-        if (this.$mainWin.isMinimized()) this.$mainWin.restore()
-        this.$mainWin.focus()
-      }
-    })
+    // 重复打开应用就显示窗口
+    app.on('second-instance', (event, commandLine, workingDirectory) => this.showMainWin())
     // 所有窗口关闭之后退出应用
     app.once('window-all-closed', () => {
       if (process.platform !== 'darwin') {

@@ -640,7 +640,7 @@
     js-levenshtein "^1.1.3"
     semver "^5.5.0"
 
-"@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4":
+"@babel/runtime@^7.3.4":
   version "7.4.4"
   resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.4.4.tgz#dc2e34982eb236803aa27a07fea6857af1b9171d"
   integrity sha1-3C40mC6yNoA6onoH/qaFevG5Fx0=
@@ -2567,10 +2567,10 @@ electron-debug@^2.2.0:
     electron-is-dev "^0.3.0"
     electron-localshortcut "^3.1.0"
 
-electron-dev-webpack-plugin@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.npm.taobao.org/electron-dev-webpack-plugin/download/electron-dev-webpack-plugin-1.0.3.tgz#efecc6b194421ffa40ed6f4fd56b3a340f3d8f8e"
-  integrity sha1-7+zGsZRCH/pA7W9P1Ws6NA89j44=
+electron-dev-webpack-plugin@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npm.taobao.org/electron-dev-webpack-plugin/download/electron-dev-webpack-plugin-1.0.4.tgz#75be6fc89a65e1b34c77adceb89b8c565bb96801"
+  integrity sha1-db5vyJpl4bNMd63OuJuMVlu5aAE=
   dependencies:
     chalk "^2.4.2"
     cross-spawn "^6.0.5"
@@ -6566,12 +6566,11 @@ shebang-regex@^1.0.0:
   resolved "https://registry.npm.taobao.org/shebang-regex/download/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   integrity sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=
 
-shortcut-capture@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.npm.taobao.org/shortcut-capture/download/shortcut-capture-1.1.3.tgz#4672ed0cb061507d5c3b0a64d0d2d68b1e13832d"
-  integrity sha1-RnLtDLBhUH1cOwpk0NLWix4Tgy0=
+shortcut-capture@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.npm.taobao.org/shortcut-capture/download/shortcut-capture-1.1.4.tgz#49528a913c31dfa0c0effc7214b7b24e6ac1f93b"
+  integrity sha1-SVKKkTwx36DA7/xyFLeyTmrB+Ts=
   dependencies:
-    "@babel/runtime" "^7.3.1"
     normalize.css "^8.0.1"
     vue "^2.6.7"
 
