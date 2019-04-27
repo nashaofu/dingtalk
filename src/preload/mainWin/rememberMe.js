@@ -1,5 +1,5 @@
-import ElectronStore from 'electron-store'
 import debounce from 'lodash/debounce'
+import ElectronStore from 'electron-store'
 const electronStore = new ElectronStore()
 
 export default () => {
