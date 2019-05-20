@@ -1,6 +1,9 @@
 # dingtalk[![Build Status](https://travis-ci.org/nashaofu/dingtalk.svg?branch=master)](https://travis-ci.org/nashaofu/dingtalk)[![Build status](https://ci.appveyor.com/api/projects/status/jptk80n78gdogd18/branch/master?svg=true)](https://ci.appveyor.com/project/nashaofu/dingtalk/branch/master)
 钉钉桌面版，基于electron和钉钉网页版开发，支持Windows、Linux和macOS
 
+## 帮朋友招人
+招聘electron方向的开发者，公司坐标上海，公司产品非常不错，用户很多，招聘链接地址[BOSS直聘](https://m.zhipin.com/weijd/v2/job/7f03de3a1e1ce03803Vz2NW-EVM~?date8=20190514&sid=self_jd)，产品官网，可下载体验[墨者](https://www.mozhes.com/)
+
 ## 安装步骤
 > 直接从[GitHub releases](https://github.com/nashaofu/dingtalk/releases/latest)页面下载最新版安装包即可
 
