@@ -1,6 +1,19 @@
 const fs = require('fs')
 const axios = require('axios')
 const chalk = require('chalk')
+const http = require('http')
+const https = require('https')
+const registryUrl = require('registry-url')
+const registryAuthToken = require('registry-auth-token')
+
+const httpAgent = new http.Agent({
+  keepAlive: true,
+  maxSockets: 50
+})
+const httpsAgent = new https.Agent({
+  keepAlive: true,
+  maxSockets: 50
+})
 
 /**
  * 把一个长的并发一步任务转换为
@@ -29,11 +42,25 @@ function parallelToSerial (tasks) {
  */
 async function getPackageVersion (pkg, pkgInfo) {
   console.log(`get ${pkg} ...`)
+  const scope = pkg.split('/')[0]
+  const registry = registryUrl(scope)
+  const authInfo = registryAuthToken(registry, { recursive: true })
+  const headers = {
+    accept: 'application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*'
+  }
+
+  if (authInfo) {
+    headers.authorization = `${authInfo.type} ${authInfo.token}`
+  }
+
   const time = Date.now()
   try {
-    // 同步最新的包
-    // await axios.put(`http://npm.uyundev.cn/sync/${pkg}`)
-    const { data } = await axios.get(`https://registry.npm.taobao.org/${pkg}`)
+    const { data } = await axios.get(`${encodeURIComponent(pkg).replace(/^%40/, '@')}/latest`, {
+      baseURL: registry,
+      headers,
+      httpAgent,
+      httpsAgent
+    })
     console.log(
       chalk.bgGreen.black(' DONE '),
       JSON.stringify(
@@ -47,7 +74,7 @@ async function getPackageVersion (pkg, pkgInfo) {
         2
       )
     )
-    return data['dist-tags'].latest
+    return data.version
   } catch (e) {
     const status = ((e || {}).response || {}).status
     console.log(
