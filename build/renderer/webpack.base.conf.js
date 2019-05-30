@@ -2,6 +2,7 @@
 const path = require('path')
 const config = require('../config')
 const { entries } = require('./views')
+const { dependencies } = require('../../package.json')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 function resolve (dir) {
@@ -25,7 +26,10 @@ module.exports = {
     }
   },
   externals: {
-    'node-notifier': 'node-notifier'
+    ...Object.keys(dependencies || {}).reduce((deps, key) => {
+      deps[key] = `require("${key}")`
+      return deps
+    }, {})
   },
   module: {
     rules: [
