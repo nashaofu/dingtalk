@@ -22,9 +22,6 @@ module.exports = {
       '@': resolve('src/preload')
     }
   },
-  externals: {
-    'node-notifier': 'node-notifier'
-  },
   module: {
     rules: [
       {

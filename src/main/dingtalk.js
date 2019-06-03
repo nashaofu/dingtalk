@@ -39,18 +39,17 @@ export default class DingTalk {
   }
 
   constructor () {
-    if (!this.requestSingleInstanceLock()) {
-      this.init().then(() => {
-        app.setAppUserModelId('com.electron.dingtalk')
-        // 移除窗口菜单
-        Menu.setApplicationMenu(null)
-        this.initMainWin()
-        this.initTray()
-        this.initShortcutCapture()
-        this.initNotify()
-        this.bindShortcut()
-      })
-    }
+    if (!app.requestSingleInstanceLock()) return app.quit()
+    this.init().then(() => {
+      app.setAppUserModelId('com.electron.dingtalk')
+      // 移除窗口菜单
+      Menu.setApplicationMenu(null)
+      this.initMainWin()
+      this.initTray()
+      this.initShortcutCapture()
+      this.initNotify()
+      this.bindShortcut()
+    })
   }
 
   /**
@@ -60,20 +59,19 @@ export default class DingTalk {
   async init () {
     online(this)()
     this.setting = await initSetting(this)()
-    return this.whenReady()
-  }
-
-  /**
-   * 使应用程序成为单个实例应用程序
-   * 而不是允许应用程序的多个实例运行
-   * 这将确保只有一个应用程序的实例正在运行
-   * 其余的实例全部会被终止并退出
-   */
-  requestSingleInstanceLock () {
-    // 同时只能运行一个人实例
-    const isSecond = app.makeSingleInstance(() => this.showMainWin())
-    if (isSecond) app.quit()
-    return isSecond
+    // 重复打开应用就显示窗口
+    app.on('second-instance', (event, commandLine, workingDirectory) => this.showMainWin())
+    // 所有窗口关闭之后退出应用
+    app.once('window-all-closed', () => {
+      if (process.platform !== 'darwin') {
+        if (this.$tray && !this.$tray.isDestroyed()) {
+          this.$tray.destroy()
+          this.$tray = null
+        }
+        app.quit()
+      }
+    })
+    return app.whenReady()
   }
 
   /**
@@ -120,29 +118,6 @@ export default class DingTalk {
    */
   writeSetting () {
     return writeSetting(this)()
-  }
-
-  /**
-   * app是否ready
-   * @return {Promise} setting
-   */
-  whenReady () {
-    if (this._ready) return this._ready
-    this._ready = new Promise((resolve, reject) => {
-      if (app.isReady()) return resolve()
-      app.once('ready', () => resolve())
-      // 所有窗口关闭之后退出应用
-      app.once('window-all-closed', () => {
-        if (process.platform !== 'darwin') {
-          if (this.$tray && !this.$tray.isDestroyed()) {
-            this.$tray.destroy()
-            this.$tray = null
-          }
-          app.quit()
-        }
-      })
-    })
-    return this._ready
   }
 
   /**
