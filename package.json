@@ -16,7 +16,7 @@
     "build:main": "webpack --config build/main/webpack.prod.conf.js",
     "build:preload": "webpack --config build/preload/webpack.prod.conf.js",
     "build:renderer": "webpack --config build/renderer/webpack.prod.conf.js",
-    "pack": "electron-builder --dir",
+    "pack": "electron-builder",
     "release": "electron-builder"
   },
   "keywords": [
