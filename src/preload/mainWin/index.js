@@ -1,7 +1,6 @@
 import open from './open'
 import download from './download'
 import openEmail from './openEmail'
-import rememberMe from './rememberMe'
 import winOperation from './winOperation'
 import notifyMessage from './notifyMessage'
 import { ipcRenderer, webFrame } from 'electron'
@@ -37,10 +36,6 @@ class MainWinInjector {
      * 关闭/最大化/最小化
      */
     this.winOperation()
-    /**
-     * 检测是否需要插入记住我选项
-     */
-    this.rememberMe()
 
     /**
      * 劫持window.open
@@ -79,11 +74,6 @@ class MainWinInjector {
   // 插入窗口操作按钮
   winOperation () {
     winOperation(this)
-  }
-
-  // 插入记住我选项
-  rememberMe () {
-    rememberMe(this)
   }
 
   // 消息通知发送到主进程

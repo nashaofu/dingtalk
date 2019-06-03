@@ -1,7 +1,6 @@
 'use strict'
 const path = require('path')
 const config = require('../config')
-const { dependencies } = require('../../package.json')
 
 function resolve (dir) {
   return path.join(config.baseDir, dir)
@@ -22,12 +21,6 @@ module.exports = {
     alias: {
       '@': resolve('src/preload')
     }
-  },
-  externals: {
-    ...Object.keys(dependencies || {}).reduce((deps, key) => {
-      deps[key] = `require("${key}")`
-      return deps
-    }, {})
   },
   module: {
     rules: [

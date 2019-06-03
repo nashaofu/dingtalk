@@ -2,7 +2,6 @@
 const path = require('path')
 const config = require('../config')
 const { entries } = require('./views')
-const { dependencies } = require('../../package.json')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 function resolve (dir) {
@@ -24,12 +23,6 @@ module.exports = {
       '@': resolve('src/renderer'),
       '#': resolve('')
     }
-  },
-  externals: {
-    ...Object.keys(dependencies || {}).reduce((deps, key) => {
-      deps[key] = `require("${key}")`
-      return deps
-    }, {})
   },
   module: {
     rules: [
