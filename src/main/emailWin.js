@@ -21,7 +21,10 @@ export default dingtalk => url => {
     resizable: true,
     menu: false,
     show: false,
-    icon: logo
+    icon: logo,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
 
   $win.on('ready-to-show', () => {

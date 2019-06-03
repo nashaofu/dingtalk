@@ -20,7 +20,10 @@ export default dingtalk => () => {
     parent: dingtalk.$mainWin,
     modal: process.platform !== 'darwin',
     show: false,
-    icon: logo
+    icon: logo,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
 
   $win.on('ready-to-show', () => {

@@ -42,7 +42,10 @@ export default dingtalk => () => {
     show: false,
     backgroundColor: '#5a83b7',
     icon: logo,
-    resizable: true
+    resizable: true,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
 
   /**

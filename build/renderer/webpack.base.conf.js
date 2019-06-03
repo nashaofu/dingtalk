@@ -24,9 +24,6 @@ module.exports = {
       '#': resolve('')
     }
   },
-  externals: {
-    'node-notifier': 'node-notifier'
-  },
   module: {
     rules: [
       {

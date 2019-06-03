@@ -22,7 +22,10 @@ export default dingtalk => () => {
     show: false,
     closable: false,
     skipTaskbar: true,
-    icon: logo
+    icon: logo,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
 
   $win.on('ready-to-show', () => {
