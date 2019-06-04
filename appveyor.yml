@@ -2,7 +2,7 @@ version: 1.0.{build}
 image: Visual Studio 2017
 platform: Any CPU
 environment:
-  nodejs_version: 8
+  nodejs_version: 10
   GH_TOKEN:
     secure: xdnnENSuvDPoe93wuR2RayHBr4opZ+r6YGbMh68EZAkqSCk049zMHTmiOq6wpG1t
 
