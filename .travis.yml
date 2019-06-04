@@ -9,7 +9,6 @@ matrix:
   include:
     - os: linux
     - os: osx
-    - os: windows
 
 cache:
   directories:
