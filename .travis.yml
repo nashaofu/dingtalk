@@ -8,10 +8,10 @@ node_js:
 matrix:
   include:
     - os: linux
-      before_install:
-        - sudo apt-get -qq update
-        - sudo apt-get install --no-install-recommends -y gcc-multilib g++-multilib
-        - sudo apt-get install --no-install-recommends -y rpm
+      # before_install:
+      #   - sudo apt-get -qq update
+      #   - sudo apt-get install --no-install-recommends -y gcc-multilib g++-multilib
+      #   - sudo apt-get install --no-install-recommends -y rpm
     - os: osx
 
 cache:
