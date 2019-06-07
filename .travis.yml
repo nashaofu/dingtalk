@@ -3,11 +3,15 @@ sudo: required
 
 language: node_js
 node_js:
-  - "10"
+  - '10'
 
 matrix:
   include:
     - os: linux
+      before_install: # 为了支持打包rpm格式的包
+        - sudo apt-get update
+        - sudo apt-get install --no-install-recommends -y gcc-multilib g++-multilib
+        - sudo apt-get install --no-install-recommends -y rpm
     - os: osx
 
 cache:
