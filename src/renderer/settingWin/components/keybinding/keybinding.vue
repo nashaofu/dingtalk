@@ -125,11 +125,6 @@ export default {
       } else {
         this.keys = []
       }
-    },
-    toggle () {
-      if (!this.disabled) {
-        // this.$emit('input', !this.value)
-      }
     }
   }
 }
