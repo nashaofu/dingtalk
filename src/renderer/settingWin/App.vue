@@ -2,23 +2,22 @@
 .app
   .app-item
     dt-switch(
-      v-model="enableCapture",
+      v-model="enableCapture"
       title="截图"
     )
     dt-keybinding(
-      :noTitle="true",
-      :disabled="!enableCapture",
-      v-model="shortcutCapture",
+      :disabled="!enableCapture"
+      v-model="shortcutCapture"
     )
   .app-item
     dt-switch(
-      v-model="autoupdate",
-      title="自动更新"
-    )
-  .app-item
-    dt-switch(
-      v-model="enableFlicker",
+      v-model="enableFlicker"
       title="新消息闪烁"
+    )
+  .app-item
+    dt-switch(
+      v-model="autoupdate"
+      title="自动更新"
     )
   .app-item
     .app-item-button

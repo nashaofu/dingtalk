@@ -34,13 +34,6 @@ export const readSetting = dingtalk => () => {
         if (typeof setting.keymap['shortcut-capture'] === 'string') {
           setting.keymap['shortcut-capture'] = setting.keymap['shortcut-capture'].split('+')
         }
-
-        for (let name of ['enableCapture', 'enableFlicker']) {
-          if (!(name in setting)) {
-            setting[name] = true
-          }
-        }
-
         resolve({ ...dingtalk.setting, ...setting })
       } catch (e) {
         resolve(dingtalk.setting)

@@ -13,8 +13,6 @@ export default class DingtalkTray {
   noMessageTrayIcon = getNoMessageTrayIcon()
 
   constructor ({ dingtalk }) {
-    // this.messageTrayIcon = getMessageTrayIcon()
-    // this.noMessageTrayIcon = getNoMessageTrayIcon()
     this._dingtalk = dingtalk
     // 生成托盘图标及其菜单项实例
     this.$tray = new Tray(this.noMessageTrayIcon)
@@ -28,7 +26,7 @@ export default class DingtalkTray {
    * 初始化菜单
    */
   initMenu () {
-    let menu = [
+    const menu = [
       {
         label: '显示窗口',
         click: () => this._dingtalk.showMainWin()
@@ -55,9 +53,7 @@ export default class DingtalkTray {
     }
 
     // 绑定菜单
-    this.$tray.setContextMenu(
-      Menu.buildFromTemplate(menu)
-    )
+    this.$tray.setContextMenu(Menu.buildFromTemplate(menu))
   }
 
   /**
@@ -73,10 +69,10 @@ export default class DingtalkTray {
    * @param {Boolean} is
    */
   flicker (is) {
+    const { enableFlicker } = this._dingtalk.setting
     if (is) {
       let icon = this.messageTrayIcon
-
-      if (this._dingtalk.setting.enableFlicker) {
+      if (enableFlicker) {
         // 防止连续调用多次，导致图标切换时间间隔不是1000ms
         if (this._flickerTimer !== null) return
         this._flickerTimer = setInterval(() => {
@@ -87,11 +83,8 @@ export default class DingtalkTray {
         this.$tray.setImage(icon)
       }
     } else {
-      if (this._dingtalk.setting.enableFlicker && this._flickerTimer) {
-        clearInterval(this._flickerTimer)
-        this._flickerTimer = null
-      }
-
+      clearInterval(this._flickerTimer)
+      this._flickerTimer = null
       this.$tray.setImage(this.noMessageTrayIcon)
     }
   }

@@ -94,9 +94,7 @@ export default class DingTalk {
    * 初始化截图
    */
   initShortcutCapture () {
-    if (this.setting.enableCapture){
-      this.$shortcutCapture = new ShortcutCapture()
-    }
+    this.$shortcutCapture = new ShortcutCapture()
   }
 
   /**
@@ -213,6 +211,14 @@ export default class DingTalk {
     if (this.$settingWin) {
       this.$settingWin.close()
     }
+  }
+
+  resetTray () {
+    if (this.$tray && !this.$tray.isDestroyed()) {
+      this.$tray.destroy()
+      this.$tray = null
+    }
+    this.$tray = new DingtalkTray({ dingtalk: this })
   }
 
   /**
