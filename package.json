@@ -139,6 +139,7 @@
           ]
         }
       ],
+      "executableName": "dingtalk",
       "icon": "./resources/icons",
       "category": "InstantMessaging;Network"
     },
