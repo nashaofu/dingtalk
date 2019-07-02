@@ -82,6 +82,7 @@
   "build": {
     "appId": "com.electron.dingtalk",
     "productName": "钉钉",
+    "artifactName": "dingtalk-${version}-${channel}-${arch}.${ext}",
     "copyright": "Copyright © year nashaofu",
     "asar": true,
     "directories": {
@@ -146,7 +147,6 @@
     "nsis": {
       "oneClick": false,
       "perMachine": true,
-      "artifactName": "dingtalk-${version}.${ext}",
       "allowToChangeInstallationDirectory": true,
       "displayLanguageSelector": true,
       "language": 2052
