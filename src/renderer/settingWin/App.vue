@@ -1,13 +1,22 @@
 <template lang="pug">
 .app
   .app-item
-    dt-keybinding(
-      v-model="shortcutCapture",
+    dt-switch(
+      v-model="enableCapture"
       title="截图"
+    )
+    dt-keybinding(
+      :disabled="!enableCapture"
+      v-model="shortcutCapture"
     )
   .app-item
     dt-switch(
-      v-model="autoupdate",
+      v-model="enableFlicker"
+      title="新消息闪烁"
+    )
+  .app-item
+    dt-switch(
+      v-model="autoupdate"
       title="自动更新"
     )
   .app-item
@@ -57,6 +66,28 @@ export default {
         this.setting = {
           ...this.setting,
           autoupdate: val
+        }
+      }
+    },
+    enableCapture: {
+      get () {
+        return !!this.setting.enableCapture
+      },
+      set (val) {
+        this.setting = {
+          ...this.setting,
+          enableCapture: val
+        }
+      }
+    },
+    enableFlicker: {
+      get () {
+        return !!this.setting.enableFlicker
+      },
+      set (val) {
+        this.setting = {
+          ...this.setting,
+          enableFlicker: val
         }
       }
     }

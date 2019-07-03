@@ -13,46 +13,13 @@ export default class DingtalkTray {
   noMessageTrayIcon = getNoMessageTrayIcon()
 
   constructor ({ dingtalk }) {
-    // this.messageTrayIcon = getMessageTrayIcon()
-    // this.noMessageTrayIcon = getNoMessageTrayIcon()
     this._dingtalk = dingtalk
     // 生成托盘图标及其菜单项实例
     this.$tray = new Tray(this.noMessageTrayIcon)
     // 设置鼠标悬浮时的标题
     this.$tray.setToolTip('钉钉')
-    this.initMenu()
     this.initEvent()
-  }
-
-  /**
-   * 初始化菜单
-   */
-  initMenu () {
-    // 绑定菜单
-    this.$tray.setContextMenu(
-      Menu.buildFromTemplate([
-        {
-          label: '显示窗口',
-          click: () => this._dingtalk.showMainWin()
-        },
-        {
-          label: '屏幕截图',
-          click: () => this._dingtalk.shortcutCapture()
-        },
-        {
-          label: '设置',
-          click: () => this._dingtalk.showSettingWin()
-        },
-        {
-          label: '关于',
-          click: () => this._dingtalk.showAboutWin()
-        },
-        {
-          label: '退出',
-          click: () => this._dingtalk.quit()
-        }
-      ])
-    )
+    this.setMenu()
   }
 
   /**
@@ -64,18 +31,57 @@ export default class DingtalkTray {
   }
 
   /**
+   * 设置菜单
+   */
+  setMenu () {
+    const menu = [
+      {
+        label: '显示窗口',
+        click: () => this._dingtalk.showMainWin()
+      },
+      {
+        label: '设置',
+        click: () => this._dingtalk.showSettingWin()
+      },
+      {
+        label: '关于',
+        click: () => this._dingtalk.showAboutWin()
+      },
+      {
+        label: '退出',
+        click: () => this._dingtalk.quit()
+      }
+    ]
+
+    if (this._dingtalk.setting.enableCapture) {
+      menu.splice(1, 0, {
+        label: '屏幕截图',
+        click: () => this._dingtalk.shortcutCapture()
+      })
+    }
+
+    // 绑定菜单
+    this.$tray.setContextMenu(Menu.buildFromTemplate(menu))
+  }
+
+  /**
    * 控制图标是否闪烁
    * @param {Boolean} is
    */
   flicker (is) {
+    const { enableFlicker } = this._dingtalk.setting
     if (is) {
-      // 防止连续调用多次，导致图标切换时间间隔不是1000ms
-      if (this._flickerTimer !== null) return
       let icon = this.messageTrayIcon
-      this._flickerTimer = setInterval(() => {
+      if (enableFlicker) {
+        // 防止连续调用多次，导致图标切换时间间隔不是1000ms
+        if (this._flickerTimer !== null) return
+        this._flickerTimer = setInterval(() => {
+          this.$tray.setImage(icon)
+          icon = icon === this.messageTrayIcon ? this.noMessageTrayIcon : this.messageTrayIcon
+        }, 1000)
+      } else {
         this.$tray.setImage(icon)
-        icon = icon === this.messageTrayIcon ? this.noMessageTrayIcon : this.messageTrayIcon
-      }, 1000)
+      }
     } else {
       clearInterval(this._flickerTimer)
       this._flickerTimer = null

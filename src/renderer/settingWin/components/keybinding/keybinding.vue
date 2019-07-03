@@ -1,6 +1,6 @@
 <template lang="pug">
 .dt-keybinding
-  .dt-keybinding-title {{ title }}
+  .dt-keybinding-title(v-if="showTitle") {{ title }}
   .dt-keybinding-value
     input(
       type="text",
@@ -24,8 +24,7 @@ export default {
       default: () => []
     },
     title: {
-      type: [String, Number],
-      default: ''
+      type: [String, Number]
     },
     disabled: {
       type: Boolean,
@@ -35,6 +34,11 @@ export default {
   data () {
     return {
       keys: []
+    }
+  },
+  computed: {
+    showTitle () {
+      return this.title == null
     }
   },
   mounted () {

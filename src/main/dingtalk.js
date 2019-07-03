@@ -33,6 +33,8 @@ export default class DingTalk {
   // 默认配置
   setting = {
     autoupdate: true,
+    enableCapture: true,
+    enableFlicker: true,
     keymap: {
       'shortcut-capture': ['Control', 'Alt', 'A']
     }
@@ -166,7 +168,7 @@ export default class DingTalk {
    * 截图
    */
   shortcutCapture () {
-    if (this.shortcutCapture) {
+    if (this.$shortcutCapture) {
       this.$shortcutCapture.shortcutCapture()
     }
   }
@@ -208,6 +210,12 @@ export default class DingTalk {
   hideSettingWin () {
     if (this.$settingWin) {
       this.$settingWin.close()
+    }
+  }
+
+  resetTrayMenu () {
+    if (this.$tray && !this.$tray.isDestroyed()) {
+      this.$tray.setMenu()
     }
   }
 
