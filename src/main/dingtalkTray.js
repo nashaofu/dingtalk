@@ -18,14 +18,22 @@ export default class DingtalkTray {
     this.$tray = new Tray(this.noMessageTrayIcon)
     // 设置鼠标悬浮时的标题
     this.$tray.setToolTip('钉钉')
-    this.initMenu()
     this.initEvent()
+    this.setMenu()
   }
 
   /**
-   * 初始化菜单
+   * 初始化事件
    */
-  initMenu () {
+  initEvent () {
+    this.$tray.on('click', () => this._dingtalk.showMainWin())
+    this.$tray.on('double-click', () => this._dingtalk.showMainWin())
+  }
+
+  /**
+   * 设置菜单
+   */
+  setMenu () {
     const menu = [
       {
         label: '显示窗口',
@@ -54,14 +62,6 @@ export default class DingtalkTray {
 
     // 绑定菜单
     this.$tray.setContextMenu(Menu.buildFromTemplate(menu))
-  }
-
-  /**
-   * 初始化事件
-   */
-  initEvent () {
-    this.$tray.on('click', () => this._dingtalk.showMainWin())
-    this.$tray.on('double-click', () => this._dingtalk.showMainWin())
   }
 
   /**

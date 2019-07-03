@@ -50,7 +50,7 @@ export default dingtalk => () => {
     dingtalk.setting = setting
     await dingtalk.writeSetting()
     dingtalk.bindShortcut()
-    dingtalk.resetTray()
+    dingtalk.resetTrayMenu()
     if (dingtalk.setting.autoupdate) {
       autoUpdater.checkForUpdates()
     }

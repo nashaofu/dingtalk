@@ -213,12 +213,10 @@ export default class DingTalk {
     }
   }
 
-  resetTray () {
+  resetTrayMenu () {
     if (this.$tray && !this.$tray.isDestroyed()) {
-      this.$tray.destroy()
-      this.$tray = null
+      this.$tray.setMenu()
     }
-    this.$tray = new DingtalkTray({ dingtalk: this })
   }
 
   /**
