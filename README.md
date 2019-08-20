@@ -2,8 +2,9 @@
 
 钉钉桌面版，基于 electron 和钉钉网页版开发，支持 Windows、Linux 和 macOS
 
-## 帮朋友招人
-招聘electron方向的开发者，公司坐标上海，公司产品非常不错，用户很多，招聘链接地址[BOSS直聘](https://m.zhipin.com/weijd/v2/job/7f03de3a1e1ce03803Vz2NW-EVM~?date8=20190514&sid=self_jd)，产品官网，可下载体验[墨者](https://www.mozhes.com/)
+## 公司招人
+
+招聘 react 技术栈的开发者，公司研发中心位于杭州，当前是北京团队招聘初级、中级和高级前端人员。高级或者中级工程师可培养为团队 leader，有带团队的经验加分，有意向的请私聊我，邮箱：diaocheng@outlook.com。
 
 ## 安装步骤
 
