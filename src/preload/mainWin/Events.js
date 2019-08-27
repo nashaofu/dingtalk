@@ -2,9 +2,10 @@ export default class Events {
   static noConflict () {
     return Events
   }
+
   getListeners (event) {
     let listener
-    let events = this._getEvents()
+    const events = this._getEvents()
     if (event instanceof RegExp) {
       listener = {}
       Object.keys(events).forEach(key => {
@@ -32,6 +33,7 @@ export default class Events {
     }
     return listenerAsObject
   }
+
   addListener (event, listener) {
     const isObject = typeof listener === 'object'
     const listenerAsObject = this.getListenersAsObject(event)
@@ -54,13 +56,16 @@ export default class Events {
       once: true
     })
   }
+
   once (event, listener) {
     return this.addOnceListener(event, listener)
   }
+
   defineEvent (event) {
     this.getListeners(event)
     return this
   }
+
   defineEvents (events) {
     events.forEach(event => this.defineEvent(event))
     return this
@@ -90,12 +95,8 @@ export default class Events {
   }
 
   manipulateListeners (is, events, listeners) {
-    const single = is
-      ? this.removeListener
-      : this.addListener
-    const manipulate = is
-      ? this.removeListeners
-      : this.addListeners
+    const single = is ? this.removeListener : this.addListener
+    const manipulate = is ? this.removeListeners : this.addListeners
     if (typeof events !== 'object' || events instanceof RegExp) {
       listeners.forEach(listener => single.call(this, events, listener))
     } else {
@@ -130,7 +131,7 @@ export default class Events {
   }
 
   emitEvent (event, args) {
-    let listenersAsObject = this.getListenersAsObject(event)
+    const listenersAsObject = this.getListenersAsObject(event)
     Object.keys(listenersAsObject).forEach(key => {
       listenersAsObject[key].forEach(listener => {
         if (listener.once) {
@@ -158,7 +159,7 @@ export default class Events {
   }
 
   _getOnceReturnValue = function () {
-    return !this.hasOwnProperty('_onceReturnValue') || this._onceReturnValue
+    return Object.prototype.hasOwnProperty.call(this, '_onceReturnValue') || this._onceReturnValue
   }
 
   _getEvents = function () {

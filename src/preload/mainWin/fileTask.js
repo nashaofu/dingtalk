@@ -5,10 +5,12 @@ export default class FileTask extends Events {
   EventsName = {
     FILE_STATUS_UPDATE: 'file_status_update'
   }
+
   constructor (file) {
     super()
     this.initialize(file)
   }
+
   initialize (file) {
     this.type = 2
     this.name = file.name
@@ -42,6 +44,7 @@ export default class FileTask extends Events {
       this.createTime = parseInt(this.clientId.split('_').shift())
     }
   }
+
   setIsFinish (isFinish) {
     this.isFinish = isFinish
   }
@@ -117,7 +120,7 @@ export default class FileTask extends Events {
     }
   }
 
-  onUploadStopAll (file) { }
+  onUploadStopAll (file) {}
 
   isTaskFinish () {
     return this.isFinish
