@@ -9,7 +9,7 @@ import aboutWin from './aboutWin'
 import shortcut from './shortcut'
 import settingWin from './settingWin'
 import DingtalkTray from './dingtalkTray'
-import ShortcutCapture from 'shortcut-capture'
+import Screenshots from 'electron-screenshots'
 
 export default class DingTalk {
   // app对象是否ready
@@ -27,7 +27,7 @@ export default class DingTalk {
   // 关于窗口
   $aboutWin = null
   // 截图对象
-  $shortcutCapture = null
+  $screenshots = null
   // 网络情况，默认为null，必须等到页面报告状态
   online = null
   // 默认配置
@@ -36,7 +36,7 @@ export default class DingTalk {
     enableCapture: true,
     enableFlicker: true,
     keymap: {
-      'shortcut-capture': ['Control', 'Alt', 'A']
+      'screenshots-capture': ['Control', 'Alt', 'A']
     }
   }
 
@@ -48,7 +48,7 @@ export default class DingTalk {
       Menu.setApplicationMenu(null)
       this.initMainWin()
       this.initTray()
-      this.initShortcutCapture()
+      this.initScreenshots()
       this.initNotify()
       this.bindShortcut()
     })
@@ -93,8 +93,8 @@ export default class DingTalk {
   /**
    * 初始化截图
    */
-  initShortcutCapture () {
-    this.$shortcutCapture = new ShortcutCapture()
+  initScreenshots () {
+    this.$screenshots = new Screenshots()
   }
 
   /**
@@ -167,9 +167,9 @@ export default class DingTalk {
   /**
    * 截图
    */
-  shortcutCapture () {
-    if (this.$shortcutCapture) {
-      this.$shortcutCapture.shortcutCapture()
+  screenshotsCapture () {
+    if (this.$screenshots) {
+      this.$screenshots.startCapture()
     }
   }
 

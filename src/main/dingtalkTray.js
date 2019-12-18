@@ -56,7 +56,7 @@ export default class DingtalkTray {
     if (this._dingtalk.setting.enableCapture) {
       menu.splice(1, 0, {
         label: '屏幕截图',
-        click: () => this._dingtalk.shortcutCapture()
+        click: () => this._dingtalk.screenshotsCapture()
       })
     }
 

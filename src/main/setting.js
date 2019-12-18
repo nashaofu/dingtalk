@@ -31,8 +31,8 @@ export const readSetting = dingtalk => () => {
       if (err) return reject(err)
       try {
         const setting = JSON.parse(data)
-        if (typeof setting.keymap['shortcut-capture'] === 'string') {
-          setting.keymap['shortcut-capture'] = setting.keymap['shortcut-capture'].split('+')
+        if (typeof setting.keymap['screenshots-capture'] === 'string') {
+          setting.keymap['screenshots-capture'] = setting.keymap['screenshots-capture'].split('+')
         }
         resolve({ ...dingtalk.setting, ...setting })
       } catch (e) {
