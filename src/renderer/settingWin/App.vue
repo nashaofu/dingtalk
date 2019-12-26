@@ -44,7 +44,7 @@ export default {
     shortcutCapture: {
       get () {
         return this.setting.keymap
-          ? this.setting.keymap['shortcut-capture']
+          ? this.setting.keymap['screenshots-capture']
           : []
       },
       set (val) {
@@ -53,7 +53,7 @@ export default {
           ...this.setting,
           keymap: {
             ...keymap,
-            'shortcut-capture': val
+            'screenshots-capture': val
           }
         }
       }

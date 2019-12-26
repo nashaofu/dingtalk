@@ -1,7 +1,7 @@
 <template lang="pug">
 .app
   .app-logo
-    img.app-logo-image(src="./logo.png")
+    img.app-logo-image(:src="logo")
     .app-logo-title 钉钉 {{ version }}
 
   .app-update
@@ -33,11 +33,13 @@ import {
   ipcRenderer,
   shell
 } from 'electron'
+import logo from './logo.png'
 
 export default {
   name: 'App',
   data () {
     return {
+      logo,
       version,
       description,
       author,

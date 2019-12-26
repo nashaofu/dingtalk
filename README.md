@@ -2,10 +2,6 @@
 
 钉钉桌面版，基于 electron 和钉钉网页版开发，支持 Windows、Linux 和 macOS
 
-## 公司招人
-
-招聘 react 技术栈的开发者，公司研发中心位于杭州，当前是北京团队招聘初级、中级和高级前端人员。高级或者中级工程师可培养为团队 leader，有带团队的经验加分，有意向的请私聊我，邮箱：diaocheng@outlook.com。
-
 ## 安装步骤
 
 > 直接从[GitHub releases](https://github.com/nashaofu/dingtalk/releases/latest)页面下载最新版安装包即可
@@ -73,7 +69,7 @@ npm run pack
 1. 支持屏幕截图，并且支持多显示器截图。截图快捷键为`ctrl+alt+a`，2017-10-23
 2. 支持网络错误页面提示，网络恢复自动跳转到登陆页面，2017-12-28
 3. 修改网络错误页面，支持快捷键设置，2018-02-07
-4. 更新截图功能，支持多显示器截图，目前确认支持 Ubuntu16，Ubuntu17 不支持，其他 Linux 系统未测试，其中使用了[shortcut-capture](https://github.com/nashaofu/shortcut-capture)模块来实现截图；修复设置页面不修改快捷键时，点击保存时提示错误的 BUG，2018-03-03
+4. 更新截图功能，支持多显示器截图，目前确认支持 Ubuntu16，Ubuntu17 不支持，其他 Linux 系统未测试，其中使用了[electron-screenshots](https://github.com/nashaofu/electron-screenshots)模块来实现截图；修复设置页面不修改快捷键时，点击保存时提示错误的 BUG，2018-03-03
 5. 整个项目采用 webpack 打包，采用 electron-builder 来构建应用，分别构建生成三大平台安装包，2018-03-22
 6. 添加关于页面，文件下载进度支持，消息提示不弹出问题修复，修复 Linux 更新问题，2018-04-01
 7. 修复消息提示 node-notifier 图标显示问题，2018-04-07
