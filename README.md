@@ -2,10 +2,6 @@
 
 钉钉桌面版，基于 electron 和钉钉网页版开发，支持 Windows、Linux 和 macOS
 
-## 公司招人
-
-招聘 react 技术栈的开发者，公司研发中心位于杭州，当前是北京团队招聘初级、中级和高级前端人员。高级或者中级工程师可培养为团队 leader，有带团队的经验加分，有意向的请私聊我，邮箱：diaocheng@outlook.com。
-
 ## 安装步骤
 
 > 直接从[GitHub releases](https://github.com/nashaofu/dingtalk/releases/latest)页面下载最新版安装包即可
