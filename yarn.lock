@@ -866,9 +866,9 @@
   integrity sha1-xOY69eiCPOnMPws097mYwhcfDEQ=
 
 "@types/node@^10.12.18":
-  version "10.17.11"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-10.17.11.tgz?cache=0&sync_timestamp=1576679929331&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-10.17.11.tgz#46ba035fb917b31c948280dbea22ab8838f386a4"
-  integrity sha1-RroDX7kXsxyUgoDb6iKriDjzhqQ=
+  version "10.17.12"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-10.17.12.tgz?cache=0&sync_timestamp=1577120143247&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-10.17.12.tgz#4134d75b0dade682f6da9a2f44f5463e8e4f4172"
+  integrity sha1-QTTXWw2t5oL22povRPVGPo5PQXI=
 
 "@types/semver@^6.0.2":
   version "6.2.0"
@@ -2877,12 +2877,12 @@ electron-publish@21.2.0:
     lazy-val "^1.0.4"
     mime "^2.4.4"
 
-electron-screenshots@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.npm.taobao.org/electron-screenshots/download/electron-screenshots-0.0.4.tgz#0dcf413049f97a7372b0c8bd1789f3bc7919aa7e"
-  integrity sha1-Dc9BMEn5enNysMi9F4nzvHkZqn4=
+electron-screenshots@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.npm.taobao.org/electron-screenshots/download/electron-screenshots-0.0.5.tgz?cache=0&sync_timestamp=1577370284579&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Felectron-screenshots%2Fdownload%2Felectron-screenshots-0.0.5.tgz#3da1cdb79890514edc24fe769ac7b35b45f2c7f3"
+  integrity sha1-PaHNt5iQUU7cJP52msezW0Xyx/M=
   dependencies:
-    react-screenshots "^0.0.4"
+    react-screenshots "^0.0.5"
 
 electron-to-chromium@^1.3.191:
   version "1.3.241"
@@ -2910,7 +2910,7 @@ electron-updater@^4.2.0:
 
 electron@^6.1.7:
   version "6.1.7"
-  resolved "https://registry.npm.taobao.org/electron/download/electron-6.1.7.tgz?cache=0&sync_timestamp=1576635558157&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Felectron%2Fdownload%2Felectron-6.1.7.tgz#a67695f81f5cb771e395bcf9711560520e347c54"
+  resolved "https://registry.npm.taobao.org/electron/download/electron-6.1.7.tgz#a67695f81f5cb771e395bcf9711560520e347c54"
   integrity sha1-pnaV+B9ct3Hjlbz5cRVgUg40fFQ=
   dependencies:
     "@types/node" "^10.12.18"
@@ -3103,12 +3103,12 @@ eslint-module-utils@^2.4.1:
     debug "^2.6.9"
     pkg-dir "^2.0.0"
 
-eslint-plugin-es@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/eslint-plugin-es/download/eslint-plugin-es-2.0.0.tgz#0f5f5da5f18aa21989feebe8a73eadefb3432976"
-  integrity sha1-D19dpfGKohmJ/uvopz6t77NDKXY=
+eslint-plugin-es@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/eslint-plugin-es/download/eslint-plugin-es-3.0.0.tgz#98cb1bc8ab0aa807977855e11ad9d1c9422d014b"
+  integrity sha1-mMsbyKsKqAeXeFXhGtnRyUItAUs=
   dependencies:
-    eslint-utils "^1.4.2"
+    eslint-utils "^2.0.0"
     regexpp "^3.0.0"
 
 eslint-plugin-import@^2.19.1:
@@ -3129,13 +3129,13 @@ eslint-plugin-import@^2.19.1:
     read-pkg-up "^2.0.0"
     resolve "^1.12.0"
 
-eslint-plugin-node@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.npm.taobao.org/eslint-plugin-node/download/eslint-plugin-node-10.0.0.tgz#fd1adbc7a300cf7eb6ac55cf4b0b6fc6e577f5a6"
-  integrity sha1-/Rrbx6MAz362rFXPSwtvxuV39aY=
+eslint-plugin-node@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.npm.taobao.org/eslint-plugin-node/download/eslint-plugin-node-11.0.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-plugin-node%2Fdownload%2Feslint-plugin-node-11.0.0.tgz#365944bb0804c5d1d501182a9bc41a0ffefed726"
+  integrity sha1-NllEuwgExdHVARgqm8QaD/7+1yY=
   dependencies:
-    eslint-plugin-es "^2.0.0"
-    eslint-utils "^1.4.2"
+    eslint-plugin-es "^3.0.0"
+    eslint-utils "^2.0.0"
     ignore "^5.1.1"
     minimatch "^3.0.4"
     resolve "^1.10.1"
@@ -3151,10 +3151,10 @@ eslint-plugin-standard@^4.0.1:
   resolved "https://registry.npm.taobao.org/eslint-plugin-standard/download/eslint-plugin-standard-4.0.1.tgz#ff0519f7ffaff114f76d1bd7c3996eef0f6e20b4"
   integrity sha1-/wUZ9/+v8RT3bRvXw5lu7w9uILQ=
 
-eslint-plugin-vue@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.npm.taobao.org/eslint-plugin-vue/download/eslint-plugin-vue-6.0.1.tgz?cache=0&sync_timestamp=1573637124762&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-plugin-vue%2Fdownload%2Feslint-plugin-vue-6.0.1.tgz#166d3eb24cf290f3ff24d44fe9fca496f3924fc2"
-  integrity sha1-Fm0+skzykPP/JNRP6fyklvOST8I=
+eslint-plugin-vue@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.npm.taobao.org/eslint-plugin-vue/download/eslint-plugin-vue-6.0.2.tgz?cache=0&sync_timestamp=1577327089153&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-plugin-vue%2Fdownload%2Feslint-plugin-vue-6.0.2.tgz#3c72fe58c5b1c2f77badccc075b81cfc23fd50ba"
+  integrity sha1-PHL+WMWxwvd7rczAdbgc/CP9ULo=
   dependencies:
     vue-eslint-parser "^6.0.5"
 
@@ -3174,17 +3174,17 @@ eslint-scope@^5.0.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-utils@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.npm.taobao.org/eslint-utils/download/eslint-utils-1.4.2.tgz#166a5180ef6ab7eb462f162fd0e6f2463d7309ab"
-  integrity sha1-FmpRgO9qt+tGLxYv0ObyRj1zCas=
-  dependencies:
-    eslint-visitor-keys "^1.0.0"
-
 eslint-utils@^1.4.3:
   version "1.4.3"
   resolved "https://registry.npm.taobao.org/eslint-utils/download/eslint-utils-1.4.3.tgz#74fec7c54d0776b6f67e0251040b5806564e981f"
   integrity sha1-dP7HxU0Hdrb2fgJRBAtYBlZOmB8=
+  dependencies:
+    eslint-visitor-keys "^1.1.0"
+
+eslint-utils@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/eslint-utils/download/eslint-utils-2.0.0.tgz#7be1cc70f27a72a76cd14aa698bcabed6890e1cd"
+  integrity sha1-e+HMcPJ6cqds0UqmmLyr7WiQ4c0=
   dependencies:
     eslint-visitor-keys "^1.1.0"
 
@@ -3193,10 +3193,10 @@ eslint-visitor-keys@^1.0.0, eslint-visitor-keys@^1.1.0:
   resolved "https://registry.npm.taobao.org/eslint-visitor-keys/download/eslint-visitor-keys-1.1.0.tgz?cache=0&sync_timestamp=1565705523991&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-visitor-keys%2Fdownload%2Feslint-visitor-keys-1.1.0.tgz#e2a82cea84ff246ad6fb57f9bde5b46621459ec2"
   integrity sha1-4qgs6oT/JGrW+1f5veW0ZiFFnsI=
 
-eslint@^6.7.2:
-  version "6.7.2"
-  resolved "https://registry.npm.taobao.org/eslint/download/eslint-6.7.2.tgz#c17707ca4ad7b2d8af986a33feba71e18a9fecd1"
-  integrity sha1-wXcHykrXstivmGoz/rpx4Yqf7NE=
+eslint@^6.8.0:
+  version "6.8.0"
+  resolved "https://registry.npm.taobao.org/eslint/download/eslint-6.8.0.tgz#62262d6729739f9275723824302fb227c8c93ffb"
+  integrity sha1-YiYtZylzn5J1cjgkMC+yJ8jJP/s=
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.10.0"
@@ -5227,10 +5227,10 @@ mimic-response@^1.0.0, mimic-response@^1.0.1:
   resolved "https://registry.npm.taobao.org/mimic-response/download/mimic-response-1.0.1.tgz#4923538878eef42063cb8a3e3b0798781487ab1b"
   integrity sha1-SSNTiHju9CBjy4o+OweYeBSHqxs=
 
-mini-css-extract-plugin@^0.8.2:
-  version "0.8.2"
-  resolved "https://registry.npm.taobao.org/mini-css-extract-plugin/download/mini-css-extract-plugin-0.8.2.tgz#a875e169beb27c88af77dd962771c9eedc3da161"
-  integrity sha1-qHXhab6yfIivd92WJ3HJ7tw9oWE=
+mini-css-extract-plugin@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.npm.taobao.org/mini-css-extract-plugin/download/mini-css-extract-plugin-0.9.0.tgz?cache=0&sync_timestamp=1576856580721&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmini-css-extract-plugin%2Fdownload%2Fmini-css-extract-plugin-0.9.0.tgz#47f2cf07aa165ab35733b1fc97d4c46c0564339e"
+  integrity sha1-R/LPB6oWWrNXM7H8l9TEbAVkM54=
   dependencies:
     loader-utils "^1.1.0"
     normalize-url "1.9.1"
@@ -6526,10 +6526,10 @@ react-is@^16.8.1:
   resolved "https://registry.npm.taobao.org/react-is/download/react-is-16.12.0.tgz?cache=0&sync_timestamp=1576527198497&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-is%2Fdownload%2Freact-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha1-LMD+D7p0LZf9UnxCoTvsTusGJBw=
 
-react-screenshots@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.npm.taobao.org/react-screenshots/download/react-screenshots-0.0.4.tgz#a43a5e8e9199363c679fdc0efbd684693c0c876a"
-  integrity sha1-pDpejpGZNjxnn9wO+9aEaTwMh2o=
+react-screenshots@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.npm.taobao.org/react-screenshots/download/react-screenshots-0.0.5.tgz?cache=0&sync_timestamp=1577370279658&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-screenshots%2Fdownload%2Freact-screenshots-0.0.5.tgz#200a442d1aaa1e875c14b735a779489dc1a205eb"
+  integrity sha1-IApELRqqHodcFLc1p3lIncGiBes=
   dependencies:
     core-js "^3.4.7"
     normalize.css "^8.0.1"
