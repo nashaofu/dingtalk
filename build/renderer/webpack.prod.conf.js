@@ -41,8 +41,7 @@ module.exports = merge(baseWebpackConfig, {
           removeStyleLinkTypeAttributes: true,
           useShortDoctype: true
         },
-        chunks: [view.key],
-        chunksSortMode: 'dependency'
+        chunks: [view.key]
       })
     }),
     // keep module.id stable when vendor modules does not change
