@@ -1,0 +1,56 @@
+appId: com.electron.dingtalk
+productName: 钉钉
+artifactName: dingtalk-${version}-${channel}-${arch}.${ext}
+copyright: Copyright © year nashaofu
+asar: true
+directories:
+  buildResources: resources/icons
+  output: release
+files:
+  - dist/**/*
+  - resources/tray/*
+  - resources/logo.png
+publish:
+  provider: github
+  owner: nashaofu
+  repo: dingtalk
+mac:
+  target: dmg
+  icon: './resources/icons/icon.icns'
+  category: public.app-category.instant-messaging
+win:
+  icon: './resources/icons/icon.ico'
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - ia32
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+        - ia32
+        - arm64
+        - armv7l
+    - target: deb
+      arch:
+        - x64
+        - ia32
+        - arm64
+        - armv7l
+    - target: rpm
+      arch:
+        - x64
+        - ia32
+        - arm64
+        - armv7l
+  executableName: dingtalk
+  icon: './resources/icons'
+  category: InstantMessaging;Network
+nsis:
+  oneClick: false
+  perMachine: true
+  allowToChangeInstallationDirectory: true
+  displayLanguageSelector: true
+  language: 2052

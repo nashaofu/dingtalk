@@ -1,4 +1,3 @@
-import debounce from 'lodash/debounce'
 /**
  * 劫持window.open
  */
@@ -10,7 +9,7 @@ export default injector => {
   iframe.setAttribute('nwdisable', true)
   document.body.append(iframe)
 
-  const download = debounce(url => {
+  const download = url => {
     if (url.indexOf('https://space.dingtalk.com/auth/download') === 0) {
       iframe.src = url
       return true
@@ -18,12 +17,16 @@ export default injector => {
       iframe.src = url
       return true
     }
-  }, 800)
+  }
 
   document.addEventListener('click', e => {
     for (let i = 0, length = e.path.length; i < length; i++) {
       const node = e.path[i]
       if (node.nodeName === 'A' && node.href) {
+        if (iframe.src === node.href && Date.now() - iframe.time < 800) {
+          e.preventDefault()
+          return
+        }
         if (download(node.href)) {
           e.preventDefault()
           return
