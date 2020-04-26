@@ -19,13 +19,8 @@ class MainWinInjector {
 
   // 初始化
   init () {
-    console.log('asdasdasd')
     ipcRenderer.on('dom-ready', () => {
       ipcRenderer.send('online', navigator.onLine)
-      if (!navigator.onLine) {
-        return
-      }
-      console.log('asdasdasd')
     })
     this.injectJs()
   }

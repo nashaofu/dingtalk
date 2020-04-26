@@ -82,8 +82,10 @@ export default dingtalk => () => {
       if (err) return
       fs.readFile(filename, (error, data) => {
         if (error || $win.webContents.isDestroyed()) return
-        $win.webContents.executeJavaScript(data.toString(), () => {
-          if (!$win.webContents.isDestroyed()) $win.webContents.send('dom-ready')
+        $win.webContents.executeJavaScript(data.toString()).then(() => {
+          if (!$win.webContents.isDestroyed()) {
+            $win.webContents.send('dom-ready')
+          }
         })
       })
     })
