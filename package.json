@@ -7,7 +7,7 @@
   "scripts": {
     "start": "electron .",
     "lint": "eslint --ext .js,.vue src",
-    "dev": "node build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --config build/webpack.dev.conf.js",
     "postinstall": "electron-builder install-app-deps",
     "dev:main": "webpack --config build/main/webpack.dev.conf.js",
     "dev:preload": "webpack --config build/preload/webpack.dev.conf.js",
