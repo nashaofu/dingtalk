@@ -1,6 +1,6 @@
 {
   "name": "dingtalk",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "钉钉桌面版，基于electron和钉钉网页版开发，支持Windows、Linux和macOS",
   "author": "nashaofu <diaocheng@outlook.com>",
   "main": "dist/main.js",
