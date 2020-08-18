@@ -13,11 +13,7 @@ function generateLoaders (loader) {
       options
     }
 
-    const vueStyleLoader = {
-      loader: 'vue-style-loader',
-      options
-    }
-    const styleLoader = options.extract ? MiniCssExtractPlugin.loader : vueStyleLoader
+    const styleLoader = options.extract ? MiniCssExtractPlugin.loader : 'style-loader'
 
     const loaders = [styleLoader, cssLoader, postcssLoader]
     if (loader) {

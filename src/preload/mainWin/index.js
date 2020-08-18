@@ -1,10 +1,9 @@
 import open from './open'
 import download from './download'
 import openEmail from './openEmail'
+import { webFrame } from 'electron'
 import winOperation from './winOperation'
 import notifyMessage from './notifyMessage'
-import { ipcRenderer, webFrame } from 'electron'
-
 import './css.less'
 
 class MainWinInjector {
@@ -19,15 +18,13 @@ class MainWinInjector {
 
   // 初始化
   init () {
-    ipcRenderer.on('dom-ready', () => {
-      ipcRenderer.send('online', navigator.onLine)
-    })
     this.injectJs()
   }
 
   // 注入JS
   injectJs () {
     this.setZoomLevel()
+
     /**
      * 插入窗口操作按钮
      * 关闭/最大化/最小化
@@ -37,7 +34,6 @@ class MainWinInjector {
     /**
      * 劫持window.open
      */
-
     this.open()
 
     /**

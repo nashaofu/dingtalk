@@ -1,10 +1,8 @@
 import { app, Menu, ipcMain, BrowserWindow } from 'electron'
 import { initSetting, readSetting, writeSetting } from './setting'
-import online from './online'
 import Notify from './notify'
 import mainWin from './mainWin'
 import emailWin from './emailWin'
-import errorWin from './errorWin'
 import aboutWin from './aboutWin'
 import shortcut from './shortcut'
 import settingWin from './settingWin'
@@ -20,16 +18,12 @@ export default class DingTalk {
   $mainWin = null
   // 邮箱窗口
   $emailWin = null
-  // 错误窗口
-  $errorWin = null
   // 设置窗口
   $settingWin = null
   // 关于窗口
   $aboutWin = null
   // 截图对象
   $screenshots = null
-  // 网络情况，默认为null，必须等到页面报告状态
-  online = null
   // 默认配置
   setting = {
     autoupdate: true,
@@ -59,7 +53,6 @@ export default class DingTalk {
    * @return {Promise} setting
    */
   async init () {
-    online(this)()
     this.setting = await initSetting(this)()
     // 重复打开应用就显示窗口
     app.on('second-instance', (event, commandLine, workingDirectory) => this.showMainWin())
@@ -149,18 +142,9 @@ export default class DingTalk {
    */
   showMainWin () {
     if (this.$mainWin) {
-      if (this.online) {
-        if (this.$mainWin.isMinimized()) this.$mainWin.restore()
-        this.$mainWin.show()
-        this.$mainWin.focus()
-      } else if (this.online === false) {
-        /**
-         * this.online === null不显示
-         * 因为可能此时还没有初始化online
-         * 即$mainWin还没有触发dom-ready
-         */
-        this.showErrorWin()
-      }
+      if (this.$mainWin.isMinimized()) this.$mainWin.restore()
+      this.$mainWin.show()
+      this.$mainWin.focus()
     }
   }
 
@@ -179,22 +163,6 @@ export default class DingTalk {
    */
   showEmailWin (storage) {
     this.$emailWin = emailWin(this)(storage)
-  }
-
-  /**
-   * 显示错误窗口
-   */
-  showErrorWin () {
-    this.$errorWin = errorWin(this)()
-  }
-
-  /**
-   * 隐藏错误窗口
-   */
-  hideErrorWin () {
-    if (this.$errorWin) {
-      this.$errorWin.close()
-    }
   }
 
   /**
