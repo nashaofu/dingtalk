@@ -1,7 +1,7 @@
 'use strict'
 const path = require('path')
 const config = require('../config')
-const { dependencies } = require('../../package.json')
+const { dependencies, devDependencies } = require('../../package.json')
 
 function resolve (dir) {
   return path.join(config.baseDir, dir)
@@ -23,8 +23,8 @@ module.exports = {
     }
   },
   externals: {
-    ...Object.keys(dependencies || {}).reduce((deps, key) => {
-      deps[key] = `require("${key}")`
+    ...Object.keys({ ...dependencies, ...devDependencies }).reduce((deps, key) => {
+      deps[key] = `commonjs2 ${key}`
       return deps
     }, {})
   },

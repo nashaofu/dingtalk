@@ -1,9 +1,5 @@
 const views = [
   {
-    key: 'errorWin',
-    title: '网络错误'
-  },
-  {
     key: 'settingWin',
     title: '设置'
   },
