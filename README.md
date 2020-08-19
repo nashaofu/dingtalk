@@ -47,11 +47,9 @@ npm run pack
    ![4.png](./screenshot/4.png)
 5. 截图效果预览
    ![5.png](./screenshot/5.png)
-6. 网络错误页面
-   ![6.png](./screenshot/6.png)
-7. 系统设置界面
+6. 系统设置界面
    ![7.png](./screenshot/7.png)
-8. 关于界面
+7. 关于界面
    ![8.png](./screenshot/8.png)
 
 ## 功能说明
