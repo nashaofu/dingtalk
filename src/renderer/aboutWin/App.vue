@@ -1,22 +1,22 @@
 <template lang="pug">
 .app
-  .app-logo
-    img.app-logo-image(src="~./logo.png")
-    .app-logo-title 钉钉 {{ version }}
+  .app-left
+    .app-logo
+      img.app-logo-image(src="~./logo.png")
+      .app-logo-title 钉钉 {{ version }}(基于{{ license }}协议)
 
-  .app-update
-    button.app-update-button(@click="checkForUpdates") 检查更新
+    .app-update
+      button.app-update-button(@click="checkForUpdates") 检查更新
 
-  .app-desc {{ description }}
-  .app-info
-    .app-info-title 作者:
-    .app-info-desc {{ author }}
-  .app-info
-    .app-info-title 协议:
-    .app-info-desc {{ license }}
-  .app-info
-    .app-info-title 主页:
-    .app-info-desc(@click="openURL") {{ homepage }}
+    .app-desc {{ description }}
+
+    .app-url(@click="openURL") {{ homepage }}
+    .app-url(@click="openMail") {{ author }}
+
+  .app-right
+    .app-mpqrcode
+      img.app-mpqrcode-img(src="~./mpqrcode.jpg")
+      .app-mpqrcode-title 欢迎关注作者公众号
 </template>
 
 <script>
@@ -60,6 +60,13 @@ export default {
     checkForUpdates () {
       ipcRenderer.send('ABOUTWIN:checkForUpdates')
     },
+    openMail () {
+      const result = this.author.match(/<(.+)>/)
+      if (!result) {
+        return
+      }
+      shell.openExternal(`mailto:${result[1]}`)
+    },
     openURL () {
       shell.openExternal(this.homepage)
     }
@@ -83,24 +90,44 @@ export default {
 
 html,
 body {
+  height: 100%;
   font-family: @font-family;
   color: #333;
   overflow: hidden;
 }
 
 .app {
-  padding: 40px 15px 15px 15px;
+  height: 100%;
+  display: flex;
+  padding: 15px 0;
+  &-left {
+    width: 60%;
+    height: 100%;
+    position: relative;
+    padding: 10px 36px;
+    &:after {
+      content: "";
+      width: 1px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 5px;
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+  &-right {
+    width: 40%;
+    height: 100%;
+  }
 
   &-logo {
     text-align: center;
-
     &-image {
       margin: 0 auto;
       display: block;
       width: 96px;
       height: 96px;
     }
-
     &-title {
       margin: 10px auto;
       font-size: 18px;
@@ -111,7 +138,6 @@ body {
   &-update {
     text-align: center;
     margin: 10px auto;
-
     &-button {
       display: inline-block;
       padding: 7px 14px;
@@ -121,11 +147,9 @@ body {
       border: 1px solid #ccc;
       cursor: pointer;
       outline: none;
-
       &:hover {
         background-color: #f3f3f3;
       }
-
       &:active {
         box-shadow: inset 0 2px 20px rgba(0, 0, 0, 0.1);
       }
@@ -140,26 +164,26 @@ body {
     word-break: break-all;
   }
 
-  &-info {
-    display: flex;
+  &-url {
     margin: 10px auto;
-    font-size: 15px;
+    white-space: nowrap;
+    text-align: center;
+    color: #08f;
+    text-decoration: underline;
+  }
 
-    &-title {
-      width: 42px;
-      min-width: 42px;
-      font-weight: 600;
-      color: #777;
+  &-mpqrcode {
+    text-align: center;
+    padding-top: 50px;
+    &-img {
+      width: 190px;
+      height: 190px;
+      display: block;
+      margin: 0 auto;
     }
-
-    &-desc {
-      flex: 1;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      color: #08f;
-      text-decoration: underline;
-      cursor: pointer;
+    &-title {
+      margin-top: 20px;
+      font-weight: 500;
     }
   }
 }

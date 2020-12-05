@@ -2856,12 +2856,12 @@ electron-publish@22.9.1:
     lazy-val "^1.0.4"
     mime "^2.4.6"
 
-electron-screenshots@^0.0.11:
-  version "0.0.11"
-  resolved "https://registry.npm.taobao.org/electron-screenshots/download/electron-screenshots-0.0.11.tgz?cache=0&sync_timestamp=1606571083832&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Felectron-screenshots%2Fdownload%2Felectron-screenshots-0.0.11.tgz#f4aa0c9aaf0cd127b3b500997b0303efc5122112"
-  integrity sha1-9KoMmq8M0SeztQCZewMD78USIRI=
+electron-screenshots@^0.0.12:
+  version "0.0.12"
+  resolved "https://registry.npm.taobao.org/electron-screenshots/download/electron-screenshots-0.0.12.tgz#8fcca274e6cf0519ef55b7e0aecfadfa04f3c89b"
+  integrity sha1-j8yidObPBRnvVbfgrs+t+gTzyJs=
   dependencies:
-    react-screenshots "^0.0.11"
+    react-screenshots "^0.0.12"
 
 electron-to-chromium@^1.3.591:
   version "1.3.610"
@@ -6251,10 +6251,10 @@ react-is@^16.8.1:
   resolved "https://registry.npm.taobao.org/react-is/download/react-is-16.13.1.tgz?cache=0&sync_timestamp=1603369407179&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-is%2Fdownload%2Freact-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha1-eJcppNw23imZ3BVt1sHZwYzqVqQ=
 
-react-screenshots@^0.0.11:
-  version "0.0.11"
-  resolved "https://registry.npm.taobao.org/react-screenshots/download/react-screenshots-0.0.11.tgz?cache=0&sync_timestamp=1606571078845&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-screenshots%2Fdownload%2Freact-screenshots-0.0.11.tgz#5becc794aca57e402255e32c9b05dbdb3dd4a64d"
-  integrity sha1-W+zHlKylfkAiVeMsmwXb2z3Upk0=
+react-screenshots@^0.0.12:
+  version "0.0.12"
+  resolved "https://registry.npm.taobao.org/react-screenshots/download/react-screenshots-0.0.12.tgz#980c21f77e0e09bdedfccbb678edcd756d2d29c9"
+  integrity sha1-mAwh934OCb3t/Mu2eO3NdW0tKck=
   dependencies:
     core-js "^3.6.5"
     normalize.css "^8.0.1"
