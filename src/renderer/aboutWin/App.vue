@@ -100,6 +100,7 @@ body {
   height: 100%;
   display: flex;
   padding: 15px 0;
+  font-size: 14px;
   &-left {
     width: 60%;
     height: 100%;

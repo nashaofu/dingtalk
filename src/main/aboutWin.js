@@ -12,7 +12,7 @@ export default dingtalk => () => {
   }
   const $win = new BrowserWindow({
     title: '关于',
-    width: 680,
+    width: 720,
     height: 370,
     useContentSize: true,
     resizable: false,
