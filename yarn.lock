@@ -2881,10 +2881,10 @@ electron-updater@^4.3.1:
     lodash.isequal "^4.5.0"
     semver "^7.3.2"
 
-electron@^9.3.1:
-  version "9.3.5"
-  resolved "https://registry.npm.taobao.org/electron/download/electron-9.3.5.tgz?cache=0&sync_timestamp=1606416794563&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Felectron%2Fdownload%2Felectron-9.3.5.tgz#7967146b81e6d9b484773243fd4a4f671a50b884"
-  integrity sha1-eWcUa4Hm2bSEdzJD/UpPZxpQuIQ=
+electron@^9.4.0:
+  version "9.4.0"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-9.4.0.tgz#c3c607e3598226ddbaaff8babcdffa8bb2210936"
+  integrity sha512-hOC4q0jkb+UDYZRy8vrZ1IANnq+jznZnbkD62OEo06nU+hIbp2IrwDRBNuSLmQ3cwZMVir0WSIA1qEVK0PkzGA==
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"
