@@ -2,6 +2,12 @@
 
 钉钉桌面版，基于 electron 和钉钉网页版开发，支持 Windows、Linux 和 macOS
 
+## 社区相关文章
+
+- [福珑2.0主机（龙芯3a4000+Debian10）使用桌面版钉钉](https://tieba.baidu.com/p/7215366063)
+- [龙芯3A4000+Debian10系统使用钉钉桌面版（dingtalk）](https://b23.tv/MvJO3E)
+- [如何在优麒麟上安装钉钉（DingTalk）软件](https://mp.weixin.qq.com/s/0STmE9KJZgR_RNpIiSqFUA)
+
 ## 安装步骤
 
 > 直接从[GitHub releases](https://github.com/nashaofu/dingtalk/releases/latest)页面下载最新版安装包即可
