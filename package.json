@@ -68,7 +68,7 @@
     "mini-css-extract-plugin": "^0.10.0",
     "npm-run-all": "^4.1.5",
     "postcss-loader": "^3.0.0",
-    "pug": "^3.0.0",
+    "pug": "^3.0.1",
     "pug-plain-loader": "^1.0.0",
     "registry-auth-token": "^4.2.0",
     "registry-url": "^5.1.0",
