@@ -109,3 +109,28 @@ npm run pack
 
 如果你觉得作者的辛苦付出有帮助到你，你可以给作者买杯咖啡！🤣
 ![打赏](./screenshot/reward.png)
+
+## 字节跳动内推
+
+打个广告，挣点内推奖金🤪，社招内推[请点这里](https://job.toutiao.com/s/eJT84ta)，校招内推[请点这里](https://jobs.toutiao.com/s/eJTe3L1)。你也可以扫描下方二维码，或者在本仓库的[issues](https://github.com/nashaofu/nashaofu/issues)中留言联系我！
+
+<div align="center">
+  <table>
+    <thead>
+      <tr>
+        <th>社招内推</th>
+        <th>校招内推</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <img src="https://github.com/nashaofu/nashaofu/raw/master/内推二维码/社招内推.png" width="300" />
+        </td>
+        <td>
+          <img src="https://github.com/nashaofu/nashaofu/raw/master/内推二维码/校招内推.png" width="300" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
