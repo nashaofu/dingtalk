@@ -11,7 +11,7 @@
     "postinstall": "electron-builder install-app-deps",
     "dev:main": "webpack --config build/main/webpack.dev.conf.js",
     "dev:preload": "webpack --config build/preload/webpack.dev.conf.js",
-    "dev:renderer": "webpack-dev-server --config build/renderer/webpack.dev.conf.js",
+    "dev:renderer": "webpack serve --config build/renderer/webpack.dev.conf.js",
     "build": "npm-run-all --parallel build:main build:preload build:renderer",
     "build:main": "webpack --config build/main/webpack.prod.conf.js",
     "build:preload": "webpack --config build/preload/webpack.prod.conf.js",
