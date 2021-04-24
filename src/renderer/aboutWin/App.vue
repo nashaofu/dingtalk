@@ -20,13 +20,7 @@
 </template>
 
 <script>
-import {
-  version,
-  description,
-  author,
-  license,
-  homepage
-} from '#/package.json'
+import pkg from '#/package.json'
 
 import {
   webFrame,
@@ -38,11 +32,11 @@ export default {
   name: 'App',
   data () {
     return {
-      version,
-      description,
-      author,
-      license,
-      homepage
+      version: pkg.version,
+      description: pkg.description,
+      author: pkg.author,
+      license: pkg.license,
+      homepage: pkg.homepage
     }
   },
   created () {

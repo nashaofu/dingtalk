@@ -23,7 +23,8 @@ export default dingtalk => url => {
     show: false,
     icon: logo,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     }
   })
 

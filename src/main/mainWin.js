@@ -44,7 +44,8 @@ export default dingtalk => () => {
     icon: logo,
     resizable: true,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     }
   })
 

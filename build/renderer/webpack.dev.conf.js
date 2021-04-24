@@ -14,12 +14,10 @@ const PORT = process.env.PORT || config.dev.port
 
 module.exports = merge(baseWebpackConfig, {
   mode: 'development',
-  watch: true,
   module: {
     rules: styleLoader({ sourceMap: true })
   },
-  // cheap-module-eval-source-map is faster for development
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'eval-cheap-module-source-map',
 
   // these devServer options should be customized in /config/index.js
   devServer: {
@@ -39,7 +37,6 @@ module.exports = merge(baseWebpackConfig, {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     ...htmlWebpackPlugins(view => {
