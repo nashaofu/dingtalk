@@ -3,8 +3,6 @@ const axios = require('axios')
 const chalk = require('chalk')
 const http = require('http')
 const https = require('https')
-const registryUrl = require('registry-url')
-const registryAuthToken = require('registry-auth-token')
 
 const httpAgent = new http.Agent({
   keepAlive: true,
@@ -42,21 +40,14 @@ function parallelToSerial (tasks) {
  */
 async function getPackageVersion (pkg, pkgInfo) {
   console.log(`get ${pkg} ...`)
-  const scope = pkg.split('/')[0]
-  const registry = registryUrl(scope)
-  const authInfo = registryAuthToken(registry, { recursive: true })
   const headers = {
     accept: 'application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*'
-  }
-
-  if (authInfo) {
-    headers.authorization = `${authInfo.type} ${authInfo.token}`
   }
 
   const time = Date.now()
   try {
     const { data } = await axios.get(`${encodeURIComponent(pkg).replace(/^%40/, '@')}/latest`, {
-      baseURL: registry,
+      baseURL: 'https://registry.npmjs.org/',
       headers,
       httpAgent,
       httpsAgent
