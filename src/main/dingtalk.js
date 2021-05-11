@@ -8,6 +8,15 @@ import shortcut from './shortcut'
 import settingWin from './settingWin'
 import DingtalkTray from './dingtalkTray'
 import Screenshots from 'electron-screenshots'
+import * as Sentry from '@sentry/electron'
+
+Sentry.init({
+  dsn: 'https://63fd311869974925bcf1bdeaa1af2b79@o260436.ingest.sentry.io/1457235',
+  debug: false,
+  sampleRate: 1,
+  maxBreadcrumbs: 100,
+  attachStacktrace: true
+})
 
 export default class DingTalk {
   // app对象是否ready
