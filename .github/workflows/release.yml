@@ -32,4 +32,4 @@ jobs:
       - name: Pack and Release Electron app
         run: yarn release
         env:
-          GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
