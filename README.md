@@ -1,4 +1,4 @@
-# dingtalk[![Build Status](https://travis-ci.org/nashaofu/dingtalk.svg?branch=master)](https://travis-ci.org/nashaofu/dingtalk)[![Build status](https://ci.appveyor.com/api/projects/status/jptk80n78gdogd18/branch/master?svg=true)](https://ci.appveyor.com/project/nashaofu/dingtalk/branch/master)
+# dingtalk[![Release](https://github.com/nashaofu/dingtalk/actions/workflows/release.yml/badge.svg?branch=master)](https://github.com/nashaofu/dingtalk/actions/workflows/release.yml)
 
 钉钉桌面版，基于 electron 和钉钉网页版开发，支持 Windows、Linux 和 macOS
 
