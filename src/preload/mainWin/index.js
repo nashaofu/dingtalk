@@ -5,6 +5,7 @@ import { webFrame } from 'electron'
 import winOperation from './winOperation'
 import notifyMessage from './notifyMessage'
 import './css.less'
+import logout from './logout'
 
 class MainWinInjector {
   constructor () {
@@ -50,6 +51,10 @@ class MainWinInjector {
      * 文件下载监听
      */
     this.download()
+    /**
+     * 登录被弹出监听
+     */
+    this.logout()
   }
 
   // 设置缩放等级
@@ -82,6 +87,11 @@ class MainWinInjector {
   // 文件下载劫持
   download () {
     download(this)
+  }
+
+  // 登录被弹出劫持
+  logout () {
+    logout(this)
   }
 
   // window.open重写
