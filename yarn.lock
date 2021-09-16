@@ -2886,10 +2886,10 @@ electron-updater@^4.3.9:
     lodash.isequal "^4.5.0"
     semver "^7.3.5"
 
-electron@^12.0.7:
-  version "12.0.7"
-  resolved "https://registry.nlark.com/electron/download/electron-12.0.7.tgz#e0fca2c8be34cb7da48c4d15cfb1d2ad666d2718"
-  integrity sha1-4PyiyL40y32kjE0Vz7HSrWZtJxg=
+electron@^14.0.1:
+  version "14.0.1"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-14.0.1.tgz#967da47895a77a9af8a7938e9266cd4a75ab24c4"
+  integrity sha512-1XILvfE5mQEBz5L/QeNfcwC3PxAIjwMyA3GR8Naw5C0IKAnHl3lAdjczbtGX8nqbcEpOAVo+4TMSpcPD3zxe8Q==
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^14.6.2"

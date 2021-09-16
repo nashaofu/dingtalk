@@ -10,6 +10,6 @@ export default () => {
 
     e.stopPropagation()
     e.preventDefault()
-    ipcRenderer.send('MAINWIN:reload')
+    ipcRenderer.send('MAINWIN:logout')
   })
 }

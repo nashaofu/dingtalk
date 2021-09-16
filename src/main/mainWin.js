@@ -122,7 +122,7 @@ export default dingtalk => () => {
 
   ipcMain.on('MAINWIN:window-close', () => $win.hide())
   ipcMain.on('MAINWIN:open-email', (e, url) => dingtalk.showEmailWin(url))
-  ipcMain.on('MAINWIN:reload', () => $win.reload())
+  ipcMain.on('MAINWIN:logout', () => $win.reload())
 
   ipcMain.on('MAINWIN:window-show', () => {
     $win.show()
