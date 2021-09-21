@@ -30,7 +30,7 @@
     "@babel/runtime": "^7.14.0",
     "@sentry/electron": "^2.4.1",
     "axios": "^0.21.1",
-    "electron-screenshots": "^0.0.15",
+    "electron-screenshots": "^0.0.17",
     "electron-updater": "^4.3.9",
     "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
