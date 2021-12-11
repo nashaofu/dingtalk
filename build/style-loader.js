@@ -1,8 +1,8 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 // generate loader string to be used with extract text plugin
-function generateLoaders (loader) {
-  return function ({ extract, ...options }) {
+function generateLoaders ({ extract, ...options }) {
+  return function (loader) {
     const cssLoader = {
       loader: 'css-loader',
       options
@@ -13,7 +13,7 @@ function generateLoaders (loader) {
       options
     }
 
-    const styleLoader = options.extract ? MiniCssExtractPlugin.loader : 'style-loader'
+    const styleLoader = extract ? MiniCssExtractPlugin.loader : 'style-loader'
 
     const loaders = [styleLoader, cssLoader, postcssLoader]
     if (loader) {
@@ -30,19 +30,19 @@ module.exports = function (options) {
   return [
     {
       test: /\.css$/,
-      use: generateLoaders()(options)
+      use: generateLoaders(options)()
     },
     {
       test: /\.less$/,
-      use: generateLoaders('less')(options)
+      use: generateLoaders(options)('less')
     },
     {
       test: /\.(sass|scss)$/,
-      use: generateLoaders('sass')(options)
+      use: generateLoaders(options)('sass')
     },
     {
       test: /\.(stylus|styl)$/,
-      use: generateLoaders('stylus')(options)
+      use: generateLoaders(options)('stylus')
     }
   ]
 }
