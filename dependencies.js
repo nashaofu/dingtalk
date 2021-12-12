@@ -1,6 +1,5 @@
 const fs = require('fs')
 const axios = require('axios')
-const chalk = require('chalk')
 const http = require('http')
 const https = require('https')
 
@@ -53,7 +52,6 @@ async function getPackageVersion (pkg, pkgInfo) {
       httpsAgent
     })
     console.log(
-      chalk.bgGreen.black(' DONE '),
       JSON.stringify(
         {
           ...pkgInfo,
@@ -69,7 +67,6 @@ async function getPackageVersion (pkg, pkgInfo) {
   } catch (e) {
     const status = ((e || {}).response || {}).status
     console.log(
-      chalk.bgRed.black(' ERROR '),
       JSON.stringify(
         {
           ...pkgInfo,

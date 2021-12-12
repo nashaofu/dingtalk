@@ -1,7 +1,7 @@
-'use strict'
 const path = require('path')
 const config = require('../config')
 const { dependencies, devDependencies } = require('../../package.json')
+const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 
 function resolve (dir) {
   return path.join(config.baseDir, dir)
@@ -32,16 +32,6 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        include: [resolve('src/main')],
-        options: {
-          formatter: require('eslint-friendly-formatter'),
-          emitWarning: true
-        }
-      },
-      {
-        test: /\.js$/,
         loader: 'babel-loader'
       }
     ]
@@ -49,5 +39,6 @@ module.exports = {
   node: {
     __dirname: true,
     __filename: true
-  }
+  },
+  plugins: [new ESLintWebpackPlugin()]
 }

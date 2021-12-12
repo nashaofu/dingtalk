@@ -1,4 +1,3 @@
-'use strict'
 const config = require('../config')
 const { merge } = require('webpack-merge')
 const styleLoader = require('../style-loader')

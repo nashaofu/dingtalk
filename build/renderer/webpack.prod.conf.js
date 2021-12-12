@@ -1,6 +1,4 @@
-'use strict'
 const path = require('path')
-const webpack = require('webpack')
 const config = require('../config')
 const { merge } = require('webpack-merge')
 const styleLoader = require('../style-loader')
@@ -20,12 +18,12 @@ module.exports = merge(baseWebpackConfig, {
   devtool: config.prod.sourcemap ? '#source-map' : false,
   output: {
     path: config.distRendererDir,
-    filename: 'js/[name].[chunkhash].js',
-    chunkFilename: 'js/[id].[chunkhash].js'
+    filename: 'static/js/[name].[chunkhash].js',
+    chunkFilename: 'static/js/[id].[chunkhash].js'
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[contenthash].css'
+      filename: 'static/css/[name].[contenthash].css'
     }),
     ...htmlWebpackPlugins(view => {
       return new HtmlWebpackPlugin({
@@ -43,8 +41,6 @@ module.exports = merge(baseWebpackConfig, {
         },
         chunks: [view.key]
       })
-    }),
-    // enable scope hoisting
-    new webpack.optimize.ModuleConcatenationPlugin()
+    })
   ]
 })

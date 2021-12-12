@@ -1,6 +1,6 @@
-'use strict'
 const path = require('path')
 const config = require('../config')
+const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 
 function resolve (dir) {
   return path.join(config.baseDir, dir)
@@ -26,40 +26,27 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        include: [resolve('src/preload')],
-        options: {
-          formatter: require('eslint-friendly-formatter'),
-          emitWarning: true
-        }
-      },
-      {
-        test: /\.js$/,
         loader: 'babel-loader'
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: 'img/[name].[hash:7].[ext]'
+        type: 'asset/resource',
+        generator: {
+          filename: 'static/images/[name].[hash:7].[ext]'
         }
       },
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: 'media/[name].[hash:7].[ext]'
+        type: 'asset/resource',
+        generator: {
+          filename: 'static/medias/[name].[hash:7].[ext]'
         }
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: 'fonts/[name].[hash:7].[ext]'
+        type: 'asset/resource',
+        generator: {
+          filename: 'static/fonts/[name].[hash:7].[ext]'
         }
       }
     ]
@@ -67,5 +54,6 @@ module.exports = {
   node: {
     __dirname: true,
     __filename: true
-  }
+  },
+  plugins: [new ESLintWebpackPlugin()]
 }
