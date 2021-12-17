@@ -23,6 +23,7 @@
     .app-item-button
       dt-button(@click="reset") 还原设置
       dt-button(
+        tabIndex="1"
         type="primary"
         @click="save"
       ) 保存设置
@@ -43,9 +44,7 @@ export default {
   computed: {
     shortcutCapture: {
       get () {
-        return this.setting.keymap
-          ? this.setting.keymap['screenshots-capture']
-          : []
+        return this.setting.keymap ? this.setting.keymap['screenshots-capture'] : []
       },
       set (val) {
         const keymap = this.setting.keymap || {}
@@ -117,12 +116,10 @@ export default {
 </script>
 
 <style lang="less">
-@import "~normalize.css";
+@import '~normalize.css';
 
-@font-family: "PingFang-SC-Medium", "Source Han Sans", "Segoe UI",
-  "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo,
-  "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3",
-  sans-serif;
+@font-family: 'PingFang-SC-Medium', 'Source Han Sans', 'Segoe UI', 'Lucida Grande', Helvetica, Arial, 'Microsoft YaHei',
+  FreeSans, Arimo, 'Droid Sans', 'wenquanyi micro hei', 'Hiragino Sans GB', 'Hiragino Sans GB W3', sans-serif;
 
 *,
 *:before,

@@ -46,6 +46,7 @@ linux:
         - arm64
         - armv7l
   executableName: dingtalk
+  desktop: 钉钉
   icon: './resources/icons'
   category: InstantMessaging;Network
 nsis:

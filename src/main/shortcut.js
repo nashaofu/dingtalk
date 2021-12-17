@@ -1,4 +1,18 @@
-import { globalShortcut } from 'electron'
+import { BrowserWindow, globalShortcut } from 'electron'
+import localShortcut from 'electron-localshortcut'
+
+function toggleDevTools (win = BrowserWindow.getFocusedWindow()) {
+  if (!win) {
+    return
+  }
+
+  const { webContents } = win
+  if (webContents.isDevToolsOpened()) {
+    webContents.closeDevTools()
+  } else {
+    webContents.openDevTools()
+  }
+}
 
 export default dingtalk => () => {
   const actions = {
@@ -15,4 +29,7 @@ export default dingtalk => () => {
       globalShortcut.register(keymap[key].join('+'), actions[key])
     }
   })
+
+  localShortcut.register(process.platform === 'darwin' ? 'Command+Alt+I' : 'Control+Shift+I', toggleDevTools)
+  localShortcut.register('F12', toggleDevTools)
 }

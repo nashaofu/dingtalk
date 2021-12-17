@@ -4,7 +4,7 @@ module.exports = {
       '@babel/preset-env',
       {
         targets: {
-          electron: 15
+          electron: 16
         }
       }
     ]
