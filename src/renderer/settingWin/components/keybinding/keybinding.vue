@@ -93,9 +93,11 @@ export default {
       }
 
       // 必须要保证按键是keys中的键按下时的
-      if (($e.ctrlKey && this.keys[0] === 'Control') ||
+      if (
+        ($e.ctrlKey && this.keys[0] === 'Control') ||
         ($e.altKey && this.keys[0] === 'Alt') ||
-        ($e.shiftKey && this.keys[0] === 'Shift')) {
+        ($e.shiftKey && this.keys[0] === 'Shift')
+      ) {
         this.keys.push(key)
       } else {
         // 当this.keys中有元素的时候，单独按下keys中的键
