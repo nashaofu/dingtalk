@@ -34,12 +34,26 @@ linux:
         - arm64
         - armv7l
     - target: deb
+      depends:
+        - libc6
+        - gconf2
+        - gconf-service
+        - libnotify4
+        - libappindicator1
+        - libxtst6
+        - libnss3
+        - libx11-6
+        - libxrandr2
       arch:
         - x64
         - ia32
         - arm64
         - armv7l
     - target: rpm
+      depends:
+        - libc6
+        - libx11-6
+        - libxrandr2
       arch:
         - x64
         - ia32
