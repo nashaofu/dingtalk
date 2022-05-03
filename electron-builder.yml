@@ -55,3 +55,13 @@ nsis:
   allowToChangeInstallationDirectory: true
   displayLanguageSelector: true
   language: 2052
+deb:
+  depends:
+    - libc6
+    - libx11-6
+    - libxrandr2
+rpm:
+  depends:
+    - libc6
+    - libx11-6
+    - libxrandr2
