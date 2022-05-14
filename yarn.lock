@@ -2842,14 +2842,15 @@ electron-publish@22.14.13:
     lazy-val "^1.0.5"
     mime "^2.5.2"
 
-electron-screenshots@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.npmmirror.com/electron-screenshots/-/electron-screenshots-0.3.2.tgz#98bf24a085fc6ea65cd75ec3c64ab8646961058e"
-  integrity sha512-1n/HoLYRR0QHx64wbzuHKAj1Q4zMG5Oo5e2JPUKHASYQIKnC+0CNmZYO2PIJ5lCVwWm4OSTovk6w8yOTgOe71w==
+electron-screenshots@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.npmmirror.com/electron-screenshots/-/electron-screenshots-0.4.1.tgz#e3afc7a1ddb41689ad2f639685849e66d973b401"
+  integrity sha512-jODZW3AfQY0QwI6dvP3QB9QrQA1ZY/nyAsvwnXgpUOjdp96ZLIt/61u8ALDeWboIupbPbI7bT8+enbzNPwFVhg==
   dependencies:
     debug "^4.3.3"
+    fs-extra "^10.1.0"
     node-screenshots "^0.0.2"
-    react-screenshots "^0.3.1"
+    react-screenshots "^0.4.0"
 
 electron-to-chromium@^1.4.118:
   version "1.4.131"
@@ -3443,7 +3444,7 @@ fresh@0.5.2:
   resolved "https://registry.npmmirror.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==
 
-fs-extra@^10.0.0:
+fs-extra@^10.0.0, fs-extra@^10.1.0:
   version "10.1.0"
   resolved "https://registry.npmmirror.com/fs-extra/-/fs-extra-10.1.0.tgz#02873cfbc4084dde127eaa5f9905eef2325d1abf"
   integrity sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==
@@ -5484,10 +5485,10 @@ rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-screenshots@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.npmmirror.com/react-screenshots/-/react-screenshots-0.3.1.tgz#c5c6422533da3b611557aeb8111adbc53cc8c9c3"
-  integrity sha512-tJch9Ac/JcKlaQWzY+/WU3QthAK8iCUfjh7VElzeK1axYENCNwqIfGsuP7wIE69avx32LMRVtNdjlWZs6a/OQA==
+react-screenshots@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.npmmirror.com/react-screenshots/-/react-screenshots-0.4.0.tgz#1227305dc2a8a4e7578e3f8ad53cef4e7dfa2c76"
+  integrity sha512-6mvsJj1y+5fU+kt9DTs6hSekMHqpRLpYu2c9DzRWkTd9kz6Qs1vhbVpoohPJ+wBnHeNDh0EH0vPNSysb271Vsg==
 
 read-config-file@6.2.0:
   version "6.2.0"
