@@ -2842,15 +2842,15 @@ electron-publish@22.14.13:
     lazy-val "^1.0.5"
     mime "^2.5.2"
 
-electron-screenshots@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.npmmirror.com/electron-screenshots/-/electron-screenshots-0.4.3.tgz#7af65401faa8652d1451868bba8c654daf0df44f"
-  integrity sha512-SDtKgyMX6SHCcFOg3JPr69Uxt8FLrtv2oKD4wdgIqQ33WVJa6g4fXBrq/e/hedg1x9OwZD31klRGu4OyYkAdiQ==
+electron-screenshots@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.npmmirror.com/electron-screenshots/-/electron-screenshots-0.5.1.tgz#131b4e99aa4fa191998c8abd3f178b1ab2e933d4"
+  integrity sha512-0Em7R4GlBUzQuKqwNkSU4lPNEprEGJQH3WmqZTBa6Fvi/r6Pi5/kIWeZmZw1Y16O4FWVgr0qkhdWbAjCqQLbfQ==
   dependencies:
     debug "^4.3.3"
     fs-extra "^10.1.0"
     node-screenshots "^0.0.3"
-    react-screenshots "^0.4.3"
+    react-screenshots "^0.5.1"
 
 electron-to-chromium@^1.4.118:
   version "1.4.131"
@@ -5485,10 +5485,10 @@ rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-screenshots@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.npmmirror.com/react-screenshots/-/react-screenshots-0.4.3.tgz#1273016de4eff39158cd65579bda7d9548838ee6"
-  integrity sha512-f9dQ85uLu69cpjQhVPqBeM6YrA9HuAEyqXbtOULr7xDi8u1MspzbeKnu8QNmIkvWFLTXTOlMHct6JMp895uQrg==
+react-screenshots@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.npmmirror.com/react-screenshots/-/react-screenshots-0.5.1.tgz#45d839ae8c8ec47009a39fe5b06a78c79e4a0694"
+  integrity sha512-GmELGHFD8bCC17kr35apE0dR92jFwmfguTcl0ZBSlqX9y0pnj8tcs0q/D8BXbku5nZtEl2jjVY3adLjSu3GKIw==
 
 read-config-file@6.2.0:
   version "6.2.0"
