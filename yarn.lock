@@ -2871,10 +2871,10 @@ electron-updater@^4.6.1:
     lodash.isequal "^4.5.0"
     semver "^7.3.5"
 
-electron@^16.0.5:
-  version "16.2.4"
-  resolved "https://registry.npmmirror.com/electron/-/electron-16.2.4.tgz#4e4c72a615b37570fcc38b74b2bcbab585a42575"
-  integrity sha512-A40aU+gh41EtyspwEBMSuy5KBB56Z8OYSDsqZK9Y8nJdVIFKDtp824x/jnU7N6zNnzVil6oDIFBMGp/hkFu6FQ==
+electron@^16.2.6:
+  version "16.2.6"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-16.2.6.tgz#2d22077edb5361ab52034bb3b19405380921931b"
+  integrity sha512-FJLnIu318WNh1WigMmWqSidOPwipwym2Qi3Hs/YY6znquztf6ZJuaq/TdJJyHIJHld+znG0hSmq3VbyW5KUr9A==
   dependencies:
     "@electron/get" "^1.13.0"
     "@types/node" "^14.6.2"
