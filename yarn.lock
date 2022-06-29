@@ -2842,10 +2842,10 @@ electron-publish@22.14.13:
     lazy-val "^1.0.5"
     mime "^2.5.2"
 
-electron-screenshots@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.npmmirror.com/electron-screenshots/-/electron-screenshots-0.5.1.tgz#131b4e99aa4fa191998c8abd3f178b1ab2e933d4"
-  integrity sha512-0Em7R4GlBUzQuKqwNkSU4lPNEprEGJQH3WmqZTBa6Fvi/r6Pi5/kIWeZmZw1Y16O4FWVgr0qkhdWbAjCqQLbfQ==
+electron-screenshots@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.npmmirror.com/electron-screenshots/-/electron-screenshots-0.5.4.tgz#53d1dc104f2260b15a078810b6341bbe97b1b93b"
+  integrity sha512-mZOqkVwf7o7u9Zfw7ToTlgHy8aycovmaNdGAqqwHz2SJiYtgqbFTFQWukWDl+zSdGbJ+XB+rKYSDZyCiKeiQoQ==
   dependencies:
     debug "^4.3.3"
     fs-extra "^10.1.0"
