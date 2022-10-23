@@ -15,7 +15,11 @@ publish:
   owner: nashaofu
   repo: dingtalk
 mac:
-  target: dmg
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
   icon: './resources/icons/icon.icns'
   category: public.app-category.instant-messaging
 win:
